@@ -1,8 +1,8 @@
-package org.kep.kursach.license;
+package org.kep.kursach.license.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.kep.kursach.license.type.LicenseTypeEnum;
-import org.kep.kursach.software.SoftwareInfo;
+import org.kep.kursach.software.domain.SoftwareInfo;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -20,7 +20,7 @@ public class LicenseInfo {
     @Id
     @GeneratedValue
     @Column(name = "id")
-    private long id;
+    private Long id;
 
     @Column(name = "name", length = 250)
     private String name;
@@ -81,7 +81,7 @@ public class LicenseInfo {
         this.products = products;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

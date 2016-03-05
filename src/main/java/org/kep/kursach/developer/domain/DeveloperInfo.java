@@ -1,7 +1,7 @@
-package org.kep.kursach.developer;
+package org.kep.kursach.developer.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.kep.kursach.software.SoftwareInfo;
+import org.kep.kursach.software.domain.SoftwareInfo;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -20,7 +20,7 @@ public class DeveloperInfo implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "id")
-    private long id;
+    private Long id;
 
     @Column(name = "name", length = 200)
     private String name;
@@ -86,7 +86,7 @@ public class DeveloperInfo implements Serializable {
         this.products = products;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

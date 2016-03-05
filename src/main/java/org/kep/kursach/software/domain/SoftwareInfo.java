@@ -1,7 +1,7 @@
-package org.kep.kursach.software;
+package org.kep.kursach.software.domain;
 
-import org.kep.kursach.developer.DeveloperInfo;
-import org.kep.kursach.license.LicenseInfo;
+import org.kep.kursach.developer.domain.DeveloperInfo;
+import org.kep.kursach.license.domain.LicenseInfo;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -16,7 +16,7 @@ public class SoftwareInfo {
     @Id
     @GeneratedValue
     @Column(name = "id")
-    private long id;
+    private Long id;
 
     @Column(name = "name", length = 250)
     private String name;
@@ -65,7 +65,7 @@ public class SoftwareInfo {
         this.macOS = macOS;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
