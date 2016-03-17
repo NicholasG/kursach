@@ -1,5 +1,6 @@
 package org.kep.kursach.software.domain;
 
+import org.hibernate.annotations.JoinColumnOrFormula;
 import org.kep.kursach.developer.domain.DeveloperInfo;
 import org.kep.kursach.license.domain.LicenseInfo;
 
@@ -28,9 +29,11 @@ public class SoftwareInfo {
     private Date release;
 
     @ManyToOne
+    @JoinColumn(name = "developerId", nullable = false)
     private DeveloperInfo developer;
 
     @ManyToOne
+    @JoinColumn(name = "licenseId", nullable = false)
     private LicenseInfo license;
 
     @Column(name = "windows")
