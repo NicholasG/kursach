@@ -1,6 +1,5 @@
 package org.kep.kursach.software.domain;
 
-import org.hibernate.annotations.JoinColumnOrFormula;
 import org.kep.kursach.developer.domain.DeveloperInfo;
 import org.kep.kursach.license.domain.LicenseInfo;
 

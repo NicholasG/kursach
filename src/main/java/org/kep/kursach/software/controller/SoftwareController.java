@@ -3,19 +3,16 @@ package org.kep.kursach.software.controller;
 import org.kep.kursach.software.domain.SoftwareInfo;
 import org.kep.kursach.software.reporitory.SoftwareRepository;
 import org.kep.kursach.software.service.SoftwareService;
-import org.kep.kursach.software.service.impl.SoftwareServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
@@ -48,9 +45,43 @@ public class SoftwareController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<?> addNewSoftware(@RequestBody SoftwareInfo software) {
-        LOG.info("Adding new software");
+    public ResponseEntity<Void> addNewSoftware(@RequestBody SoftwareInfo software) {
+        LOG.info("Adding software '{}'", software.getName());
         return softwareService.addNewSoftware(software);
+    }
+
+    @RequestMapping(
+            method = RequestMethod.PUT,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<Void> editSoftware(@RequestBody SoftwareInfo software) {
+        LOG.info("Editing software '{}'", software.getName());
+        return softwareService.editSoftware(software);
+    }
+
+    @RequestMapping(
+            method = RequestMethod.DELETE,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<?> deleteSoftware(@RequestParam("id") Long id) {
+        LOG.info("Deleting software");
+        return softwareService.delete(id);
+    }
+
+    @RequestMapping(
+            value = "/{id}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<?> getOne(@PathVariable("id") Long id) {
+        Optional<SoftwareInfo> software = softwareRepository.findOneById(id);
+        if (software.isPresent()) {
+            return ResponseEntity.ok(software.get());
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @RequestMapping(

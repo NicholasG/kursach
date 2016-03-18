@@ -16,4 +16,5 @@ public interface SoftwareRepository extends JpaRepository<SoftwareInfo, Long> {
     @Query(value = "SELECT s FROM SoftwareInfo s WHERE s.developer.name LIKE :name")
     Stream<SoftwareInfo> findByDeveloperName(@Param("name") String name);
 
+    Optional<SoftwareInfo> findOneById(Long id);
 }
