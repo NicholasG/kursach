@@ -45,9 +45,9 @@ public class SoftwareController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Void> addNewSoftware(@RequestBody SoftwareInfo software) {
+    public ResponseEntity<Void> addSoftware(@RequestBody SoftwareInfo software) {
         LOG.info("Adding software '{}'", software.getName());
-        return softwareService.addNewSoftware(software);
+        return softwareService.add(software);
     }
 
     @RequestMapping(
@@ -57,7 +57,7 @@ public class SoftwareController {
     )
     public ResponseEntity<SoftwareInfo> editSoftware(@RequestBody SoftwareInfo software) {
         LOG.info("Editing software '{}'", software.getName());
-        return softwareService.editSoftware(software);
+        return softwareService.edit(software);
     }
 
     @RequestMapping(
@@ -65,7 +65,7 @@ public class SoftwareController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<?> deleteSoftware(@RequestParam("id") Long id) {
+    public ResponseEntity<Void> deleteSoftware(@RequestParam("id") Long id) {
         LOG.info("Deleting software id={}", id);
         return softwareService.delete(id);
     }

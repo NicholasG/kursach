@@ -25,14 +25,14 @@ public class SoftwareServiceImpl implements SoftwareService {
     private SoftwareRepository repository;
 
     @Override
-    public ResponseEntity<Void> addNewSoftware(SoftwareInfo software) {
+    public ResponseEntity<Void> add(SoftwareInfo software) {
         repository.save(software);
         LOG.info("Software '{}' has been added", software.getName());
         return ResponseEntity.ok().build();
     }
 
     @Override
-    public ResponseEntity<SoftwareInfo> editSoftware(SoftwareInfo software) {
+    public ResponseEntity<SoftwareInfo> edit(SoftwareInfo software) {
         return repository
                 .findOneById(software.getId())
                 .map(s -> {
@@ -48,11 +48,11 @@ public class SoftwareServiceImpl implements SoftwareService {
                     LOG.info("Software '{}' has been edited", software.getName());
                     return ResponseEntity.ok().body(software);
                 })
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
+                .orElseGet(() -> new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
     @Override
-    public ResponseEntity<?> delete(Long id) {
+    public ResponseEntity<Void> delete(Long id) {
         Optional<SoftwareInfo> software = repository.findOneById(id);
         if (software.isPresent()) {
             repository.delete(software.get().getId());

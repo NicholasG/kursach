@@ -49,7 +49,7 @@ public class DeveloperServiceImpl implements DeveloperService {
                     LOG.info("Developer '{}' has been edited", d.getName());
                     return ResponseEntity.ok().body(d);
                 })
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
+                .orElseGet(() -> new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
     @Override
