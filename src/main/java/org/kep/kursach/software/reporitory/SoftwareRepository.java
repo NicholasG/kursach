@@ -13,8 +13,9 @@ import java.util.stream.Stream;
  */
 public interface SoftwareRepository extends JpaRepository<SoftwareInfo, Long> {
 
-    @Query(value = "SELECT s FROM SoftwareInfo s WHERE s.developer.name LIKE :name")
+    @Query(value = "SELECT s FROM SoftwareInfo s WHERE UPPER(s.developer.name) LIKE UPPER(:name)")
     Stream<SoftwareInfo> findByDeveloperName(@Param("name") String name);
 
     Optional<SoftwareInfo> findOneById(Long id);
+
 }

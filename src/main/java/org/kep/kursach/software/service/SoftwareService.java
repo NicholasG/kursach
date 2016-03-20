@@ -10,7 +10,7 @@ public interface SoftwareService {
 
     ResponseEntity<Void> addNewSoftware(SoftwareInfo software);
 
-    ResponseEntity<Void> editSoftware(SoftwareInfo software);
+    ResponseEntity<SoftwareInfo> editSoftware(SoftwareInfo software);
 
     ResponseEntity<?> delete(Long id);
 }
