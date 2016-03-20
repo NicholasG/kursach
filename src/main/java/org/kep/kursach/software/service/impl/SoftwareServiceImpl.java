@@ -7,6 +7,7 @@ import org.kep.kursach.web.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
@@ -32,26 +33,29 @@ public class SoftwareServiceImpl implements SoftwareService {
 
     @Override
     public ResponseEntity<SoftwareInfo> editSoftware(SoftwareInfo software) {
-        repository.findOneById(software.getId()).ifPresent(s -> {
-            s.setName(software.getName());
-            s.setVersion(software.getVersion());
-            s.setRelease(software.getRelease());
-            s.setDeveloper(software.getDeveloper());
-            s.setLicense(software.getLicense());
-            s.setWindows(software.isWindows());
-            s.setLinux(software.isLinux());
-            s.setMacOS(software.isMacOS());
-            repository.save(s);
-        });
-        LOG.info("Software '{}' has been edited", software.getName());
-        return ResponseEntity.ok().body(software);
+        return repository
+                .findOneById(software.getId())
+                .map(s -> {
+                    s.setName(software.getName());
+                    s.setVersion(software.getVersion());
+                    s.setRelease(software.getRelease());
+                    s.setDeveloper(software.getDeveloper());
+                    s.setLicense(software.getLicense());
+                    s.setWindows(software.isWindows());
+                    s.setLinux(software.isLinux());
+                    s.setMacOS(software.isMacOS());
+                    repository.save(s);
+                    LOG.info("Software '{}' has been edited", software.getName());
+                    return ResponseEntity.ok().body(software);
+                })
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
     @Override
     public ResponseEntity<?> delete(Long id) {
         Optional<SoftwareInfo> software = repository.findOneById(id);
         if (software.isPresent()) {
-            repository.delete(id);
+            repository.delete(software.get().getId());
             LOG.info("Software '{}' has been deleted", software.get().getName());
             return ResponseEntity.ok().build();
         } else {

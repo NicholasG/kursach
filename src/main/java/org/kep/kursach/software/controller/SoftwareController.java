@@ -3,17 +3,16 @@ package org.kep.kursach.software.controller;
 import org.kep.kursach.software.domain.SoftwareInfo;
 import org.kep.kursach.software.reporitory.SoftwareRepository;
 import org.kep.kursach.software.service.SoftwareService;
-import org.kep.kursach.web.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
@@ -78,14 +77,10 @@ public class SoftwareController {
     )
     public ResponseEntity<?> getOne(@PathVariable("id") Long id) {
         LOG.info("Getting software by id={}", id);
-        Optional<SoftwareInfo> software = softwareRepository.findOneById(id);
-        if (software.isPresent()) {
-            return ResponseEntity.ok(software.get());
-        } else {
-            return ResponseEntity.notFound()
-                    .headers(HeaderUtil.createFailureAlert("software-management", "notFound", "Software not found"))
-                    .build();
-        }
+        return softwareRepository
+                .findOneById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> new ResponseEntity(HttpStatus.NOT_FOUND));
     }
 
     @RequestMapping(
