@@ -1,6 +1,7 @@
 package org.kep.kursach.developer.service;
 
 import org.kep.kursach.developer.domain.DeveloperInfo;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Optional;
 
@@ -10,5 +11,10 @@ import java.util.Optional;
 public interface DeveloperService {
 
 
+    ResponseEntity<Void> add(DeveloperInfo developer);
+
+    ResponseEntity<?> edit(DeveloperInfo developer);
+
+    ResponseEntity<Void> delete(Long id);
 
 }
