@@ -45,7 +45,7 @@ public class SoftwareController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Void> addSoftware(@RequestBody SoftwareInfo software) {
+    public ResponseEntity<SoftwareInfo> addSoftware(@RequestBody SoftwareInfo software) {
         LOG.info("Adding software '{}'", software.getName());
         return softwareService.add(software);
     }

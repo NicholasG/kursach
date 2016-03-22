@@ -44,7 +44,7 @@ public class DeveloperController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Void> addDeveloper(@RequestBody DeveloperInfo developer) {
+    public ResponseEntity<DeveloperInfo> addDeveloper(@RequestBody DeveloperInfo developer) {
         LOG.info("Adding developer '{}'", developer.getName());
         return developerService.add(developer);
     }

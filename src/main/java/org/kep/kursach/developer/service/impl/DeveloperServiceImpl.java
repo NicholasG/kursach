@@ -11,8 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-
 /**
  * Created by NicholasG on 05.03.2016.
  */
@@ -25,10 +23,10 @@ public class DeveloperServiceImpl implements DeveloperService {
     private DeveloperRepository repository;
 
     @Override
-    public ResponseEntity<Void> add(DeveloperInfo developer) {
-        repository.save(developer);
+    public ResponseEntity<DeveloperInfo> add(DeveloperInfo developer) {
+        repository.saveAndFlush(developer);
         LOG.info("Developer '{}' has been added", developer.getName());
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(developer);
     }
 
     @Override
@@ -45,7 +43,7 @@ public class DeveloperServiceImpl implements DeveloperService {
                     d.setPhoneNumber(developer.getPhoneNumber());
                     d.setZipcode(developer.getZipcode());
                     d.setFax(developer.getFax());
-                    repository.save(d);
+                    repository.saveAndFlush(d);
                     LOG.info("Developer '{}' has been edited", d.getName());
                     return ResponseEntity.ok().body(d);
                 })
@@ -54,8 +52,7 @@ public class DeveloperServiceImpl implements DeveloperService {
 
     @Override
     public ResponseEntity<Void> delete(Long id) {
-        Optional<DeveloperInfo> developer = repository.findOneById(id);
-        return developer
+        return repository.findOneById(id)
                 .map(d -> {
                     if (d.getProducts().isEmpty()) {
                         repository.delete(d);

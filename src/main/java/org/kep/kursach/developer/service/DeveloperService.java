@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface DeveloperService {
 
 
-    ResponseEntity<Void> add(DeveloperInfo developer);
+    ResponseEntity<DeveloperInfo> add(DeveloperInfo developer);
 
     ResponseEntity<?> edit(DeveloperInfo developer);
 

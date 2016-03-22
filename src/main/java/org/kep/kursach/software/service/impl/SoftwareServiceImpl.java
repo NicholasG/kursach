@@ -25,10 +25,10 @@ public class SoftwareServiceImpl implements SoftwareService {
     private SoftwareRepository repository;
 
     @Override
-    public ResponseEntity<Void> add(SoftwareInfo software) {
-        repository.save(software);
+    public ResponseEntity<SoftwareInfo> add(SoftwareInfo software) {
+        repository.saveAndFlush(software);
         LOG.info("Software '{}' has been added", software.getName());
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(software);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class SoftwareServiceImpl implements SoftwareService {
                     s.setWindows(software.isWindows());
                     s.setLinux(software.isLinux());
                     s.setMacOS(software.isMacOS());
-                    repository.save(s);
+                    repository.saveAndFlush(s);
                     LOG.info("Software '{}' has been edited", software.getName());
                     return ResponseEntity.ok().body(software);
                 })

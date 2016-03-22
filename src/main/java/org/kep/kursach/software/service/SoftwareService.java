@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
  */
 public interface SoftwareService {
 
-    ResponseEntity<Void> add(SoftwareInfo software);
+    ResponseEntity<SoftwareInfo> add(SoftwareInfo software);
 
     ResponseEntity<SoftwareInfo> edit(SoftwareInfo software);
 
