@@ -1,7 +1,6 @@
 package org.kep.kursach.license.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.kep.kursach.license.type.LicenseTypeEnum;
 import org.kep.kursach.software.domain.SoftwareInfo;
 
 import javax.persistence.*;
@@ -17,6 +16,23 @@ import static javax.persistence.CascadeType.ALL;
 @Table(name = "licenseInfo")
 public class LicenseInfo {
 
+    private enum Type {
+        FREE("Безкоштовна"),
+        TRIAL("Умовно безкоштовна"),
+        PAID("Платна");
+
+        private final String type;
+
+        Type(String type) {
+            this.type = type;
+        }
+
+        @Override
+        public String toString() {
+            return type;
+        }
+    }
+
     @Id
     @GeneratedValue
     @Column(name = "id")
@@ -26,7 +42,7 @@ public class LicenseInfo {
     private String name;
 
     @Column(name = "type")
-    private LicenseTypeEnum type;
+    private Type type;
 
     @Column(name = "minimumUsers")
     private int minimumUsers;
@@ -55,7 +71,7 @@ public class LicenseInfo {
 
     public LicenseInfo(
             String name,
-            LicenseTypeEnum type,
+            Type type,
             int minimumUsers,
             int maximumUsers,
             int expiration,
@@ -97,11 +113,11 @@ public class LicenseInfo {
         this.name = name;
     }
 
-    public LicenseTypeEnum getType() {
+    public Type getType() {
         return type;
     }
 
-    public void setType(LicenseTypeEnum type) {
+    public void setType(Type type) {
         this.type = type;
     }
 
