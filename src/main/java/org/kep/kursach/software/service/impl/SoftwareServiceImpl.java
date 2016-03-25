@@ -7,14 +7,13 @@ import org.kep.kursach.web.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-import java.sql.Date;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * Created by NicholasG on 05.03.2016.
@@ -70,35 +69,21 @@ public class SoftwareServiceImpl implements SoftwareService {
     }
 
     @Override
-    public List<SoftwareInfo> searchFor(String name, String release, String devName, String licName) {
-        List<SoftwareInfo> searchResults = repository.findAll();
+    public Page<SoftwareInfo> searchFor(Pageable pageable, String name, String devName, String licName) {
+        if (name == null || name.equals("")) name = "%";
+        else name += "%";
 
-        if (release != null && !release.equals("")) {
-            searchResults = searchResults
-                    .stream()
-                    .filter(s -> s.getRelease().equals(Date.valueOf(release)))
-                    .collect(Collectors.toList());
-        }
-        if (name != null && !name.equals("")) {
-            searchResults = searchResults
-                    .stream()
-                    .filter(s -> s.getName().toLowerCase().startsWith(name.toLowerCase()))
-                    .collect(Collectors.toList());
-        }
-        if (devName != null && !devName.equals("")) {
-            searchResults = searchResults
-                    .stream()
-                    .filter(s -> s.getDeveloper().getName().toLowerCase().startsWith(devName.toLowerCase()))
-                    .collect(Collectors.toList());
-        }
-        if (licName != null && !licName.equals("")) {
-            searchResults = searchResults
-                    .stream()
-                    .filter(s -> s.getLicense().getName().toLowerCase().startsWith(licName.toLowerCase()))
-                    .collect(Collectors.toList());
-        }
+        if (devName == null || devName.equals("")) devName = "%";
+        else devName += "%";
 
-        return searchResults;
+        if (licName == null || licName.equals("")) licName = "%";
+        else licName += "%";
+
+        return repository.findByNameAndDeveloperNameAndLicenseName(pageable, name, devName, licName);
     }
-
 }
+
+
+
+
+

@@ -8,14 +8,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * Created by NicholasG on 05.03.2016.
@@ -91,18 +88,11 @@ public class SoftwareController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Page<SoftwareInfo>> findBy(Pageable pageable, String name, String release, String devName, String licName) {
-        LOG.info("Searching some software by name='{}', release='{}', devName='{}', licName='{}'", name, release, devName, licName);
-        List<SoftwareInfo> softwareList = softwareService.searchFor(name, release, devName, licName);
+    public ResponseEntity<Page<SoftwareInfo>> searchFor(Pageable pageable, String name, String devName, String licName) {
+        LOG.info("Searching some software by name='{}', devName='{}', licName='{}'", name, devName, licName);
+        Page<SoftwareInfo> page = softwareService.searchFor(pageable, name, devName, licName);
 
-        return ResponseEntity.ok(getPage(pageable, softwareList));
-    }
-
-    private Page<SoftwareInfo> getPage(Pageable pageable, List<SoftwareInfo> softwareList) {
-        int fromIndex = pageable.getOffset();
-        int toIndex = pageable.getOffset() + pageable.getPageSize();
-        List<SoftwareInfo> subList = softwareList.subList(fromIndex, toIndex > softwareList.size() ? softwareList.size() : toIndex);
-        return new PageImpl<>(subList, pageable, softwareList.size());
+        return ResponseEntity.ok(page);
     }
 
 }

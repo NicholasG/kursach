@@ -1,9 +1,9 @@
 package org.kep.kursach.software.service;
 
 import org.kep.kursach.software.domain.SoftwareInfo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-
-import java.util.List;
 
 /**
  * Created by NicholasG on 05.03.2016.
@@ -16,5 +16,5 @@ public interface SoftwareService {
 
     ResponseEntity<Void> delete(Long id);
 
-    List<SoftwareInfo> searchFor(String name, String release, String devName, String licName);
+    Page<SoftwareInfo> searchFor(Pageable pageable, String name, String devName, String licName);
 }
