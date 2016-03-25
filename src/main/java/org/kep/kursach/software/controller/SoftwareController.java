@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * Created by NicholasG on 05.03.2016.
@@ -88,11 +87,10 @@ public class SoftwareController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Object[]> findByDeveloperName(String devName) {
-        LOG.info("Searching some software by devName='{}'", devName);
-        try (Stream<SoftwareInfo> stream = softwareRepository.findByDeveloperName(devName + '%')) {
-            return ResponseEntity.ok(stream.toArray());
-        }
+    public ResponseEntity<List<SoftwareInfo>> findBy(String name, String release, String devName, String licName) {
+        LOG.info("Searching some software by name='{}', release='{}', devName='{}', licName='{}'", name, release, devName, licName);
+        List<SoftwareInfo> softwareList = softwareService.searchFor(name, release, devName, licName);
+        return ResponseEntity.ok(softwareList);
     }
 
 }

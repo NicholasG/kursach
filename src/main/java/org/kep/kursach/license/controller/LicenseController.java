@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Required;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -66,6 +66,19 @@ public class LicenseController {
     public ResponseEntity<Void> deleteLicense(@RequestParam("id") Long id) {
         LOG.info("Deleting license id={}", id);
         return licenseService.delete(id);
+    }
+
+    @RequestMapping(
+            value = "/{id}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<LicenseInfo> getOne(@PathVariable("id") Long id) {
+        LOG.info("Getting license by id='{}'", id);
+        return licenseRepository
+                .findOneById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> new ResponseEntity(HttpStatus.NOT_FOUND));
     }
 
 }

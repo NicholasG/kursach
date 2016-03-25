@@ -11,7 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import java.sql.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Created by NicholasG on 05.03.2016.
@@ -64,6 +67,38 @@ public class SoftwareServiceImpl implements SoftwareService {
                     .headers(HeaderUtil.createFailureAlert("software-management", "notFound", "Software not found"))
                     .build();
         }
+    }
+
+    @Override
+    public List<SoftwareInfo> searchFor(String name, String release, String devName, String licName) {
+        List<SoftwareInfo> searchResults = repository.findAll();
+
+        if (release != null && !release.equals("")) {
+            searchResults = searchResults
+                    .stream()
+                    .filter(s -> s.getRelease().equals(Date.valueOf(release)))
+                    .collect(Collectors.toList());
+        }
+        if (name != null && !name.equals("")) {
+            searchResults = searchResults
+                    .stream()
+                    .filter(s -> s.getName().toLowerCase().contains(name.toLowerCase()))
+                    .collect(Collectors.toList());
+        }
+        if (devName != null && !devName.equals("")) {
+            searchResults = searchResults
+                    .stream()
+                    .filter(s -> s.getDeveloper().getName().toLowerCase().contains(devName.toLowerCase()))
+                    .collect(Collectors.toList());
+        }
+        if (licName != null && !licName.equals("")) {
+            searchResults = searchResults
+                    .stream()
+                    .filter(s -> s.getLicense().getName().toLowerCase().contains(licName.toLowerCase()))
+                    .collect(Collectors.toList());
+        }
+
+        return searchResults;
     }
 
 }
