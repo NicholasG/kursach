@@ -82,19 +82,19 @@ public class SoftwareServiceImpl implements SoftwareService {
         if (name != null && !name.equals("")) {
             searchResults = searchResults
                     .stream()
-                    .filter(s -> s.getName().toLowerCase().contains(name.toLowerCase()))
+                    .filter(s -> s.getName().toLowerCase().startsWith(name.toLowerCase()))
                     .collect(Collectors.toList());
         }
         if (devName != null && !devName.equals("")) {
             searchResults = searchResults
                     .stream()
-                    .filter(s -> s.getDeveloper().getName().toLowerCase().contains(devName.toLowerCase()))
+                    .filter(s -> s.getDeveloper().getName().toLowerCase().startsWith(devName.toLowerCase()))
                     .collect(Collectors.toList());
         }
         if (licName != null && !licName.equals("")) {
             searchResults = searchResults
                     .stream()
-                    .filter(s -> s.getLicense().getName().toLowerCase().contains(licName.toLowerCase()))
+                    .filter(s -> s.getLicense().getName().toLowerCase().startsWith(licName.toLowerCase()))
                     .collect(Collectors.toList());
         }
 
