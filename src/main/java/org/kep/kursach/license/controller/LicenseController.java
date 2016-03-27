@@ -7,12 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * Created by NicholasG on 05.03.2016.
@@ -34,9 +34,9 @@ public class LicenseController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<List<LicenseInfo>> getAll() {
+    public ResponseEntity<Page<LicenseInfo>> getAll(Pageable pageable) {
         LOG.info("Getting all licenses");
-        return ResponseEntity.ok(licenseRepository.findAll());
+        return ResponseEntity.ok(licenseRepository.findAll(pageable));
     }
 
     @RequestMapping(
