@@ -18,25 +18,25 @@ import org.springframework.web.bind.annotation.*;
  * Created by NicholasG on 05.03.2016.
  */
 @RestController
-@RequestMapping("/license")
+@RequestMapping( "/license" )
 public class LicenseController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(LicenseController.class);
+    private static final Logger LOG = LoggerFactory.getLogger( LicenseController.class );
 
     @Autowired
     private LicenseRepository licenseRepository;
 
     @Autowired
-    @Qualifier("licenseService")
+    @Qualifier( "licenseService" )
     private LicenseService licenseService;
 
     @RequestMapping(
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Page<LicenseInfo>> getAll(Pageable pageable) {
-        LOG.info("Getting all licenses");
-        return ResponseEntity.ok(licenseRepository.findAll(pageable));
+    public ResponseEntity<Page<LicenseInfo>> getAll( Pageable pageable ) {
+        LOG.info( "Getting all licenses" );
+        return ResponseEntity.ok( licenseRepository.findAll( pageable ) );
     }
 
     @RequestMapping(
@@ -44,9 +44,9 @@ public class LicenseController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<?> addLicense(@RequestBody LicenseInfo license) {
-        LOG.info("Adding license '{}'", license.getName());
-        return licenseService.add(license);
+    public ResponseEntity<?> addLicense( @RequestBody LicenseInfo license ) {
+        LOG.info( "Adding license '{}'", license.getName() );
+        return licenseService.add( license );
     }
 
     @RequestMapping(
@@ -54,18 +54,18 @@ public class LicenseController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<?> editLicense(@RequestBody LicenseInfo license) {
-        LOG.info("Editing license '{}'", license.getName());
-        return licenseService.edit(license);
+    public ResponseEntity<?> editLicense( @RequestBody LicenseInfo license ) {
+        LOG.info( "Editing license '{}'", license.getName() );
+        return licenseService.edit( license );
     }
 
     @RequestMapping(
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Void> deleteLicense(@RequestParam("id") Long id) {
-        LOG.info("Deleting license id={}", id);
-        return licenseService.delete(id);
+    public ResponseEntity<Void> deleteLicense( @RequestParam( "id" ) Long id ) {
+        LOG.info( "Deleting license id={}", id );
+        return licenseService.delete( id );
     }
 
     @RequestMapping(
@@ -73,12 +73,12 @@ public class LicenseController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<LicenseInfo> getOne(@PathVariable("id") Long id) {
-        LOG.info("Getting license by id='{}'", id);
+    public ResponseEntity<LicenseInfo> getOne( @PathVariable( "id" ) Long id ) {
+        LOG.info( "Getting license by id='{}'", id );
         return licenseRepository
-                .findOneById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> new ResponseEntity(HttpStatus.NOT_FOUND));
+                .findOneById( id )
+                .map( ResponseEntity::ok )
+                .orElseGet( () -> new ResponseEntity( HttpStatus.NOT_FOUND ) );
     }
 
     @RequestMapping(
@@ -86,10 +86,10 @@ public class LicenseController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Page<LicenseInfo>> searchFor(Pageable pageable, String name) {
-        LOG.info("Searching license by name '{}'", name);
-        Page<LicenseInfo> page = licenseService.searchFor(pageable, name);
-        return ResponseEntity.ok(page);
+    public ResponseEntity<Page<LicenseInfo>> searchFor( Pageable pageable, String name ) {
+        LOG.info( "Searching license by name '{}'", name );
+        Page<LicenseInfo> page = licenseService.searchFor( pageable, name );
+        return ResponseEntity.ok( page );
     }
 
 }

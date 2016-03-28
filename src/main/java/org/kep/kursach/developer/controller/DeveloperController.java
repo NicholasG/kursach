@@ -18,25 +18,25 @@ import org.springframework.web.bind.annotation.*;
  * Created by NicholasG on 05.03.2016.
  */
 @RestController
-@RequestMapping("/dev")
+@RequestMapping( "/dev" )
 public class DeveloperController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(DeveloperController.class);
+    private static final Logger LOG = LoggerFactory.getLogger( DeveloperController.class );
 
     @Autowired
     private DeveloperRepository developerRepository;
 
     @Autowired
-    @Qualifier("developerService")
+    @Qualifier( "developerService" )
     private DeveloperService developerService;
 
     @RequestMapping(
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Page<DeveloperInfo>> getAll(Pageable pageable) {
-        LOG.info("Getting all developers");
-        return ResponseEntity.ok(developerRepository.findAll(pageable));
+    public ResponseEntity<Page<DeveloperInfo>> getAll( Pageable pageable ) {
+        LOG.info( "Getting all developers" );
+        return ResponseEntity.ok( developerRepository.findAll( pageable ) );
     }
 
     @RequestMapping(
@@ -44,9 +44,9 @@ public class DeveloperController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<DeveloperInfo> addDeveloper(@RequestBody DeveloperInfo developer) {
-        LOG.info("Adding developer '{}'", developer.getName());
-        return developerService.add(developer);
+    public ResponseEntity<DeveloperInfo> addDeveloper( @RequestBody DeveloperInfo developer ) {
+        LOG.info( "Adding developer '{}'", developer.getName() );
+        return developerService.add( developer );
     }
 
     @RequestMapping(
@@ -54,18 +54,18 @@ public class DeveloperController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<?> editDeveloper(@RequestBody DeveloperInfo developer) {
-        LOG.info("Editing developer '{}'", developer.getName());
-        return developerService.edit(developer);
+    public ResponseEntity<?> editDeveloper( @RequestBody DeveloperInfo developer ) {
+        LOG.info( "Editing developer '{}'", developer.getName() );
+        return developerService.edit( developer );
     }
 
     @RequestMapping(
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Void> deleteDeveloper(@RequestParam("id") Long id) {
-        LOG.info("Deleting developer id={}", id);
-        return developerService.delete(id);
+    public ResponseEntity<Void> deleteDeveloper( @RequestParam( "id" ) Long id ) {
+        LOG.info( "Deleting developer id={}", id );
+        return developerService.delete( id );
     }
 
     @RequestMapping(
@@ -73,12 +73,12 @@ public class DeveloperController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<DeveloperInfo> getOne(@PathVariable("id") Long id) {
-        LOG.info("Getting developer by id={}", id);
+    public ResponseEntity<DeveloperInfo> getOne( @PathVariable( "id" ) Long id ) {
+        LOG.info( "Getting developer by id={}", id );
         return developerRepository
-                .findOneById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> new ResponseEntity(HttpStatus.NOT_FOUND));
+                .findOneById( id )
+                .map( ResponseEntity::ok )
+                .orElseGet( () -> new ResponseEntity( HttpStatus.NOT_FOUND ) );
     }
 
     @RequestMapping(
@@ -86,11 +86,11 @@ public class DeveloperController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Page<DeveloperInfo>> searchFor(Pageable pageable, String name) {
-        LOG.info("Searching developer by name '{}'", name);
-        Page<DeveloperInfo> page = developerService.searchFor(pageable, name);
+    public ResponseEntity<Page<DeveloperInfo>> searchFor( Pageable pageable, String name ) {
+        LOG.info( "Searching developer by name '{}'", name );
+        Page<DeveloperInfo> page = developerService.searchFor( pageable, name );
 
-        return ResponseEntity.ok(page);
+        return ResponseEntity.ok( page );
     }
 
 }

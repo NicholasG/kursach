@@ -18,26 +18,26 @@ import org.springframework.web.bind.annotation.*;
  * Created by NicholasG on 05.03.2016.
  */
 @RestController
-@RequestMapping("/soft")
+@RequestMapping( "/soft" )
 public class SoftwareController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SoftwareController.class);
+    private static final Logger LOG = LoggerFactory.getLogger( SoftwareController.class );
 
     @Autowired
     private SoftwareRepository softwareRepository;
 
     @Autowired
-    @Qualifier("softwareService")
+    @Qualifier( "softwareService" )
     private SoftwareService softwareService;
 
     @RequestMapping(
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Page<SoftwareInfo>> getAll(Pageable pageable) {
-        LOG.info("Getting all software");
-        Page<SoftwareInfo> page = softwareRepository.findAll(pageable);
-        return ResponseEntity.ok(page);
+    public ResponseEntity<Page<SoftwareInfo>> getAll( Pageable pageable ) {
+        LOG.info( "Getting all software" );
+        Page<SoftwareInfo> page = softwareRepository.findAll( pageable );
+        return ResponseEntity.ok( page );
     }
 
     @RequestMapping(
@@ -45,9 +45,9 @@ public class SoftwareController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<SoftwareInfo> addSoftware(@RequestBody SoftwareInfo software) {
-        LOG.info("Adding software '{}'", software.getName());
-        return softwareService.add(software);
+    public ResponseEntity<SoftwareInfo> addSoftware( @RequestBody SoftwareInfo software ) {
+        LOG.info( "Adding software '{}'", software.getName() );
+        return softwareService.add( software );
     }
 
     @RequestMapping(
@@ -55,9 +55,9 @@ public class SoftwareController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<SoftwareInfo> editSoftware(@RequestBody SoftwareInfo software) {
-        LOG.info("Editing software '{}'", software.getName());
-        return softwareService.edit(software);
+    public ResponseEntity<SoftwareInfo> editSoftware( @RequestBody SoftwareInfo software ) {
+        LOG.info( "Editing software '{}'", software.getName() );
+        return softwareService.edit( software );
     }
 
     @RequestMapping(
@@ -65,9 +65,9 @@ public class SoftwareController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Void> deleteSoftware(@RequestParam("id") Long id) {
-        LOG.info("Deleting software id={}", id);
-        return softwareService.delete(id);
+    public ResponseEntity<Void> deleteSoftware( @RequestParam( "id" ) Long id ) {
+        LOG.info( "Deleting software id={}", id );
+        return softwareService.delete( id );
     }
 
     @RequestMapping(
@@ -75,12 +75,12 @@ public class SoftwareController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<?> getOne(@PathVariable("id") Long id) {
-        LOG.info("Getting software by id={}", id);
+    public ResponseEntity<?> getOne( @PathVariable( "id" ) Long id ) {
+        LOG.info( "Getting software by id={}", id );
         return softwareRepository
-                .findOneById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> new ResponseEntity(HttpStatus.NOT_FOUND));
+                .findOneById( id )
+                .map( ResponseEntity::ok )
+                .orElseGet( () -> new ResponseEntity( HttpStatus.NOT_FOUND ) );
     }
 
     @RequestMapping(
@@ -88,11 +88,11 @@ public class SoftwareController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Page<SoftwareInfo>> searchFor(Pageable pageable, String name, String devName, String licName) {
-        LOG.info("Searching some software by name='{}', devName='{}', licName='{}'", name, devName, licName);
-        Page<SoftwareInfo> page = softwareService.searchFor(pageable, name, devName, licName);
+    public ResponseEntity<Page<SoftwareInfo>> searchFor( Pageable pageable, String name, String devName, String licName ) {
+        LOG.info( "Searching some software by name='{}', devName='{}', licName='{}'", name, devName, licName );
+        Page<SoftwareInfo> page = softwareService.searchFor( pageable, name, devName, licName );
 
-        return ResponseEntity.ok(page);
+        return ResponseEntity.ok( page );
     }
 
 }

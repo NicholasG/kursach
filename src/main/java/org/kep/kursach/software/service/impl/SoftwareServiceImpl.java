@@ -18,68 +18,68 @@ import java.util.Optional;
 /**
  * Created by NicholasG on 05.03.2016.
  */
-@Component("softwareService")
+@Component( "softwareService" )
 public class SoftwareServiceImpl implements SoftwareService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SoftwareServiceImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger( SoftwareServiceImpl.class );
 
     @Autowired
     private SoftwareRepository repository;
 
     @Override
-    public ResponseEntity<SoftwareInfo> add(SoftwareInfo software) {
-        repository.saveAndFlush(software);
-        LOG.info("Software '{}' has been added", software.getName());
-        return ResponseEntity.ok(software);
+    public ResponseEntity<SoftwareInfo> add( SoftwareInfo software ) {
+        repository.saveAndFlush( software );
+        LOG.info( "Software '{}' has been added", software.getName() );
+        return ResponseEntity.ok( software );
     }
 
     @Override
-    public ResponseEntity<SoftwareInfo> edit(SoftwareInfo software) {
+    public ResponseEntity<SoftwareInfo> edit( SoftwareInfo software ) {
         return repository
-                .findOneById(software.getId())
-                .map(s -> {
-                    s.setName(software.getName());
-                    s.setVersion(software.getVersion());
-                    s.setRelease(software.getRelease());
-                    s.setDeveloper(software.getDeveloper());
-                    s.setLicense(software.getLicense());
-                    s.setWindows(software.isWindows());
-                    s.setLinux(software.isLinux());
-                    s.setMacOS(software.isMacOS());
-                    repository.saveAndFlush(s);
-                    LOG.info("Software '{}' has been edited", software.getName());
-                    return ResponseEntity.ok().body(software);
-                })
-                .orElseGet(() -> new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR));
+                .findOneById( software.getId() )
+                .map( s -> {
+                    s.setName( software.getName() );
+                    s.setVersion( software.getVersion() );
+                    s.setRelease( software.getRelease() );
+                    s.setDeveloper( software.getDeveloper() );
+                    s.setLicense( software.getLicense() );
+                    s.setWindows( software.isWindows() );
+                    s.setLinux( software.isLinux() );
+                    s.setMacOS( software.isMacOS() );
+                    repository.saveAndFlush( s );
+                    LOG.info( "Software '{}' has been edited", software.getName() );
+                    return ResponseEntity.ok().body( software );
+                } )
+                .orElseGet( () -> new ResponseEntity( HttpStatus.INTERNAL_SERVER_ERROR ) );
     }
 
     @Override
-    public ResponseEntity<Void> delete(Long id) {
-        Optional<SoftwareInfo> software = repository.findOneById(id);
-        if (software.isPresent()) {
-            repository.delete(software.get().getId());
-            LOG.info("Software '{}' has been deleted", software.get().getName());
+    public ResponseEntity<Void> delete( Long id ) {
+        Optional<SoftwareInfo> software = repository.findOneById( id );
+        if ( software.isPresent() ) {
+            repository.delete( software.get().getId() );
+            LOG.info( "Software '{}' has been deleted", software.get().getName() );
             return ResponseEntity.ok().build();
         } else {
-            LOG.warn("Software id={} not found!", id);
+            LOG.warn( "Software id={} not found!", id );
             return ResponseEntity.notFound()
-                    .headers(HeaderUtil.createFailureAlert("software-management", "notFound", "Software not found"))
+                    .headers( HeaderUtil.createFailureAlert( "software-management", "notFound", "Software not found" ) )
                     .build();
         }
     }
 
     @Override
-    public Page<SoftwareInfo> searchFor(Pageable pageable, String name, String devName, String licName) {
-        if (name == null || name.equals("")) name = "%";
+    public Page<SoftwareInfo> searchFor( Pageable pageable, String name, String devName, String licName ) {
+        if ( name == null || name.equals( "" ) ) name = "%";
         else name += "%";
 
-        if (devName == null || devName.equals("")) devName = "%";
+        if ( devName == null || devName.equals( "" ) ) devName = "%";
         else devName += "%";
 
-        if (licName == null || licName.equals("")) licName = "%";
+        if ( licName == null || licName.equals( "" ) ) licName = "%";
         else licName += "%";
 
-        return repository.findByNameAndDeveloperNameAndLicenseName(pageable, name, devName, licName);
+        return repository.findByNameAndDeveloperNameAndLicenseName( pageable, name, devName, licName );
     }
 }
 

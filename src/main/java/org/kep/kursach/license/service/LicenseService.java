@@ -10,11 +10,11 @@ import org.springframework.http.ResponseEntity;
  */
 public interface LicenseService {
 
-    ResponseEntity<?> add(LicenseInfo license);
+    ResponseEntity<?> add( LicenseInfo license );
 
-    ResponseEntity<?> edit(LicenseInfo license);
+    ResponseEntity<?> edit( LicenseInfo license );
 
-    ResponseEntity<Void> delete(Long id);
+    ResponseEntity<Void> delete( Long id );
 
-    Page<LicenseInfo> searchFor(Pageable pageable, String name);
+    Page<LicenseInfo> searchFor( Pageable pageable, String name );
 }

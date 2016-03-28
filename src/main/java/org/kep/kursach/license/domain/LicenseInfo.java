@@ -13,17 +13,17 @@ import static javax.persistence.CascadeType.ALL;
  * Created by NicholasG on 02.03.2016.
  */
 @Entity
-@Table(name = "licenseInfo")
+@Table( name = "licenseInfo" )
 public class LicenseInfo {
 
     private enum Type {
-        FREE("Безкоштовна"),
-        TRIAL("Умовно безкоштовна"),
-        PAID("Платна");
+        FREE( "Безкоштовна" ),
+        TRIAL( "Умовно безкоштовна" ),
+        PAID( "Платна" );
 
         private final String type;
 
-        Type(String type) {
+        Type( String type ) {
             this.type = type;
         }
 
@@ -35,35 +35,35 @@ public class LicenseInfo {
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column( name = "id" )
     private Long id;
 
-    @Column(name = "name", length = 250)
+    @Column( name = "name", length = 250 )
     private String name;
 
-    @Column(name = "type")
+    @Column( name = "type" )
     private Type type;
 
-    @Column(name = "minimumUsers")
+    @Column( name = "minimumUsers" )
     private int minimumUsers;
 
-    @Column(name = "maximumUsers")
+    @Column( name = "maximumUsers" )
     private int maximumUsers;
 
-    @Column(name = "expiration")
+    @Column( name = "expiration" )
     private int expiration;
 
-    @Column(name = "priceForOne")
+    @Column( name = "priceForOne" )
     private double priceForOne;
 
-    @Column(name = "priceForTen")
+    @Column( name = "priceForTen" )
     private double priceForTen;
 
-    @Column(name = "priceForHundred")
+    @Column( name = "priceForHundred" )
     private double priceForHundred;
 
     @JsonIgnore
-    @OneToMany(targetEntity = SoftwareInfo.class, cascade = ALL, mappedBy = "license")
+    @OneToMany( targetEntity = SoftwareInfo.class, cascade = ALL, mappedBy = "license" )
     private Set<SoftwareInfo> products = new HashSet<>();
 
     public LicenseInfo() {
@@ -93,7 +93,7 @@ public class LicenseInfo {
         return products;
     }
 
-    public void setProducts(Set<SoftwareInfo> products) {
+    public void setProducts( Set<SoftwareInfo> products ) {
         this.products = products;
     }
 
@@ -101,7 +101,7 @@ public class LicenseInfo {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId( long id ) {
         this.id = id;
     }
 
@@ -109,7 +109,7 @@ public class LicenseInfo {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName( String name ) {
         this.name = name;
     }
 
@@ -117,7 +117,7 @@ public class LicenseInfo {
         return type;
     }
 
-    public void setType(Type type) {
+    public void setType( Type type ) {
         this.type = type;
     }
 
@@ -125,7 +125,7 @@ public class LicenseInfo {
         return minimumUsers;
     }
 
-    public void setMinimumUsers(int minimumUsers) {
+    public void setMinimumUsers( int minimumUsers ) {
         this.minimumUsers = minimumUsers;
     }
 
@@ -133,7 +133,7 @@ public class LicenseInfo {
         return maximumUsers;
     }
 
-    public void setMaximumUsers(int maximumUsers) {
+    public void setMaximumUsers( int maximumUsers ) {
         this.maximumUsers = maximumUsers;
     }
 
@@ -141,7 +141,7 @@ public class LicenseInfo {
         return expiration;
     }
 
-    public void setExpiration(int expiration) {
+    public void setExpiration( int expiration ) {
         this.expiration = expiration;
     }
 
@@ -149,7 +149,7 @@ public class LicenseInfo {
         return priceForOne;
     }
 
-    public void setPriceForOne(double priceForOne) {
+    public void setPriceForOne( double priceForOne ) {
         this.priceForOne = priceForOne;
     }
 
@@ -157,7 +157,7 @@ public class LicenseInfo {
         return priceForTen;
     }
 
-    public void setPriceForTen(double priceForTen) {
+    public void setPriceForTen( double priceForTen ) {
         this.priceForTen = priceForTen;
     }
 
@@ -165,7 +165,7 @@ public class LicenseInfo {
         return priceForHundred;
     }
 
-    public void setPriceForHundred(double priceForHundred) {
+    public void setPriceForHundred( double priceForHundred ) {
         this.priceForHundred = priceForHundred;
     }
 

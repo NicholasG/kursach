@@ -5,19 +5,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
-import java.util.Optional;
-
 /**
  * Created by NicholasG on 05.03.2016.
  */
 public interface DeveloperService {
 
 
-    ResponseEntity<DeveloperInfo> add(DeveloperInfo developer);
+    ResponseEntity<DeveloperInfo> add( DeveloperInfo developer );
 
-    ResponseEntity<?> edit(DeveloperInfo developer);
+    ResponseEntity<?> edit( DeveloperInfo developer );
 
-    ResponseEntity<Void> delete(Long id);
+    ResponseEntity<Void> delete( Long id );
 
-    Page<DeveloperInfo> searchFor(Pageable pageable, String name);
+    Page<DeveloperInfo> searchFor( Pageable pageable, String name );
 }

@@ -10,11 +10,11 @@ import org.springframework.http.ResponseEntity;
  */
 public interface SoftwareService {
 
-    ResponseEntity<SoftwareInfo> add(SoftwareInfo software);
+    ResponseEntity<SoftwareInfo> add( SoftwareInfo software );
 
-    ResponseEntity<SoftwareInfo> edit(SoftwareInfo software);
+    ResponseEntity<SoftwareInfo> edit( SoftwareInfo software );
 
-    ResponseEntity<Void> delete(Long id);
+    ResponseEntity<Void> delete( Long id );
 
-    Page<SoftwareInfo> searchFor(Pageable pageable, String name, String devName, String licName);
+    Page<SoftwareInfo> searchFor( Pageable pageable, String name, String devName, String licName );
 }

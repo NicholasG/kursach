@@ -14,43 +14,43 @@ import static javax.persistence.CascadeType.ALL;
  * Created by NicholasG on 02.03.2016.
  */
 @Entity
-@Table(name = "developerInfo")
+@Table( name = "developerInfo" )
 public class DeveloperInfo implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column( name = "id" )
     private Long id;
 
-    @Column(name = "name", length = 200)
+    @Column( name = "name", length = 200 )
     private String name;
 
-    @Column(name = "country", length = 50)
+    @Column( name = "country", length = 50 )
     private String country;
 
-    @Column(name = "city", length = 50)
+    @Column( name = "city", length = 50 )
     private String city;
 
-    @Column(name = "street", length = 50)
+    @Column( name = "street", length = 50 )
     private String street;
 
-    @Column(name = "zipcode", length = 50)
+    @Column( name = "zipcode", length = 50 )
     private String zipcode;
 
-    @Column(name = "email", length = 200)
+    @Column( name = "email", length = 200 )
     private String email;
 
-    @Column(name = "website", length = 200)
+    @Column( name = "website", length = 200 )
     private String website;
 
-    @Column(name = "phoneNumber", length = 20)
+    @Column( name = "phoneNumber", length = 20 )
     private String phoneNumber;
 
-    @Column(name = "fax", length = 20)
+    @Column( name = "fax", length = 20 )
     private String fax;
 
     @JsonIgnore
-    @OneToMany(targetEntity = SoftwareInfo.class, cascade = ALL, mappedBy = "developer")
+    @OneToMany( targetEntity = SoftwareInfo.class, cascade = ALL, mappedBy = "developer" )
     private Set<SoftwareInfo> products = new HashSet<>();
 
     public DeveloperInfo() {
@@ -82,7 +82,7 @@ public class DeveloperInfo implements Serializable {
         return products;
     }
 
-    public void setProducts(Set<SoftwareInfo> products) {
+    public void setProducts( Set<SoftwareInfo> products ) {
         this.products = products;
     }
 
@@ -90,7 +90,7 @@ public class DeveloperInfo implements Serializable {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId( long id ) {
         this.id = id;
     }
 
@@ -98,7 +98,7 @@ public class DeveloperInfo implements Serializable {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName( String name ) {
         this.name = name;
     }
 
@@ -106,7 +106,7 @@ public class DeveloperInfo implements Serializable {
         return country;
     }
 
-    public void setCountry(String country) {
+    public void setCountry( String country ) {
         this.country = country;
     }
 
@@ -114,7 +114,7 @@ public class DeveloperInfo implements Serializable {
         return city;
     }
 
-    public void setCity(String city) {
+    public void setCity( String city ) {
         this.city = city;
     }
 
@@ -122,7 +122,7 @@ public class DeveloperInfo implements Serializable {
         return street;
     }
 
-    public void setStreet(String street) {
+    public void setStreet( String street ) {
         this.street = street;
     }
 
@@ -130,7 +130,7 @@ public class DeveloperInfo implements Serializable {
         return zipcode;
     }
 
-    public void setZipcode(String zipcode) {
+    public void setZipcode( String zipcode ) {
         this.zipcode = zipcode;
     }
 
@@ -138,7 +138,7 @@ public class DeveloperInfo implements Serializable {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail( String email ) {
         this.email = email;
     }
 
@@ -146,7 +146,7 @@ public class DeveloperInfo implements Serializable {
         return website;
     }
 
-    public void setWebsite(String website) {
+    public void setWebsite( String website ) {
         this.website = website;
     }
 
@@ -154,7 +154,7 @@ public class DeveloperInfo implements Serializable {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public void setPhoneNumber( String phoneNumber ) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -162,7 +162,7 @@ public class DeveloperInfo implements Serializable {
         return fax;
     }
 
-    public void setFax(String fax) {
+    public void setFax( String fax ) {
         this.fax = fax;
     }
 

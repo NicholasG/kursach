@@ -14,12 +14,12 @@ import java.util.Optional;
  */
 public interface LicenseRepository extends JpaRepository<LicenseInfo, Long> {
 
-    Optional<LicenseInfo> findOneById(Long id);
+    Optional<LicenseInfo> findOneById( Long id );
 
-    Optional<LicenseInfo> findOneByName(String name);
+    Optional<LicenseInfo> findOneByName( String name );
 
-    @Query("SELECT l FROM LicenseInfo l " +
-            "WHERE  UPPER(l.name) LIKE UPPER(:name)")
-    Page<LicenseInfo> findOneByName(Pageable pageable, @Param("name") String name);
+    @Query( "SELECT l FROM LicenseInfo l " +
+            "WHERE  UPPER(l.name) LIKE UPPER(:name)" )
+    Page<LicenseInfo> findOneByName( Pageable pageable, @Param( "name" ) String name );
 
 }

@@ -25,10 +25,10 @@ public class SpringSecurityWebAppConfig extends WebSecurityConfigurerAdapter {
      * @throws Exception if an error occurs
      */
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure( HttpSecurity http ) throws Exception {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/**").permitAll();
+                .antMatchers( "/**" ).permitAll();
     }
 }

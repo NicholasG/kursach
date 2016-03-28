@@ -10,38 +10,38 @@ import java.sql.Date;
  * Created by NicholasG on 02.03.2016.
  */
 @Entity
-@Table(name = "softwareInfo")
+@Table( name = "softwareInfo" )
 public class SoftwareInfo {
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column( name = "id" )
     private Long id;
 
-    @Column(name = "name", length = 250)
+    @Column( name = "name", length = 250 )
     private String name;
 
-    @Column(name = "version")
+    @Column( name = "version" )
     private String version;
 
-    @Column(name = "release")
+    @Column( name = "release" )
     private Date release;
 
     @ManyToOne
-    @JoinColumn(name = "developerId", nullable = false)
+    @JoinColumn( name = "developerId", nullable = false )
     private DeveloperInfo developer;
 
     @ManyToOne
-    @JoinColumn(name = "licenseId", nullable = false)
+    @JoinColumn( name = "licenseId", nullable = false )
     private LicenseInfo license;
 
-    @Column(name = "windows")
+    @Column( name = "windows" )
     private boolean windows;
 
-    @Column(name = "linux")
+    @Column( name = "linux" )
     private boolean linux;
 
-    @Column(name = "macOS")
+    @Column( name = "macOS" )
     private boolean macOS;
 
     public SoftwareInfo() {
@@ -71,7 +71,7 @@ public class SoftwareInfo {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId( long id ) {
         this.id = id;
     }
 
@@ -79,7 +79,7 @@ public class SoftwareInfo {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName( String name ) {
         this.name = name;
     }
 
@@ -87,7 +87,7 @@ public class SoftwareInfo {
         return version;
     }
 
-    public void setVersion(String version) {
+    public void setVersion( String version ) {
         this.version = version;
     }
 
@@ -95,7 +95,7 @@ public class SoftwareInfo {
         return release;
     }
 
-    public void setRelease(Date release) {
+    public void setRelease( Date release ) {
         this.release = release;
     }
 
@@ -103,7 +103,7 @@ public class SoftwareInfo {
         return developer;
     }
 
-    public void setDeveloper(DeveloperInfo developer) {
+    public void setDeveloper( DeveloperInfo developer ) {
         this.developer = developer;
     }
 
@@ -111,7 +111,7 @@ public class SoftwareInfo {
         return license;
     }
 
-    public void setLicense(LicenseInfo license) {
+    public void setLicense( LicenseInfo license ) {
         this.license = license;
     }
 
@@ -119,7 +119,7 @@ public class SoftwareInfo {
         return windows;
     }
 
-    public void setWindows(boolean windows) {
+    public void setWindows( boolean windows ) {
         this.windows = windows;
     }
 
@@ -127,7 +127,7 @@ public class SoftwareInfo {
         return linux;
     }
 
-    public void setLinux(boolean linux) {
+    public void setLinux( boolean linux ) {
         this.linux = linux;
     }
 
@@ -135,7 +135,7 @@ public class SoftwareInfo {
         return macOS;
     }
 
-    public void setMacOS(boolean macOS) {
+    public void setMacOS( boolean macOS ) {
         this.macOS = macOS;
     }
 }
