@@ -34,9 +34,10 @@ public class SoftwareController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Page<SoftwareInfo>> getAll( Pageable pageable ) {
-        LOG.info( "Getting all software" );
-        Page<SoftwareInfo> page = softwareRepository.findAll( pageable );
+    public ResponseEntity<Page<SoftwareInfo>> search( Pageable pageable, String name, String devName, String licName ) {
+        LOG.info( "Searching for some software by name='{}', devName='{}', licName='{}'", name, devName, licName );
+        Page<SoftwareInfo> page = softwareService.searchFor( pageable, name, devName, licName );
+
         return ResponseEntity.ok( page );
     }
 
@@ -81,18 +82,6 @@ public class SoftwareController {
                 .findOneById( id )
                 .map( ResponseEntity::ok )
                 .orElseGet( () -> new ResponseEntity( HttpStatus.NOT_FOUND ) );
-    }
-
-    @RequestMapping(
-            value = "/search",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE
-    )
-    public ResponseEntity<Page<SoftwareInfo>> searchFor( Pageable pageable, String name, String devName, String licName ) {
-        LOG.info( "Searching some software by name='{}', devName='{}', licName='{}'", name, devName, licName );
-        Page<SoftwareInfo> page = softwareService.searchFor( pageable, name, devName, licName );
-
-        return ResponseEntity.ok( page );
     }
 
 }

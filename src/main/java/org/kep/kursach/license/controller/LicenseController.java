@@ -34,9 +34,11 @@ public class LicenseController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Page<LicenseInfo>> getAll( Pageable pageable ) {
-        LOG.info( "Getting all licenses" );
-        return ResponseEntity.ok( licenseRepository.findAll( pageable ) );
+    public ResponseEntity<Page<LicenseInfo>> search( Pageable pageable, String name ) {
+        LOG.info( "Searching license by name '{}'", name );
+        Page<LicenseInfo> page = licenseService.searchFor( pageable, name );
+
+        return ResponseEntity.ok( page );
     }
 
     @RequestMapping(
@@ -79,17 +81,6 @@ public class LicenseController {
                 .findOneById( id )
                 .map( ResponseEntity::ok )
                 .orElseGet( () -> new ResponseEntity( HttpStatus.NOT_FOUND ) );
-    }
-
-    @RequestMapping(
-            value = "/search",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE
-    )
-    public ResponseEntity<Page<LicenseInfo>> searchFor( Pageable pageable, String name ) {
-        LOG.info( "Searching license by name '{}'", name );
-        Page<LicenseInfo> page = licenseService.searchFor( pageable, name );
-        return ResponseEntity.ok( page );
     }
 
 }

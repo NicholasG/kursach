@@ -34,9 +34,11 @@ public class DeveloperController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Page<DeveloperInfo>> getAll( Pageable pageable ) {
-        LOG.info( "Getting all developers" );
-        return ResponseEntity.ok( developerRepository.findAll( pageable ) );
+    public ResponseEntity<Page<DeveloperInfo>> search( Pageable pageable, String name ) {
+        LOG.info( "Searching developer by name '{}'", name );
+        Page<DeveloperInfo> page = developerService.searchFor( pageable, name );
+
+        return ResponseEntity.ok( page );
     }
 
     @RequestMapping(
@@ -79,18 +81,6 @@ public class DeveloperController {
                 .findOneById( id )
                 .map( ResponseEntity::ok )
                 .orElseGet( () -> new ResponseEntity( HttpStatus.NOT_FOUND ) );
-    }
-
-    @RequestMapping(
-            value = "/search",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE
-    )
-    public ResponseEntity<Page<DeveloperInfo>> searchFor( Pageable pageable, String name ) {
-        LOG.info( "Searching developer by name '{}'", name );
-        Page<DeveloperInfo> page = developerService.searchFor( pageable, name );
-
-        return ResponseEntity.ok( page );
     }
 
 }
