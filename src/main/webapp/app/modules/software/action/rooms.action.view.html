@@ -1,0 +1,47 @@
+<div class="popup-container" ng-click="close()"></div>
+<div id="room-add" class="panel panel-default popup" ng-cotroller="ActionCtrl">
+  <div class="panel-heading">
+    <h3 class="panel-title"><i class="fa fa-long-arrow-right fa-fw"></i>{{action}}</h3>
+    <i class="glyphicon glyphicon-remove action action-close right" ng-click="close()"></i>
+  </div>
+  <div class="panel-body">
+    <form name="roomForm">
+      <div class="col-lg-12">
+        <label>Room type</label>
+        <select class="form-control" ng-model="roomType" ng-value="roomType">
+          <option ng-selected="true">{{roomType}}</option>
+          <option>qwe</option>
+          <option>qwe</option>
+          <option>qwe</option>
+          <option>qwe</option>
+        </select>
+        <label>Number of rooms</label>
+        <input name="numberOfRooms" type="number" class="form-control" ng-model="numberOfRooms" min="1" max="10" pattern="^(0|[1-9][0-9]*)$" 
+        uib-popover="Max 10 room"  popover-is-open="roomForm.numberOfRooms.$invalid" popover-placement="top" popover-trigger="none">
+        <label>Type of bed</label>
+        <select class="form-control" ng-model="typeOfBed">
+          <option ng-selected="true">{{typeOfBed}}</option>
+          <option>qwe</option>
+          <option>qwe</option>
+          <option>qwe</option>
+          <option>qwe</option>
+        </select>
+        <label>Breakfast</label><br>
+        <div class="btn-group btn-group-justified">
+          <label class="btn btn-default" ng-model="breakfast" uib-btn-radio="true">avilable</label>
+          <label class="btn btn-default" ng-model="breakfast" uib-btn-radio="false">not avilable</label>
+        </div>
+        <label>Price</label>
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <input type="number" class="form-control" ng-model="price" min="0" pattern="^(0|[1-9][0-9]*)$">
+          <span class="input-group-addon">.00</span>
+        </div>
+      </div><!-- /.col-lg-6 -->
+    </form>
+    <div class="col-lg-12 tools">
+      <button class="btn btn-primary" ng-click="save()"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+      <button ng-click="close()" class="btn btn-default right" style="margin-right: 15px;">Cancel</button>
+    </div>
+  </div>
+</div>

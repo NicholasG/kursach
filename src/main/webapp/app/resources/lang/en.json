@@ -1,0 +1,36 @@
+{
+      "home": "Home",
+      "hotels": "Hotels",
+      "rooms": "Rooms",
+      "workers": "Workers",
+      "newHotel": "New Hotel",
+      "newRoom": "New Room",
+      "newWorker": "New Worker",
+      "filter": "Filter",
+      "add": "Add",
+      "action": "Action",
+      "avilable": "Avilable",
+      "notAvilable": "Not avilable",
+
+      "name": "Name", 
+      "adress": "Adress",
+      "director": "Director",
+      "email": "Email",
+      "phoneOfDirector": "Phone Of Director",
+      "phoneOrders": "Phone Orders",
+
+      "fullName": "Full name", 
+      "position": "Position",
+      "birthday": "Birthday",
+      "age": "Age",
+      "sex": "Sex",
+      "experience": "Experience",
+      "previousPosition": "Previous position",
+      "date": "Date",
+
+      "roomOfType": "Room of type", 
+      "numberOfRooms": "Number of rooms",
+      "typeOfBed": "Type of bed",
+      "breakfast": "Breakfast",
+      "price": "Price"
+}

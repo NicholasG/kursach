@@ -1,0 +1,18 @@
+{
+	"content":
+	[
+		{"id": 1, "roomType": "aaaa", "numberOfRooms": 3, "typeOfBed": "ascasc", "breakfast": true, "price": 3201},
+		{"id": 2, "roomType": "aaaa", "numberOfRooms": 3, "typeOfBed": "ascasc", "breakfast": false, "price": 3201},
+		{"id": 3, "roomType": "aaaa", "numberOfRooms": 3, "typeOfBed": "ascasc", "breakfast": false, "price": 3201},
+		{"id": 4, "roomType": "aaaa", "numberOfRooms": 3, "typeOfBed": "ascasc", "breakfast": true, "price": 3201},
+		{"id": 5, "roomType": "aaaa", "numberOfRooms": 3, "typeOfBed": "ascasc", "breakfast": true, "price": 3201},
+		{"id": 6, "roomType": "aaaa", "numberOfRooms": 3, "typeOfBed": "ascasc", "breakfast": false, "price": 3201},
+		{"id": 7, "roomType": "aaaa", "numberOfRooms": 3, "typeOfBed": "ascasc", "breakfast": true, "price": 3201}
+	],
+	"pageMetadata": {
+		"size": 10,
+		"totalElements": 40,
+		"totalPages": 2,
+		"number": 0
+	}
+}

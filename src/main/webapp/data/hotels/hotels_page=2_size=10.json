@@ -1,0 +1,21 @@
+{
+	"content":
+	[
+		{"name":"bbbbb","country":"bbb","city":"ccc","adress":"xxx","director":"sss","email":"bbbbb","phoneOfDirector":"0382865037","phoneOrders":"0382865037"},
+		{"name":"bbbbb","country":"bbb","city":"ccc","adress":"xxx","director":"sss","email":"bbbbb","phoneOfDirector":"0382865037","phoneOrders":"0382865037"},
+		{"name":"bbbbb","country":"bbb","city":"ccc","adress":"xxx","director":"sss","email":"bbbbb","phoneOfDirector":"0382865037","phoneOrders":"0382865037"},
+		{"name":"bbbbb","country":"bbb","city":"ccc","adress":"xxx","director":"sss","email":"bbbbb","phoneOfDirector":"0382865037","phoneOrders":"0382865037"},
+		{"name":"bbbbb","country":"bbb","city":"ccc","adress":"xxx","director":"sss","email":"bbbbb","phoneOfDirector":"0382865037","phoneOrders":"0382865037"},
+		{"name":"bbbbb","country":"bbb","city":"ccc","adress":"xxx","director":"sss","email":"bbbbb","phoneOfDirector":"0382865037","phoneOrders":"0382865037"},
+		{"name":"bbbbb","country":"bbb","city":"ccc","adress":"xxx","director":"sss","email":"bbbbb","phoneOfDirector":"0382865037","phoneOrders":"0382865037"},
+		{"name":"bbbbb","country":"bbb","city":"ccc","adress":"xxx","director":"sss","email":"bbbbb","phoneOfDirector":"0382865037","phoneOrders":"0382865037"},
+		{"name":"bbbbb","country":"bbb","city":"ccc","adress":"xxx","director":"sss","email":"bbbbb","phoneOfDirector":"0382865037","phoneOrders":"0382865037"},
+		{"name":"bbbbb","country":"bbb","city":"ccc","adress":"xxx","director":"sss","email":"bbbbb","phoneOfDirector":"0382865037","phoneOrders":"0382865037"}
+	],
+	"pageMetadata": {
+		"size": 10,
+		"totalElements": 40,
+		"totalPages": 2,
+		"number": 1
+	}
+}

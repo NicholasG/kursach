@@ -1,0 +1,37 @@
+{
+      "home": "Головна",
+      "hotels": "Готелі",
+      "rooms": "Кімнати",
+      "workers": "Робітники",
+      "newHotel": "Новий готель",
+      "newRoom": "Нова кімната",
+      "newWorker": "Новий робітник",
+      "filter": "Фільтр",
+      "add": "Додати",
+      "action": "Дія",
+      "avilable": "Є",
+      "notAvilable": "Немає",
+
+      "name": "Ім’я", 
+      "adress": "Адреса",
+      "director": "Директор",
+      "email": "Електронна пошта",
+      "phoneOfDirector": "Телефон директора",
+      "phoneOrders": "Телефон продажів",
+
+      "fullName": "ПІБ", 
+      "position": "Посада",
+      "birthday": "Дата народження",
+      "age": "Вік",
+      "sex": "Стать",
+      "experience": "Досвід",
+      "previousPosition": "Минула посада",
+      "date": "Дата",
+
+      "roomOfType": "Тип кімнати", 
+      "numberOfRooms": "Кількість",
+      "typeOfBed": "Тип ліжка",
+      "breakfast": "Сніданок",
+      "price": "Ціна"
+
+}

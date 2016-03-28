@@ -1,0 +1,101 @@
+#wrapper
+  padding-left: 0
+  -webkit-transition: all 0.5s ease
+  -moz-transition: all 0.5s ease
+  -o-transition: all 0.5s ease
+  transition: all 0.5s ease
+  &.toggled
+    padding-left: 200px
+
+#sidebar-wrapper
+  z-index: 1000
+  position: fixed
+  left: 200px
+  width: 0
+  height: 100%
+  margin-left: -200px
+  overflow-y: auto
+  background: #333
+  -webkit-transition: all 0.5s ease
+  -moz-transition: all 0.5s ease
+  -o-transition: all 0.5s ease
+  transition: all 0.5s ease
+
+#wrapper.toggled #sidebar-wrapper
+  width: 200px
+
+#page-content-wrapper
+  width: 100%
+  position: absolute
+  padding: 15px
+
+#wrapper.toggled #page-content-wrapper
+  position: absolute
+  margin-right: -200px
+
+
+
+.sidebar-nav
+  position: absolute
+  top: 0
+  width: 200px
+  margin: 0
+  padding: 0
+  list-style: none
+  .active
+      background: #222
+  li
+    text-indent: 20px
+    line-height: 40px
+    a
+      display: block
+      text-decoration: none
+      color: #999999
+      transition: 0.2s ease-out
+      &:hover
+        text-decoration: none
+        color: #fff
+        background: rgba(29, 29, 29, 0.2)
+        padding-left: 5px
+        transition: 0.2s ease-out
+      &:active, &:focus
+        text-decoration: none
+  > .sidebar-brand
+    height: 65px
+    font-size: 18px
+    line-height: 60px
+    a
+      color: #999999
+      &:hover
+        color: #fff
+        background: none
+
+@media (min-width: 768px)
+  #wrapper
+    padding-left: 200px
+    &.toggled
+      padding-left: 0
+  #sidebar-wrapper
+    width: 200px
+  #wrapper.toggled #sidebar-wrapper
+    width: 0
+  #page-content-wrapper
+    height: 100%
+    padding: 20px
+    position: inherit
+  #wrapper.toggled #page-content-wrapper
+    position: relative
+    margin-right: 0
+
+.left
+  position: absolute
+  left: 0 !important
+.right 
+  position: absolute
+  right: 0 !important
+
+label
+  margin-top: 5px
+
+table, span, button
+  outline: none

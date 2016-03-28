@@ -1,0 +1,47 @@
+<div class="popup-container" ng-click="close()"></div>
+<div id="hotel-add" class="panel panel-default popup">
+  <div class="panel-heading">
+    <h3 class="panel-title"><i class="fa fa-long-arrow-right fa-fw"></i>{{action}}</h3>
+    <i class="glyphicon glyphicon-remove action action-close right" ng-click="close()"></i>
+  </div>
+  <div class="panel-body">
+    <div class="col-lg-6">
+      <label>Full name</label>
+      <input name="fullName" ng-model="fullName" type="text" class="form-control" pattern="[A-z^\s]*">
+      <label>Position</label>
+      <input name="position" ng-model="position" type="text" class="form-control">
+      <label>Birthday</label>
+      <div class="input-group">
+        <input name="birthday" ng-model="birthday" type="text" class="form-control" uib-datepicker-popup="dd.MM.yyyy" is-open="popup1" ng-required="true" close-text="Close" alt-input-formats="'dd-MMMM-yyyy'" ng-click="popup1 = true" readonly>
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-default" ng-click="popup1 = true"><i class="glyphicon glyphicon-calendar"></i></button>
+        </span>
+      </div>
+      <label>Age</label>
+      <input name="age" ng-model="age" type="number" class="form-control" ng-value="age = (currentDate - birthday.getFullYear())">
+    </div><!-- /.col-lg-6 -->
+    <div class="col-lg-6">
+      <label>Sex</label>
+      <select class="form-control" ng-model="sex">
+        <option></option>
+        <option>Male</option>
+        <option>Female</option>
+      </select>
+      <label>Experience</label>
+      <input name="experience" ng-model="experience" type="number" class="form-control" min="0">
+      <label>Previous position</label>
+      <input name="previousPosition" ng-model="previousPosition" type="text" class="form-control">
+      <label>Date</label>
+      <div class="input-group">
+        <input name="date" ng-model="date" type="text" class="form-control" uib-datepicker-popup="dd.MM.yyyy" ng-model="dt" is-open="popup2" ng-required="true" close-text="Close" alt-input-formats="dd-MMMM-yyyy" ng-click="popup2 = true"   readonly>
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-default" ng-click="popup2 = true"><i class="glyphicon glyphicon-calendar"></i></button>
+        </span>
+      </div>
+    </div><!-- /.col-lg-6 -->   
+    <div class="col-lg-12 tools">
+     <button class="btn btn-primary" ng-click="save()"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+     <button class="btn btn-default right" ng-click="close()" style="margin-right: 15px;">Cancel</button>
+   </div>  
+ </div>
+</div>
