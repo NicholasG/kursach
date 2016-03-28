@@ -81,4 +81,15 @@ public class LicenseController {
                 .orElseGet(() -> new ResponseEntity(HttpStatus.NOT_FOUND));
     }
 
+    @RequestMapping(
+            value = "/search",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<Page<LicenseInfo>> searchFor(Pageable pageable, String name) {
+        LOG.info("Searching license by name '{}'", name);
+        Page<LicenseInfo> page = licenseService.searchFor(pageable, name);
+        return ResponseEntity.ok(page);
+    }
+
 }

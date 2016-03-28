@@ -7,6 +7,8 @@ import org.kep.kursach.web.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -67,6 +69,14 @@ public class DeveloperServiceImpl implements DeveloperService {
 
                 })
                 .orElseGet(() -> new ResponseEntity(HttpStatus.NOT_FOUND));
+    }
+
+    @Override
+    public Page<DeveloperInfo> searchFor(Pageable pageable, String name) {
+        if (name == null || name.equals("")) name = "%";
+        else name += "%";
+
+        return repository.findOneByName(pageable, name);
     }
 
 }
