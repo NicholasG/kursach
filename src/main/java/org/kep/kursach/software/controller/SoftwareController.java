@@ -27,18 +27,33 @@ public class SoftwareController {
     private SoftwareRepository softwareRepository;
 
     @Autowired
-    @Qualifier( "softwareService" )
+    @Qualifier( value = "softwareService" )
     private SoftwareService softwareService;
 
     @RequestMapping(
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Page<SoftwareInfo>> search( Pageable pageable, String name, String devName, String licName ) {
-        LOG.info( "Searching for some software by name='{}', devName='{}', licName='{}'", name, devName, licName );
-        Page<SoftwareInfo> page = softwareService.searchFor( pageable, name, devName, licName );
+    public ResponseEntity<Page<SoftwareInfo>> search(
+            Pageable pageable,
+            String name,
+            String release,
+            String devName,
+            String licName ) {
+        if ( release != null && !release.equals( "" ) ) {
+            LOG.info( "Searching for some software by " +
+                            "name='{}', release='{}', devName='{}', licName='{}'",
+                    name, release, devName, licName );
+            Page<SoftwareInfo> page = softwareService.searchFor( pageable, name, release, devName, licName );
+            return ResponseEntity.ok( page );
+        } else {
+            LOG.info( "Searching for some software by " +
+                            "name='{}', devName='{}', licName='{}'",
+                    name, devName, licName );
+            Page<SoftwareInfo> page = softwareService.searchFor( pageable, name, release, devName, licName );
 
-        return ResponseEntity.ok( page );
+            return ResponseEntity.ok( page );
+        }
     }
 
     @RequestMapping(

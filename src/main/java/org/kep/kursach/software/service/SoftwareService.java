@@ -16,5 +16,6 @@ public interface SoftwareService {
 
     ResponseEntity<Void> delete( Long id );
 
-    Page<SoftwareInfo> searchFor( Pageable pageable, String name, String devName, String licName );
+    Page<SoftwareInfo> searchFor( Pageable pageable, String name, String release, String licName, String devName );
+
 }

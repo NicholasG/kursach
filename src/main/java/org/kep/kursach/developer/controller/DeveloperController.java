@@ -27,7 +27,7 @@ public class DeveloperController {
     private DeveloperRepository developerRepository;
 
     @Autowired
-    @Qualifier( "developerService" )
+    @Qualifier( value = "developerService" )
     private DeveloperService developerService;
 
     @RequestMapping(
@@ -35,7 +35,7 @@ public class DeveloperController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<Page<DeveloperInfo>> search( Pageable pageable, String name ) {
-        LOG.info( "Searching developer by name '{}'", name );
+        LOG.info( "Searching for developer by name '{}'", name );
         Page<DeveloperInfo> page = developerService.searchFor( pageable, name );
 
         return ResponseEntity.ok( page );

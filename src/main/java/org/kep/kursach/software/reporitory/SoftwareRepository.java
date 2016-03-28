@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.sql.Date;
 import java.util.Optional;
 
 /**
@@ -26,4 +27,15 @@ public interface SoftwareRepository extends JpaRepository<SoftwareInfo, Long> {
             @Param( "devName" ) String devName,
             @Param( "licName" ) String licName );
 
+    @Query( "SELECT s FROM SoftwareInfo s " +
+            "WHERE UPPER(s.name) LIKE UPPER(:name) " +
+            "AND s.release = :release " +
+            "AND UPPER(s.developer.name) LIKE UPPER(:devName) " +
+            "AND UPPER(s.license.name) LIKE UPPER(:licName)" )
+    Page<SoftwareInfo> findByNameAndReleaseAndDeveloperNameAndLicenseName(
+            Pageable pageable,
+            @Param( "name" ) String name,
+            @Param( "release" ) Date release,
+            @Param( "devName" ) String devName,
+            @Param( "licName" ) String licName );
 }

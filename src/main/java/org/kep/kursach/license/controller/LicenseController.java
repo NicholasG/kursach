@@ -27,7 +27,7 @@ public class LicenseController {
     private LicenseRepository licenseRepository;
 
     @Autowired
-    @Qualifier( "licenseService" )
+    @Qualifier( value = "licenseService" )
     private LicenseService licenseService;
 
     @RequestMapping(
@@ -35,7 +35,7 @@ public class LicenseController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<Page<LicenseInfo>> search( Pageable pageable, String name ) {
-        LOG.info( "Searching license by name '{}'", name );
+        LOG.info( "Searching for license by name '{}'", name );
         Page<LicenseInfo> page = licenseService.searchFor( pageable, name );
 
         return ResponseEntity.ok( page );

@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import java.sql.Date;
 import java.util.Optional;
 
 /**
@@ -69,7 +70,7 @@ public class SoftwareServiceImpl implements SoftwareService {
     }
 
     @Override
-    public Page<SoftwareInfo> searchFor( Pageable pageable, String name, String devName, String licName ) {
+    public Page<SoftwareInfo> searchFor( Pageable pageable, String name, String release, String licName, String devName ) {
         if ( name == null || name.equals( "" ) ) name = "%";
         else name += "%";
 
@@ -79,7 +80,19 @@ public class SoftwareServiceImpl implements SoftwareService {
         if ( licName == null || licName.equals( "" ) ) licName = "%";
         else licName += "%";
 
-        return repository.findByNameAndDeveloperNameAndLicenseName( pageable, name, devName, licName );
+        if ( release != null && !release.equals( "" ) )
+            return repository.findByNameAndReleaseAndDeveloperNameAndLicenseName(
+                    pageable,
+                    name,
+                    Date.valueOf( release ),
+                    devName,
+                    licName );
+        else
+            return repository.findByNameAndDeveloperNameAndLicenseName(
+                    pageable,
+                    name,
+                    devName,
+                    licName );
     }
 }
 
