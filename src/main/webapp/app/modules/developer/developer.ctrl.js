@@ -15,9 +15,6 @@
 		[
 		'name', 
 		'country',
-		'city',
-		'street',
-		'zipcode',
 		'email',
 		'website',
 		'phoneNumber',
@@ -42,21 +39,11 @@
 			$state.go('main.' + sc.table);
 		};
 
-		sc.loadPage = function(currentPage) {
-			DeveloperService.getPage(currentPage - 1, 5)
+		sc.loadPage = function(currentPage, name) {
+			DeveloperService.getPage(currentPage - 1, 10, name)
 			.success(function (data){
 				sc.main = data;
 			});
-		};
-
-		sc.searchByField = function(field, value) {
-			if (value != '') {
-				DeveloperService.searchByField(field, value)
-				.success(function (data){
-					sc.main = data;
-				});
-			}
-			else sc.loadPage(1); 
 		};
 
 		sc.loadPage(1); 

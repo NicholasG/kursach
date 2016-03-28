@@ -17,20 +17,15 @@
         <table class="table table-hover table-striped">
           <thead>
             <tr>
-              <th>#</th>
               <th ng-repeat="column in tableHeader" ng-click="sort(column)"><i ng-class = "{'glyphicon glyphicon-arrow-up':isSortUp(column), 'glyphicon glyphicon-arrow-down':isSortDown(column)}"></i><span translate>{{column}}</span></th>
               <th translate>action</th>
             </tr>
           </thead>
           <tbody ng-switch="table">
-            <tr ng-switch-when="developer" ng-repeat="row in data = (main.content | filter: filterField | orderBy: fieldName:reverse)" ng-dblclick="openEdit($index)" >
-              <td>{{$index + 1}}</td>
+            <tr ng-switch-when="developer" ng-repeat="row in data = (main.content | filter: filterField | orderBy: fieldName:reverse)" ng-dblclick="openEdit($index)"
+              >
               <td>{{row.name}}</td>
-              <td>{{row.country}}</td>
-              <td>{{row.director}}</td>
-              <td>{{row.city}}</td>
-              <td>{{row.street}}</td>
-              <td>{{row.zipcode}}</td>
+              <td><span uib-popover="{{row.city}}, {{row.street}}, {{row.zipcode}}" popover-trigger="mouseenter" popover-title="Adress" popover-placement="top-left">{{row.country}}</span></td>
               <td>{{row.email}}</td>
               <td>{{row.website}}</td>
               <td>{{row.phoneNumber | phone}}</td>
@@ -73,110 +68,54 @@
           </tbody>
         </table>
         <center>
-
-         <uib-pagination total-items="main.totalElements" ng-model="currentPage" max-size="main.totalElements" 
-         ng-change="loadPage(currentPage)" class="pagination-sm"></uib-pagination>
-
-       </center>
-     </div>
-   </div>
- </div>
- <div class="col-lg-3">
-  <div class="panel panel-default" ng-controller="TableCtrl">
-    <div class="panel-heading">
-      <h3 class="panel-title" translate>filter</h3>
-    </div>
-    <div class="panel-body" ng-switch="table">
-      <div class="input-group" ng-switch-when="hotels">
-        <div class="input-group-btn">
-          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span ng-if="field == null" translate>{{tableHeader[0]}}</span>
-            <span ng-if="field != null" translate>{{field}}</span>
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu" ng-model="field">
-            <li ng-repeat="column in tableHeader" ng-click="setField(column)"><a href translate>{{column}}</a></li>
-          </ul>
-        </div>
-        <input type="text" class="form-control" placeholder="Search"  ng-change="searchByField(field, fieldValue)" ng-model="fieldValue">
-      </div>
-      <div  ng-switch-when="workers"> 
-        <label translate>fullName</label>
-        <div class="input-group-btn">
-          <input type="text" class="form-control"   ng-change="searchByField(tableHeader[0], fieldValue)" ng-model="fieldValue" pattern="[A-z^\s]*">
-        </div>
-        <label translate>position</label>
-        <select class="form-control" ng-model="position" ng-change="searchByField(tableHeader[1], position)">
-          <option></option>
-          <option>qwe</option>
-          <option>qwe</option>
-          <option>qwe</option>
-          <option>qwe</option>
-        </select>
-        <label translate>previousPosition</label>
-        <select class="form-control" ng-model="previousPosition" ng-change="searchByField(tableHeader[6], previousPosition)">
-          <option></option>
-          <option>qwe</option>
-          <option>qwe</option>
-          <option>qwe</option>
-          <option>qwe</option>
-        </select>
-        <label translate>birthday</label>
-        <div id="birthdayFilter" class="input-group">
-          <input name="birthday" ng-model="birthday" type="text" class="form-control" uib-datepicker-popup="dd.MM.yyyy" is-open="birthdayPopupFilterWorkers" ng-required="true" close-text="Close" alt-input-formats="'dd-MMMM-yyyy'" ng-click="birthdayPopupFilterWorkers = true" ng-change="searchByField(tableHeader[2], birthday.getDate() + '.' + birthday.getMonth() + '.' + birthday.getFullYear())" readonly>
-          <span class="input-group-btn">
-            <button type="button" class="btn btn-default" ng-click="birthdayPopupFilterWorkers = true"><i class="glyphicon glyphicon-calendar"></i>
-            </button>
-          </span>
-        </div>
-        <label translate>age</label>
-        <input name="age" ng-model="age" type="number" class="form-control" ng-change="searchByField(tableHeader[3], age)" min="0">
-        <label translate>sex</label>
-        <select class="form-control" ng-model="sex" ng-change="searchByField(tableHeader[4], sex)">
-          <option></option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-        </select>
-        <label translate>experience</label>
-        <input name="experience" ng-model="experience" type="number" class="form-control" ng-change="searchByField(tableHeader[5], experience)" min="0">
-        <label translate>date</label>
-        <div id="dateFilter" class="input-group">
-          <input name="date" ng-model="date" type="text" class="form-control" uib-datepicker-popup="dd.MM.yyyy" is-open="datePopupFilterWorkers" ng-required="true" close-text="Close" alt-input-formats="'dd-MMMM-yyyy'" ng-click="datePopupFilterWorkers = true" ng-change="searchByField(tableHeader[7], date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear())" datepicker-placement="top" readonly>
-          <span class="input-group-btn">
-            <button type="button" class="btn btn-default" ng-click="datePopupFilterWorkers = true"><i class="glyphicon glyphicon-calendar"></i>
-            </button>
-          </span>
-        </div>
-      </div>
-      <div  ng-switch-when="rooms"> 
-        <label translate>roomOfType</label>
-        <select class="form-control" ng-model="roomOfType" ng-change="searchByField(tableHeader[0], roomOfType)">
-          <option></option>
-          <option>qwe</option>
-          <option>qwe</option>
-          <option>qwe</option>
-          <option>qwe</option>
-        </select>
-        <label translate>numberOfRooms</label>
-        <input name="numberOfRooms" ng-model="numberOfRooms" type="number" class="form-control" ng-change="searchByField(tableHeader[1], numberOfRooms)" min="0" max="10">
-        <label translate>typeOfBed</label>
-        <select class="form-control" ng-model="typeOfBed" ng-change="searchByField(tableHeader[2], typeOfBed)">
-          <option></option>
-          <option>qwe</option>
-          <option>qwe</option>
-          <option>qwe</option>
-          <option>qwe</option>
-        </select>
-        <label translate>breakfast</label>
-        <div class="btn-group btn-group-justified">
-          <label class="btn btn-default" ng-model="breakfast" uib-btn-radio="'true'" ng-change="searchByField(tableHeader[3], breakfast)"><span translate>avilable</span></label>
-          <label class="btn btn-default" ng-model="breakfast" uib-btn-radio="'false'" ng-change="searchByField(tableHeader[3], breakfast)"><span translate>notAvilable</span></label>
-        </div>
+        <uib-pagination
+        total-items="main.totalElements"
+        ng-model="currentPage"
+        max-size="main.totalElements"
+        ng-change="loadPage(currentPage, name)"
+        class="pagination-sm">
+        </uib-pagination>
+        </center>
       </div>
     </div>
   </div>
-  <button class="btn btn-success full-width" ng-click="openAdd()"><i class="glyphicon glyphicon-plus"></i> <span translate>add</span></button>
-</div>
-
-
-<div ui-view="action"></div>
+  <div class="col-lg-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title" translate>filter</h3>
+      </div>
+      <div class="panel-body">
+        <label translate>name</label>
+        <input name="name" ng-model="name" type="text" class="form-control" ng-change="loadPage(1, name)" pattern="[A-z^\s]*">
+        <label>Country</label>
+        <input name="country" type="text" ng-model="country" placeholder="Enter country" uib-typeahead="country as country.name for country in countriesWithFlags | filter:{name:$viewValue}" typeahead-template-url="app/shared/dropdown/countries/dropdown.countries.html" class="form-control" typeahead-show-hint="true" typeahead-min-length="0" ng-change="loadPage(1, name, country)">
+        <div ng-show="false">
+          <label translate>roomOfType</label>
+          <select class="form-control" ng-model="roomOfType" ng-change="searchByField(tableHeader[0], roomOfType)">
+            <option></option>
+            <option>qwe</option>
+            <option>qwe</option>
+            <option>qwe</option>
+            <option>qwe</option>
+          </select>
+          <label translate>numberOfRooms</label>
+          <input name="numberOfRooms" ng-model="numberOfRooms" type="number" class="form-control" ng-change="searchByField(tableHeader[1], numberOfRooms)" min="0" max="10">
+          <label translate>typeOfBed</label>
+          <select class="form-control" ng-model="typeOfBed" ng-change="searchByField(tableHeader[2], typeOfBed)">
+            <option></option>
+            <option>qwe</option>
+            <option>qwe</option>
+            <option>qwe</option>
+            <option>qwe</option>
+          </select>
+          <label translate>breakfast</label>
+          <div class="btn-group btn-group-justified">
+            <label class="btn btn-default" ng-model="breakfast" uib-btn-radio="'true'" ng-change="searchByField(tableHeader[3], breakfast)"><span translate>avilable</span></label>
+            <label class="btn btn-default" ng-model="breakfast" uib-btn-radio="'false'" ng-change="searchByField(tableHeader[3], breakfast)"><span translate>notAvilable</span></label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-success full-width" ng-click="openAdd()"><i class="glyphicon glyphicon-plus"></i> <span translate>add</span></button>
+  </div>
+  <div ui-view="action"></div>

@@ -1,11 +1,45 @@
 INSERT INTO developer_info(name, country, city, street, zipcode, phone_number, website, email, fax)
   VALUES('Apple', 'USA', 'California', 'Street 26', '00073', '0965727366', 'mihalich.if.com', 'mishka.b@gmail.com', '034309');
 INSERT INTO developer_info(name, country, city, street, zipcode, phone_number, website, email, fax)
+  VALUES('Apple', 'USA', 'California', 'Street 26', '00073', '0965727366', 'mihalich.if.com', 'mishka.b@gmail.com', '034309');
+INSERT INTO developer_info(name, country, city, street, zipcode, phone_number, website, email, fax)
+  VALUES('Apple', 'USA', 'California', 'Street 26', '00073', '0965727366', 'mihalich.if.com', 'mishka.b@gmail.com', '034309');
+INSERT INTO developer_info(name, country, city, street, zipcode, phone_number, website, email, fax)
+  VALUES('Apple', 'USA', 'California', 'Street 26', '00073', '0965727366', 'mihalich.if.com', 'mishka.b@gmail.com', '034309');
+INSERT INTO developer_info(name, country, city, street, zipcode, phone_number, website, email, fax)
+  VALUES('Apple', 'USA', 'California', 'Street 26', '00073', '0965727366', 'mihalich.if.com', 'mishka.b@gmail.com', '034309');
+INSERT INTO developer_info(name, country, city, street, zipcode, phone_number, website, email, fax)
+  VALUES('Apple', 'USA', 'California', 'Street 26', '00073', '0965727366', 'mihalich.if.com', 'mishka.b@gmail.com', '034309');
+INSERT INTO developer_info(name, country, city, street, zipcode, phone_number, website, email, fax)
+  VALUES('Apple', 'USA', 'California', 'Street 26', '00073', '0965727366', 'mihalich.if.com', 'mishka.b@gmail.com', '034309');
+INSERT INTO developer_info(name, country, city, street, zipcode, phone_number, website, email, fax)
+  VALUES('Apple', 'USA', 'California', 'Street 26', '00073', '0965727366', 'mihalich.if.com', 'mishka.b@gmail.com', '034309');
+INSERT INTO developer_info(name, country, city, street, zipcode, phone_number, website, email, fax)
+  VALUES('Apple', 'USA', 'California', 'Street 26', '00073', '0965727366', 'mihalich.if.com', 'mishka.b@gmail.com', '034309');
+INSERT INTO developer_info(name, country, city, street, zipcode, phone_number, website, email, fax)
+  VALUES('Apple', 'USA', 'California', 'Street 26', '00073', '0965727366', 'mihalich.if.com', 'mishka.b@gmail.com', '034309');
+INSERT INTO developer_info(name, country, city, street, zipcode, phone_number, website, email, fax)
+  VALUES('Apple', 'USA', 'California', 'Street 26', '00073', '0965727366', 'mihalich.if.com', 'mishka.b@gmail.com', '034309');
+INSERT INTO developer_info(name, country, city, street, zipcode, phone_number, website, email, fax)
+  VALUES('Apple', 'USA', 'California', 'Street 26', '00073', '0965727366', 'mihalich.if.com', 'mishka.b@gmail.com', '034309');
+INSERT INTO developer_info(name, country, city, street, zipcode, phone_number, website, email, fax)
+  VALUES('Apple', 'USA', 'California', 'Street 26', '00073', '0965727366', 'mihalich.if.com', 'mishka.b@gmail.com', '034309');
+INSERT INTO developer_info(name, country, city, street, zipcode, phone_number, website, email, fax)
   VALUES('Yandex', 'Russia', 'Moscow', 'Krasniy 8', '04777', '7089673456', 'whereislesha.ru', 'aleksaner.br@mail.ru', '77234');
 INSERT INTO developer_info(name, country, city, street, zipcode, phone_number, website, email, fax)
   VALUES('Adobe inc.', 'USA', 'San-Francisco', 'flycacs 44a', '99976', '5550955', 'adobe.com', 'ucanseeme@gmail.com', '550005');
 INSERT INTO developer_info(name, country, city, street, zipcode, phone_number, website, email, fax)
   VALUES('Microsoft', 'USA', 'Редмонд', 'gaben street 3', '55444', '555055', 'microsoft.com', 'supportmicrosoft@gmail.com', '550504');
+INSERT INTO developer_info(name, country, city, street, zipcode, phone_number, website, email, fax)
+  VALUES('Google', 'USA', 'California', 'Silicon Valley', '55232', '555333', 'google.com', 'supportgogle@gmail.com', '552002');
+INSERT INTO developer_info(name, country, city, street, zipcode, phone_number, website, email, fax)
+  VALUES('Google', 'USA', 'California', 'Silicon Valley', '55232', '555333', 'google.com', 'supportgogle@gmail.com', '552002');
+INSERT INTO developer_info(name, country, city, street, zipcode, phone_number, website, email, fax)
+  VALUES('Google', 'USA', 'California', 'Silicon Valley', '55232', '555333', 'google.com', 'supportgogle@gmail.com', '552002');
+INSERT INTO developer_info(name, country, city, street, zipcode, phone_number, website, email, fax)
+  VALUES('Google', 'USA', 'California', 'Silicon Valley', '55232', '555333', 'google.com', 'supportgogle@gmail.com', '552002');
+INSERT INTO developer_info(name, country, city, street, zipcode, phone_number, website, email, fax)
+  VALUES('Google', 'USA', 'California', 'Silicon Valley', '55232', '555333', 'google.com', 'supportgogle@gmail.com', '552002');
 INSERT INTO developer_info(name, country, city, street, zipcode, phone_number, website, email, fax)
   VALUES('Google', 'USA', 'California', 'Silicon Valley', '55232', '555333', 'google.com', 'supportgogle@gmail.com', '552002');
 

@@ -26,12 +26,15 @@
             return $http.delete(urlBase + id);
         };
 
-        this.searchByField = function (field, value) {
-            return $http.get(urlBase + 'hotels_search_' + field + '=' + value + '.json');
-        };
-
-        this.getPage = function (currentPage, size) {
-            return $http.get(urlBase + '?page=' + currentPage + '&size=' + size);
+        this.getPage = function (currentPage, size, name, country) {
+            return $http.get(urlBase, { 
+                    params: { 
+                        name: name,
+                        country: country,
+                        page: currentPage, 
+                        size: size 
+                    }
+            });
         };
 
     });

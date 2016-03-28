@@ -44,7 +44,12 @@
           });
 	}
 
-	function run($translate) {
+	function run($translate, $rootScope, $templateCache) {
 		// $translate.use('en');
+
+		// $rootScope.$on('$viewContentLoaded', function() {
+  //     		$templateCache.removeAll();
+  //  		});
+
 	}
 })();

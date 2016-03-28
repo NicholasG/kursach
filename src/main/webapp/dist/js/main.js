@@ -44,10 +44,16 @@
           });
 	}
 
-	function run($translate) {
+	function run($translate, $rootScope, $templateCache) {
 		// $translate.use('en');
+
+		// $rootScope.$on('$viewContentLoaded', function() {
+  //     		$templateCache.removeAll();
+  //  		});
+
 	}
 })();
+
 (function () {
 	'use strict';
 
@@ -65,9 +71,6 @@
 		[
 		'name', 
 		'country',
-		'city',
-		'street',
-		'zipcode',
 		'email',
 		'website',
 		'phoneNumber',
@@ -92,21 +95,11 @@
 			$state.go('main.' + sc.table);
 		};
 
-		sc.loadPage = function(currentPage) {
-			DeveloperService.getPage(currentPage - 1, 5)
+		sc.loadPage = function(currentPage, name) {
+			DeveloperService.getPage(currentPage - 1, 10, name)
 			.success(function (data){
 				sc.main = data;
 			});
-		};
-
-		sc.searchByField = function(field, value) {
-			if (value != '') {
-				DeveloperService.searchByField(field, value)
-				.success(function (data){
-					sc.main = data;
-				});
-			}
-			else sc.loadPage(1); 
 		};
 
 		sc.loadPage(1); 
@@ -202,12 +195,15 @@
             return $http.delete(urlBase + id);
         };
 
-        this.searchByField = function (field, value) {
-            return $http.get(urlBase + 'hotels_search_' + field + '=' + value + '.json');
-        };
-
-        this.getPage = function (currentPage, size) {
-            return $http.get(urlBase + '?page=' + currentPage + '&size=' + size);
+        this.getPage = function (currentPage, size, name, country) {
+            return $http.get(urlBase, { 
+                    params: { 
+                        name: name,
+                        country: country,
+                        page: currentPage, 
+                        size: size 
+                    }
+            });
         };
 
     });
