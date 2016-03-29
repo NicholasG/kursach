@@ -17,5 +17,5 @@ public interface DeveloperService {
 
     ResponseEntity<Void> delete( Long id );
 
-    Page<DeveloperInfo> searchFor( Pageable pageable, String name );
+    Page<DeveloperInfo> searchFor( Pageable pageable, String name, String country );
 }

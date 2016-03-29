@@ -34,9 +34,9 @@ public class DeveloperController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Page<DeveloperInfo>> search( Pageable pageable, String name ) {
-        LOG.info( "Searching for developer by name '{}'", name );
-        Page<DeveloperInfo> page = developerService.searchFor( pageable, name );
+    public ResponseEntity<Page<DeveloperInfo>> search( Pageable pageable, String name, String country ) {
+        LOG.info( "Searching for developer by name='{}', country='{}'", name, country );
+        Page<DeveloperInfo> page = developerService.searchFor( pageable, name,country );
 
         return ResponseEntity.ok( page );
     }

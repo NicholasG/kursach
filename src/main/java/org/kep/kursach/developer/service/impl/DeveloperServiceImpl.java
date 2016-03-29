@@ -72,11 +72,13 @@ public class DeveloperServiceImpl implements DeveloperService {
     }
 
     @Override
-    public Page<DeveloperInfo> searchFor( Pageable pageable, String name ) {
+    public Page<DeveloperInfo> searchFor( Pageable pageable, String name, String country ) {
         if ( name == null || name.equals( "" ) ) name = "%";
         else name += "%";
+        if ( country == null || !country.equals( "" ) ) country = "%";
+        else country += "%";
 
-        return repository.findOneByName( pageable, name );
+        return repository.findOneByNameAndCountry( pageable, name, country );
     }
 
 }
