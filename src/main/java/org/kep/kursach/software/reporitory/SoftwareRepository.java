@@ -21,7 +21,7 @@ public interface SoftwareRepository extends JpaRepository<SoftwareInfo, Long> {
             "WHERE UPPER(s.name) LIKE UPPER(:name) " +
             "AND UPPER(s.developer.name) LIKE UPPER(:devName) " +
             "AND UPPER(s.license.name) LIKE UPPER(:licName)" )
-    Page<SoftwareInfo> findByNameAndDeveloperNameAndLicenseName(
+    Page<SoftwareInfo> findAllByNameAndDeveloperNameAndLicenseName(
             Pageable pageable,
             @Param( "name" ) String name,
             @Param( "devName" ) String devName,
@@ -32,7 +32,7 @@ public interface SoftwareRepository extends JpaRepository<SoftwareInfo, Long> {
             "AND s.release = :release " +
             "AND UPPER(s.developer.name) LIKE UPPER(:devName) " +
             "AND UPPER(s.license.name) LIKE UPPER(:licName)" )
-    Page<SoftwareInfo> findByNameAndReleaseAndDeveloperNameAndLicenseName(
+    Page<SoftwareInfo> findAllByNameAndReleaseAndDeveloperNameAndLicenseName(
             Pageable pageable,
             @Param( "name" ) String name,
             @Param( "release" ) Date release,

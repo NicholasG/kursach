@@ -16,12 +16,12 @@ public interface DeveloperRepository extends JpaRepository<DeveloperInfo, Long> 
 
     Optional<DeveloperInfo> findOneById( Long id );
 
-    Optional<DeveloperInfo> findOneByNameAndCountry( String name );
+    Optional<DeveloperInfo> findOneByName( String name );
 
     @Query( "SELECT d FROM DeveloperInfo d " +
             "WHERE UPPER(d.name) LIKE UPPER(:name) " +
             "AND UPPER(d.country) LIKE UPPER(:country) " )
-    Page<DeveloperInfo> findOneByNameAndCountry(
+    Page<DeveloperInfo> findAllByNameAndCountry(
             Pageable pageable,
             @Param( "name" ) String name,
             @Param( "country" ) String country );

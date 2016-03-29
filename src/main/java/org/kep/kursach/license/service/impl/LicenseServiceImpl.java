@@ -86,10 +86,15 @@ public class LicenseServiceImpl implements LicenseService {
     }
 
     @Override
-    public Page<LicenseInfo> searchFor( Pageable pageable, String name ) {
+    public Page<LicenseInfo> searchFor( Pageable pageable, String name, String type ) {
         if ( name == null || name.equals( "" ) ) name = "%";
         else name += "%";
 
-        return repository.findOneByName( pageable, name );
+        if ( type == null || type.equals( "" ) ) {
+            return repository.findAllByName( pageable, name );
+        } else {
+            LicenseInfo.Type t = LicenseInfo.Type.valueOf( type.toUpperCase() );
+            return repository.findAllByNameAndType( pageable, name, t );
+        }
     }
 }

@@ -16,5 +16,5 @@ public interface LicenseService {
 
     ResponseEntity<Void> delete( Long id );
 
-    Page<LicenseInfo> searchFor( Pageable pageable, String name );
+    Page<LicenseInfo> searchFor( Pageable pageable, String name, String type );
 }

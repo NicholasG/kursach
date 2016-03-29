@@ -16,10 +16,10 @@ import static javax.persistence.CascadeType.ALL;
 @Table( name = "licenseInfo" )
 public class LicenseInfo {
 
-    private enum Type {
-        FREE( "Безкоштовна" ),
-        TRIAL( "Умовно безкоштовна" ),
-        PAID( "Платна" );
+    public enum Type {
+        FREE( "FREE" ),
+        TRIAL( "TRIAL" ),
+        PAID( "PAID" );
 
         private final String type;
 

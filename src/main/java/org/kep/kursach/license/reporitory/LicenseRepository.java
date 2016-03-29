@@ -19,7 +19,17 @@ public interface LicenseRepository extends JpaRepository<LicenseInfo, Long> {
     Optional<LicenseInfo> findOneByName( String name );
 
     @Query( "SELECT l FROM LicenseInfo l " +
-            "WHERE  UPPER(l.name) LIKE UPPER(:name)" )
-    Page<LicenseInfo> findOneByName( Pageable pageable, @Param( "name" ) String name );
+            "WHERE UPPER(l.name) LIKE UPPER(:name)" )
+    Page<LicenseInfo> findAllByName(
+            Pageable pageable,
+            @Param( "name" ) String name );
+
+    @Query( "SELECT l FROM LicenseInfo l " +
+            "WHERE UPPER(l.name) LIKE UPPER(:name) " +
+            "AND l.type = :type" )
+    Page<LicenseInfo> findAllByNameAndType(
+            Pageable pageable,
+            @Param( "name" ) String name,
+            @Param( "type" ) LicenseInfo.Type type );
 
 }

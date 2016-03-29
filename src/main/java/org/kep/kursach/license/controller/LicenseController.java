@@ -34,9 +34,9 @@ public class LicenseController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Page<LicenseInfo>> search( Pageable pageable, String name ) {
+    public ResponseEntity<Page<LicenseInfo>> search( Pageable pageable, String name, String type ) {
         LOG.info( "Searching for license by name '{}'", name );
-        Page<LicenseInfo> page = licenseService.searchFor( pageable, name );
+        Page<LicenseInfo> page = licenseService.searchFor( pageable, name, type );
 
         return ResponseEntity.ok( page );
     }

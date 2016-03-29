@@ -78,7 +78,7 @@ public class DeveloperServiceImpl implements DeveloperService {
         if ( country == null || !country.equals( "" ) ) country = "%";
         else country += "%";
 
-        return repository.findOneByNameAndCountry( pageable, name, country );
+        return repository.findAllByNameAndCountry( pageable, name, country );
     }
 
 }

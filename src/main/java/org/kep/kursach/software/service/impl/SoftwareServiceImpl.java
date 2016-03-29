@@ -81,14 +81,14 @@ public class SoftwareServiceImpl implements SoftwareService {
         else licName += "%";
 
         if ( release != null && !release.equals( "" ) )
-            return repository.findByNameAndReleaseAndDeveloperNameAndLicenseName(
+            return repository.findAllByNameAndReleaseAndDeveloperNameAndLicenseName(
                     pageable,
                     name,
                     Date.valueOf( release ),
                     devName,
                     licName );
         else
-            return repository.findByNameAndDeveloperNameAndLicenseName(
+            return repository.findAllByNameAndDeveloperNameAndLicenseName(
                     pageable,
                     name,
                     devName,
