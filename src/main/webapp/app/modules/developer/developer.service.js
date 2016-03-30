@@ -18,7 +18,7 @@
             return $http.post(urlBase, dev);
         };
 
-        this.update = function (id, dev) {
+        this.update = function (dev) {
             return $http.put(urlBase, dev)
         };
 

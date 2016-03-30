@@ -10,7 +10,7 @@
         <label>name</label>
         <input name="name" type="name" class="form-control" ng-model="name" placeholder="Enter name"  maxlength="20">
         <label>country</label>
-        <input name="country" type="text" ng-model="country" placeholder="Enter country" uib-typeahead="country as country.name for country in countriesWithFlags | filter:{name:$viewValue}" typeahead-template-url="app/shared/dropdown/countries/dropdown.countries.html" class="form-control" typeahead-show-hint="true" typeahead-min-length="0">
+        <input name="country" type="text" ng-model="country.name" placeholder="Enter country" uib-typeahead="country as country.name for country in countriesWithFlags | filter:{name:$viewValue}" typeahead-template-url="app/shared/dropdown/countries/dropdown.countries.html" class="form-control" typeahead-show-hint="true" typeahead-min-length="0">
         <label>city</label>
         <input name="city" type="text" class="form-control" ng-model="city" placeholder="Enter city" pattern="[A-z^\s]*" maxlength="35" uib-tooltip="Only numbers" tooltip-is-open="devForm.city.$invalid" tooltip-trigger="none">
         <label>street</label>

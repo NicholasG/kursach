@@ -10,7 +10,6 @@
 
 		sc.action = 'Add';
 
-		sc.id = null;
 		sc.name = null;
 		sc.country = null;
 		sc.city = null;
@@ -24,7 +23,6 @@
 		
 		sc.save = function () {
 			sc.developer = {
-					'id': sc.id,
 					'name': sc.name,
 					'country': sc.country.name,
 					'city': sc.city,

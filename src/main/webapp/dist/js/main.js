@@ -190,7 +190,7 @@
             return $http.post(urlBase, dev);
         };
 
-        this.update = function (id, dev) {
+        this.update = function (dev) {
             return $http.put(urlBase, dev)
         };
 
@@ -725,7 +725,7 @@
 
 			sc.id = sc.developer.id;
 			sc.name = sc.developer.name;
-			sc.country = sc.developer.country;
+			sc.country = { name: sc.developer.country }
 			sc.city = sc.developer.city;
 			sc.street = sc.developer.street;
 			sc.email = sc.developer.email;
@@ -733,6 +733,7 @@
 			sc.website = sc.developer.website;
 			sc.phoneNumber = sc.developer.phoneNumber;
 			sc.fax = sc.developer.fax;
+
 
 			sc.save = function () {
 				sc.developer = {
@@ -745,13 +746,13 @@
 					'zipcode': sc.zipcode,
 					'website': sc.website,
 					'phoneNumber': sc.phoneNumber,
-					'fax': sc.fax
+					'fax': sc.fax 
 				}
 
-				DeveloperService.update(sc.id, sc.developer)
+				DeveloperService.update(sc.developer)
 				.success(function (data) {
 					alert('updated!');
-					sc.developer = null;
+					// sc.developer = null;
 				});
 			}
 		});
@@ -770,7 +771,6 @@
 
 		sc.action = 'Add';
 
-		sc.id = null;
 		sc.name = null;
 		sc.country = null;
 		sc.city = null;
@@ -784,7 +784,6 @@
 		
 		sc.save = function () {
 			sc.developer = {
-					'id': sc.id,
 					'name': sc.name,
 					'country': sc.country.name,
 					'city': sc.city,
