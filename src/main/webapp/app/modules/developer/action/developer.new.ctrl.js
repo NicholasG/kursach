@@ -37,6 +37,7 @@
 			DeveloperService.new(sc.developer)
 			.success(function (data) {
 				alert('added!');
+				sc.loadPage(1);
 				sc.developer = null;
 			});
 		}

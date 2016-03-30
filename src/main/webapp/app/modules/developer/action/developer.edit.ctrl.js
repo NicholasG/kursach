@@ -42,6 +42,7 @@
 				DeveloperService.update(sc.developer)
 				.success(function (data) {
 					alert('updated!');
+					sc.loadPage(1);
 					// sc.developer = null;
 				});
 			}

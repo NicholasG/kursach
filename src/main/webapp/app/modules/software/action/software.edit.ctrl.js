@@ -26,7 +26,7 @@
 
 			sc.release = new Date(sc.software.release);
 
-			sc.selDeveloper = { id: sc.id };
+			sc.selDeveloper = {};
 
 			DeveloperService.getAll().success( function (data) {
 				sc.developers = data.content;
@@ -39,7 +39,7 @@
 					'version': sc.version,
 					'release': sc.release.getFullYear() + '-' + (sc.release.getMonth() + 1) + '-' + sc.release.getDate(),
 					'license': sc.license,
-					'developer': sc.developers[sc.selDeveloper.id - 1],
+					'developer': sc.selDeveloper,
 					'windows': sc.windows,
 					'linux': sc.linux,
 					'macOS': sc.macOS
@@ -48,6 +48,7 @@
 				SoftwareService.update(sc.soft)
 				.success(function (data) {
 					alert('updated!');
+					sc.loadPage(1);
 					sc.soft = null;
 				});
 			}

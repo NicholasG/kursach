@@ -18,7 +18,7 @@
 		sc.linux = false;
 		sc.macOS = false;
 		
-		sc.selDeveloper = { id: null };
+		sc.selDeveloper = {};
 
 		DeveloperService.getAll().success( function (data) {
 			sc.developers = data.content;
@@ -30,7 +30,7 @@
 				'name': sc.name,
 				'version': sc.version,
 				'license': {"id":1,"name":"license1","type":"FREE","minimumUsers":1,"maximumUsers":100,"expiration":256,"priceForOne":0.0,"priceForTen":0.0,"priceForHundred":0.0},
-				'developer': sc.developers[sc.selDeveloper.id - 1],
+				'developer': sc.selDeveloper,
 				'release': sc.release.getFullYear() + '-' + sc.release.getMonth() + '-' + sc.release.getDate(),
 				'windows': sc.windows,
 				'linux': sc.linux,
@@ -40,6 +40,7 @@
 			SoftwareService.new(sc.soft)
 			.success(function (data) {
 				alert('added!');
+				sc.loadPage(1);
 				sc.soft = null;
 			});
 		}

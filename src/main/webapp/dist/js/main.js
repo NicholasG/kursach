@@ -701,6 +701,7 @@
 			DeveloperService.delete(sc.id)
 			.then(function successCallback(response) {
 			    alert('deleted' + sc.id);
+				sc.loadPage(1);
 			  }, function errorCallback(response) {
 			    	sc.log = 'Developer "' + devName + '" could not be deleted because is in use yet';
 			  }); 
@@ -752,6 +753,7 @@
 				DeveloperService.update(sc.developer)
 				.success(function (data) {
 					alert('updated!');
+					sc.loadPage(1);
 					// sc.developer = null;
 				});
 			}
@@ -798,6 +800,7 @@
 			DeveloperService.new(sc.developer)
 			.success(function (data) {
 				alert('added!');
+				sc.loadPage(1);
 				sc.developer = null;
 			});
 		}
@@ -927,6 +930,7 @@
 			SoftwareService.delete(sc.id)
 			.success(function (data) {
 				alert('deleted' + sc.id);
+				sc.loadPage(1);
 			});
 		}
 	};
@@ -960,7 +964,7 @@
 
 			sc.release = new Date(sc.software.release);
 
-			sc.selDeveloper = { id: sc.id };
+			sc.selDeveloper = {};
 
 			DeveloperService.getAll().success( function (data) {
 				sc.developers = data.content;
@@ -973,7 +977,7 @@
 					'version': sc.version,
 					'release': sc.release.getFullYear() + '-' + (sc.release.getMonth() + 1) + '-' + sc.release.getDate(),
 					'license': sc.license,
-					'developer': sc.developers[sc.selDeveloper.id - 1],
+					'developer': sc.selDeveloper,
 					'windows': sc.windows,
 					'linux': sc.linux,
 					'macOS': sc.macOS
@@ -982,6 +986,7 @@
 				SoftwareService.update(sc.soft)
 				.success(function (data) {
 					alert('updated!');
+					sc.loadPage(1);
 					sc.soft = null;
 				});
 			}
@@ -1009,7 +1014,7 @@
 		sc.linux = false;
 		sc.macOS = false;
 		
-		sc.selDeveloper = { id: null };
+		sc.selDeveloper = {};
 
 		DeveloperService.getAll().success( function (data) {
 			sc.developers = data.content;
@@ -1021,7 +1026,7 @@
 				'name': sc.name,
 				'version': sc.version,
 				'license': {"id":1,"name":"license1","type":"FREE","minimumUsers":1,"maximumUsers":100,"expiration":256,"priceForOne":0.0,"priceForTen":0.0,"priceForHundred":0.0},
-				'developer': sc.developers[sc.selDeveloper.id - 1],
+				'developer': sc.selDeveloper,
 				'release': sc.release.getFullYear() + '-' + sc.release.getMonth() + '-' + sc.release.getDate(),
 				'windows': sc.windows,
 				'linux': sc.linux,
@@ -1031,6 +1036,7 @@
 			SoftwareService.new(sc.soft)
 			.success(function (data) {
 				alert('added!');
+				sc.loadPage(1);
 				sc.soft = null;
 			});
 		}
