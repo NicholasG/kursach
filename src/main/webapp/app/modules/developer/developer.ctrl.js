@@ -39,8 +39,11 @@
 			$state.go('main.' + sc.table);
 		};
 
-		sc.loadPage = function(currentPage, name) {
-			DeveloperService.getPage(currentPage - 1, 10, name)
+		sc.loadPage = function(currentPage) {
+			if (sc.name == '') sc.name = null;
+			if (sc.country == '') sc.country = null;
+			
+			DeveloperService.getPage(currentPage - 1, 10, sc.name, sc.country)
 			.success(function (data){
 				sc.main = data;
 			});

@@ -1,0 +1,44 @@
+<div class="popup-container" ng-click="close()"></div>
+<div id="room-add" class="panel panel-default popup" ng-cotroller="ActionCtrl">
+  <div class="panel-heading">
+    <h3 class="panel-title"><i class="fa fa-long-arrow-right fa-fw"></i>{{action}}</h3>
+    <i class="glyphicon glyphicon-remove action action-close right" ng-click="close()"></i>
+  </div>
+  <div class="panel-body">
+    <form name="softForm">
+      <div class="col-lg-12">
+        <label>name</label>
+        <input name="name" type="text" class="form-control" ng-model="name">
+        <label>version</label>
+        <input name="version" type="text" class="form-control" ng-model="version">
+        <label>release</label>
+        <div class="input-group">
+          <input name="release" ng-model="release" type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" is-open="popup1" ng-required="true" close-text="Close" alt-input-formats="'yyyy-MM-dd'" ng-click="popup1 = true" ng-value="releaseValue">
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="popup1 = true"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+        </div>
+        <label>developer</label>
+        <select class="form-control" ng-options="dev.name for dev in developers" ng-model="selDeveloper">
+          <option value="" disabled>{{developer.name}}</option>
+        </select>
+        <label>license</label>
+        <div class="btn-group btn-group-justified">
+          <label class="btn btn-default" ng-class="{ 'btn-success': license.type == 'FREE'}" ng-model="license.type" uib-btn-radio="'FREE'">free</label>
+          <label class="btn btn-default" ng-class="{ 'btn-warning': license.type == 'TRIAL'}" ng-model="license.type" uib-btn-radio="'TRIAL'">trial</label>
+          <label class="btn btn-default" ng-class="{ 'btn-primary': license.type == 'PAID'}" ng-model="license.type" uib-btn-radio="'PAID'">paid</label>
+        </div>
+        <label>operationSystem</label>
+        <div class="btn-group btn-group-justified">
+          <label class="btn btn-default" ng-model="windows" uib-btn-checkbox>windows</label>
+          <label class="btn btn-default" ng-model="linux" uib-btn-checkbox>linux</label>
+          <label class="btn btn-default" ng-model="macOS" uib-btn-checkbox>macOS</label>
+        </div>
+        </div><!-- /.col-lg-6 -->
+      </form>
+      <div class="col-lg-12 tools">
+        <button class="btn btn-primary" ng-click="save()"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+        <button ng-click="close()" class="btn btn-default right" style="margin-right: 15px;">Cancel</button>
+      </div>
+    </div>
+  </div>

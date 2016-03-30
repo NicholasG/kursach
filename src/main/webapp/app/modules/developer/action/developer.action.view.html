@@ -1,35 +1,36 @@
 <div class="popup-container" ng-click="close()"></div>
-<div id="hotel-add" class="panel panel-default popup" ng-cotroller="ActionCtrl">
+<div id="dev-add" class="panel panel-default popup" ng-cotroller="ActionCtrl">
   <div class="panel-heading">
     <h3 class="panel-title"><i class="fa fa-long-arrow-right fa-fw"></i>{{action}}</h3>
     <i class="glyphicon glyphicon-remove action action-close right" ng-click="close()"></i>
   </div>
   <div class="panel-body">
     <div class="col-lg-6">
-      <form name="hotelsForm">
-        <label>Name</label>
-        <input name="name" type="name" class="form-control" ng-model="name" placeholder="Enter name hotel"  maxlength="20">
-        <label>Country</label>
+      <form name="devForm">
+        <label>name</label>
+        <input name="name" type="name" class="form-control" ng-model="name" placeholder="Enter name"  maxlength="20">
+        <label>country</label>
         <input name="country" type="text" ng-model="country" placeholder="Enter country" uib-typeahead="country as country.name for country in countriesWithFlags | filter:{name:$viewValue}" typeahead-template-url="app/shared/dropdown/countries/dropdown.countries.html" class="form-control" typeahead-show-hint="true" typeahead-min-length="0">
-        <label>City</label>
-        <input name="city" type="text" class="form-control" ng-model="city" placeholder="Enter city" pattern="[A-z^\s]*" maxlength="35" uib-tooltip="Only numbers" tooltip-is-open="hotelsForm.city.$invalid" tooltip-trigger="none">
-        <label>Adress</label>
-        <input type="text" class="form-control" ng-model="adress" placeholder="Enter adress" maxlength="100"> 
+        <label>city</label>
+        <input name="city" type="text" class="form-control" ng-model="city" placeholder="Enter city" pattern="[A-z^\s]*" maxlength="35" uib-tooltip="Only numbers" tooltip-is-open="devForm.city.$invalid" tooltip-trigger="none">
+        <label>street</label>
+        <input type="text" class="form-control" ng-model="street" placeholder="Enter street" maxlength="100"> 
       </form>
     </div>    
     <div class="col-lg-6">
-      <form name="hotelsForm">
-        <label>Director</label>
-        <input type="text" class="form-control" ng-model="director" placeholder="Enter full name director" pattern="^[A-Za-z]+$" maxlength="60">
+      <form name="devForm">
+        <label>zipcode</label>
+        <input type="text" class="form-control" ng-model="zipcode" placeholder="Enter zipcode" maxlength="60">
         <label>Email</label>
         <input name="email" type="email" class="form-control" ng-model="email" placeholder="Enter email"
-        uib-tooltip="Is no email adress"  tooltip-is-open="hotelsForm.email.$invalid" tooltip-trigger="none">
-        <label>Phone of Director</label>
-        <input name="phoneOfDirector" type="phone" class="form-control" ng-model="phoneOfDirector" placeholder="Example: 0986171061" pattern="^([0-9]*)$" maxlength="10"
-        uib-tooltip="Only numbers"  tooltip-is-open="hotelsForm.phoneOfDirector.$invalid" tooltip-trigger="none">
-        <label>Phone Orders</label>
-        <input name="phoneOrders" type="phone" class="form-control" ng-model="phoneOrders" placeholder="Example: 0986171061" pattern="^([0-9]*)$" maxlength="10"
-        uib-tooltip="Only numbers" tooltip-is-open="hotelsForm.phoneOrders.$invalid" tooltip-trigger="none">
+        uib-tooltip="Is no email adress"  tooltip-is-open="devForm.email.$invalid" tooltip-trigger="none">
+        <label>website</label>
+        <input type="text" class="form-control" ng-model="website" placeholder="Enter website" pattern="^[A-Za-z]+$" maxlength="60">
+        <label>phoneNumber</label>
+        <input name="phoneNumber" type="text" class="form-control" ng-model="phoneNumber" placeholder="Example: 0986171061" pattern="^([0-9]*)$" maxlength="10"
+        uib-tooltip="Only numbers"  tooltip-is-open="devForm.phoneNumber.$invalid" tooltip-trigger="none">
+        <label>fax</label>
+        <input type="text" class="form-control" ng-model="fax" placeholder="Enter zipcode" maxlength="60">
       </form>
     </div>    
     <div class="col-lg-12 tools">

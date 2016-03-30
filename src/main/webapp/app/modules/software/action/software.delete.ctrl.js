@@ -3,16 +3,15 @@
 
 	angular
 	.module('main')
-	.controller('RoomDeleteCtrl', RoomDeleteCtrl);
+	.controller('SoftwareDeleteCtrl', SoftwareDeleteCtrl);
 
-	function RoomDeleteCtrl ($scope, $state, $location, RoomsService) {
+	function SoftwareDeleteCtrl ($scope, $state, $location, SoftwareService) {
 		var sc = $scope;
 
 		sc.delete = function () {
-			RoomsService.delete(sc.id)
+			SoftwareService.delete(sc.id)
 			.success(function (data) {
 				alert('deleted' + sc.id);
-				sc.room = null;
 			});
 		}
 	};

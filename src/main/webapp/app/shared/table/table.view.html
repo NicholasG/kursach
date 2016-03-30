@@ -22,7 +22,7 @@
             </tr>
           </thead>
           <tbody ng-switch="table">
-            <tr ng-switch-when="developer" ng-repeat="row in data = (main.content | filter: filterField | orderBy: fieldName:reverse)" ng-dblclick="openEdit($index)"
+            <tr ng-switch-when="developer" ng-repeat="row in data = (main.content | filter: filterField | orderBy: fieldName:reverse)" ng-dblclick="openEdit(row.id)"
               >
               <td>{{row.name}}</td>
               <td><span uib-popover="{{row.city}}, {{row.street}}, {{row.zipcode}}" popover-trigger="mouseenter" popover-title="Adress" popover-placement="top-left">{{row.country}}</span></td>
@@ -31,23 +31,26 @@
               <td>{{row.phoneNumber | phone}}</td>
               <td>{{row.fax}}</td>
               <td>
-                <i class="glyphicon glyphicon-pencil action" ng-click="openEdit($index)" uib-tooltip="Edit"></i>
-                <i class="glyphicon glyphicon-remove action" ng-click="openDelete($index)" uib-tooltip="Remove"></i>
+                <i class="glyphicon glyphicon-pencil action" ng-click="openEdit(row.id)" uib-tooltip="Edit"></i>
+                <i class="glyphicon glyphicon-remove action" ng-click="openDelete(row.id)" uib-tooltip="Remove"></i>
               </td>
             </tr>
-            <tr ng-switch-when="workers" ng-repeat="row in data = (main.content | filter: filterField | orderBy: fieldName:reverse)" ng-dblclick="openEdit($index)">
-              <td>{{$index + 1}}</td>
-              <td>{{row.fullName}}</td>
-              <td>{{row.position}}</td>
-              <td>{{row.birthday}}</td>
-              <td>{{row.age}}</td>
-              <td>{{row.sex}}</td>
-              <td>{{row.experience}}</td>
-              <td>{{row.previousPosition}}</td>
-              <td>{{row.date}}</td>
+            <tr ng-switch-when="software" ng-repeat="row in data = (main.content | filter: filterField | orderBy: fieldName:reverse)" ng-dblclick="openEdit(row.id)">
+              <td>{{row.name}}</td>
+              <td>{{row.version}}</td>
+              <td>{{row.release}}</td>
+              <td>{{row.developer.name}}</td>
+              <td ng-switch="row.license.type">
+                <span ng-switch-when="FREE" class="label label-success">free</span>
+                <span ng-switch-when="TRIAL" class="label label-warning">trail</span>
+                <span ng-switch-when="PAID" class="label label-primary">paid</span>
+              </td>
+              <td><span ng-show="row.windows" class="glyphicon glyphicon-ok"></span></td>
+              <td><span ng-show="row.linux" class="glyphicon glyphicon-ok"></span></td>
+              <td><span ng-show="row.macOS" class="glyphicon glyphicon-ok"></span></td>
               <td>
-                <i class="glyphicon glyphicon-pencil action" ng-click="openEdit($index)"></i>
-                <i class="glyphicon glyphicon-remove action" ng-click="openDelete($index)"></i>
+                <i class="glyphicon glyphicon-pencil action" ng-click="openEdit(row.id)"></i>
+                <i class="glyphicon glyphicon-remove action" ng-click="openDelete(row.id)"></i>
               </td>
             </tr>
             <tr ng-switch-when="rooms" ng-repeat="row in data = (main.content | filter: filterField | orderBy: fieldName:reverse)" ng-dblclick="openEdit(row.id)">
@@ -86,10 +89,10 @@
       </div>
       <div class="panel-body">
         <label translate>name</label>
-        <input name="name" ng-model="name" type="text" class="form-control" ng-change="loadPage(1, name)" pattern="[A-z^\s]*">
-        <label>Country</label>
-        <input name="country" type="text" ng-model="country" placeholder="Enter country" uib-typeahead="country as country.name for country in countriesWithFlags | filter:{name:$viewValue}" typeahead-template-url="app/shared/dropdown/countries/dropdown.countries.html" class="form-control" typeahead-show-hint="true" typeahead-min-length="0" ng-change="loadPage(1, name, country)">
-        <div ng-show="false">
+        <input name="name" ng-model="name" type="text" class="form-control" placeholder="Enter dev name" ng-change="loadPage(1)" pattern="[A-z^\s]*">
+        <label>country</label>
+        <input name="country" type="text" ng-model="country" placeholder="Enter country" uib-typeahead="country as country.name for country in countriesWithFlags | filter:{name:$viewValue}" typeahead-template-url="app/shared/dropdown/countries/dropdown.countries.html" class="form-control" typeahead-show-hint="true" typeahead-min-length="0" ng-change="loadPage(1)">
+       <!--  <div ng-show="false">
           <label translate>roomOfType</label>
           <select class="form-control" ng-model="roomOfType" ng-change="searchByField(tableHeader[0], roomOfType)">
             <option></option>
@@ -113,7 +116,7 @@
             <label class="btn btn-default" ng-model="breakfast" uib-btn-radio="'true'" ng-change="searchByField(tableHeader[3], breakfast)"><span translate>avilable</span></label>
             <label class="btn btn-default" ng-model="breakfast" uib-btn-radio="'false'" ng-change="searchByField(tableHeader[3], breakfast)"><span translate>notAvilable</span></label>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <button class="btn btn-success full-width" ng-click="openAdd()"><i class="glyphicon glyphicon-plus"></i> <span translate>add</span></button>

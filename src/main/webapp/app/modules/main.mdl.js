@@ -4,7 +4,7 @@
 	var main = angular.module('main', [
 		'developer',
 		'workers',
-		'rooms',
+		'software',
 		'ui.router',
 		'ui.bootstrap',
 		'ngResource',

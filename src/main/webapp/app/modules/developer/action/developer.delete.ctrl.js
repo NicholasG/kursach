@@ -7,13 +7,22 @@
 
 	function DeveloperDeleteCtrl ($scope, $state, $location, DeveloperService) {
 		var sc = $scope;
+		var devName;
+
+		DeveloperService.get(sc.id)
+	  		.success( function (data) {
+	  			devName = data.name;
+				sc.log = 'Are you sure you want to remove developer ' + devName + '?';
+	  		});
+ 
 
 		sc.delete = function () {
 			DeveloperService.delete(sc.id)
-			.success(function (data) {
-				alert('deleted' + sc.id);
-				sc.hotel = null;
-			});
+			.then(function successCallback(response) {
+			    alert('deleted' + sc.id);
+			  }, function errorCallback(response) {
+			    	sc.log = 'Developer "' + devName + '" could not be deleted because is in use yet';
+			  }); 
 		}
 	};
 })();

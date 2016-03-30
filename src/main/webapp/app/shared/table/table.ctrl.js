@@ -19,8 +19,8 @@
         sc.reverse = false;
 
         sc.sort = function(fieldName) {
-            $scope.reverse = ($scope.fieldName === fieldName) ? !$scope.reverse:false;
-            $scope.fieldName = fieldName;
+            sc.reverse = (sc.fieldName === fieldName) ? !sc.reverse:false;
+            sc.fieldName = fieldName;
         }
 
         sc.isSortUp = function(fieldName) {

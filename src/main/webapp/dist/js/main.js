@@ -4,7 +4,7 @@
 	var main = angular.module('main', [
 		'developer',
 		'workers',
-		'rooms',
+		'software',
 		'ui.router',
 		'ui.bootstrap',
 		'ngResource',
@@ -95,8 +95,11 @@
 			$state.go('main.' + sc.table);
 		};
 
-		sc.loadPage = function(currentPage, name) {
-			DeveloperService.getPage(currentPage - 1, 10, name)
+		sc.loadPage = function(currentPage) {
+			if (sc.name == '') sc.name = null;
+			if (sc.country == '') sc.country = null;
+			
+			DeveloperService.getPage(currentPage - 1, 10, sc.name, sc.country)
 			.success(function (data){
 				sc.main = data;
 			});
@@ -176,23 +179,27 @@
         var urlBase = '/dev';
 
         this.getAll = function () {
-            return $http.get(urlBase + 'hotels.list.json');
+            return $http.get(urlBase);
         };  
 
         this.get = function (id) {
-            return $http.get(urlBase + id + '.json');
+            return $http.get(urlBase + '/' + id);
         };
 
-        this.new = function (hotel) {
-            return $http.post(urlBase, hotel);
+        this.new = function (dev) {
+            return $http.post(urlBase, dev);
         };
 
-        this.update = function (id, hotel) {
-            return $http.put(urlBase + id, hotel)
+        this.update = function (id, dev) {
+            return $http.put(urlBase, dev)
         };
 
         this.delete = function (id) {
-            return $http.delete(urlBase + id);
+            return $http.delete(urlBase, { 
+                    params: { 
+                        id: id
+                    }
+                }); 
         };
 
         this.getPage = function (currentPage, size, name, country) {
@@ -204,162 +211,6 @@
                         size: size 
                     }
             });
-        };
-
-    });
-
-})();
-
-(function () {
-	'use strict';
-
-	angular
-	.module('main')
-	.controller('RoomsCtrl', RoomsCtrl);
-
-	function RoomsCtrl($scope, $state, RoomsService) {
-		var sc = $scope;
-		
-		sc.table = 'rooms';
-		sc.base = '/' + sc.table;
-
-		sc.tableHeader = 
-		[
-		'roomOfType', 
-		'numberOfRooms',
-		'typeOfBed',
-		'breakfast',
-		'price'
-		];
-
-		sc.openEdit = function (id) {
-			$state.go('main.rooms.edit');
-			sc.id = id;
-		}
-
-		sc.openAdd = function () {
-			$state.go('main.rooms.new');
-		}
-
-		sc.openDelete = function (id) {
-			$state.go('main.rooms.delete');
-			sc.id = id;
-		}
-
-		sc.close = function () {
-			$state.go('main.' + sc.table);
-		}
-
-		sc.loadPage = function(currentPage) {
-			RoomsService.getPage(currentPage, 10)
-			.success(function(data){
-				sc.main = data;
-			});
-		};
-
-		sc.searchByField = function(field, value) {
-			if (value != '') {
-				RoomsService.searchByField(field, value)
-				.success(function(data){
-					sc.main = data;
-				});
-			}
-			else sc.loadPage(1); 
-		};
-
-		sc.loadPage(1); 
-	};
-
-})();
-
-(function () {
-	'use strict';
-
-	var rooms = angular.module('rooms', [
-		'ui.router'
-		])
-	.config(configure);
-
-
-	configure.$inject = ['$locationProvider', '$stateProvider', '$urlRouterProvider'];
-	function configure($locationProvider, $stateProvider, $urlRouterProvider) {
-
-		$stateProvider
-		.state('main.rooms', {
-			url: 'rooms',
-			views: {
-				'': {
-					templateUrl: '/app/shared/table/table.view.html',
-					controller: 'RoomsCtrl',
-				}
-			}
-		})
-		.state('main.rooms.new', {
-			url: '/new',
-			views: {
-				'action': {
-					templateUrl: '/app/modules/rooms/action/rooms.action.view.html',
-					controller: 'RoomNewCtrl'
-				}
-			}
-		})
-		.state('main.rooms.edit', {
-			url: '/edit',
-			views: {
-				'action': {
-					templateUrl: '/app/modules/rooms/action/rooms.action.view.html',
-					controller: 'RoomEditCtrl'
-				}
-			}
-		})
-		.state('main.rooms.delete', {
-			url: '/delete',
-			views: {
-				'action': {
-					templateUrl: '/app/modules/rooms/action/rooms.action.delete.view.html',
-					controller: 'RoomDeleteCtrl'
-				}
-			}
-		});
-
-	}
-
-})();
-
-(function () {
-    'use strict';
-
-    angular.module('main')
-    .service('RoomsService', function ($http) {
-
-        var urlBase = '../data/rooms/';
-
-        this.getAll = function () {
-            return $http.get(urlBase + 'rooms.list.json');
-        };
-
-        this.get = function (id) {
-            return $http.get(urlBase + id + '.json');
-        };
-
-        this.new = function (room) {
-            return $http.post(urlBase, room);
-        };
-
-        this.update = function (id, room) {
-            return $http.put(urlBase + id, room)
-        };
-
-        this.delete = function (id) {
-            return $http.delete(urlBase + id);
-        };
-
-        this.searchByField = function (field, value) {
-            return $http.get(urlBase + 'rooms_search_' + field + '=' + value + '.json');
-        };
-
-        this.getPage = function (currentPage, size) {
-            return $http.get(urlBase + 'rooms_page=' + currentPage + '_size=' + size + '.json');
         };
 
     });
@@ -533,6 +384,163 @@
 })();
 
 (function () {
+	'use strict';
+
+	angular
+	.module('main')
+	.controller('SoftwareCtrl', SoftwareCtrl);
+
+	function SoftwareCtrl ($scope, $state, SoftwareService, DeveloperService) {
+		var sc = $scope;
+		
+		sc.table = 'software';
+		sc.base = '/' + sc.table;
+
+		sc.tableHeader = 
+		[
+		'name', 
+		'version',
+		'release',
+		'developer',
+		'license',
+		'windows',
+		'linux',
+		'macOS'
+		];
+
+		sc.openEdit = function (id) {
+			$state.go('main.software.edit');
+			sc.id = id;
+		}
+
+		sc.openAdd = function () {
+			$state.go('main.software.new');
+		}
+
+		sc.openDelete = function (id) {
+			$state.go('main.software.delete');
+			sc.id = id;
+		}
+
+		sc.close = function () {
+			$state.go('main.' + sc.table);
+		}
+
+		sc.loadPage = function(currentPage) {
+			if (sc.name == '') sc.name = null;
+			if (sc.country == '') sc.country = null;
+			
+			SoftwareService.getPage(currentPage - 1, 10, sc.name, sc.country)
+			.success(function (data){
+				sc.main = data;
+			});
+		};
+
+		sc.loadPage(1); 
+	};
+
+})();
+
+(function () {
+	'use strict';
+
+	var software = angular.module('software', [
+		'ui.router'
+		])
+	.config(configure);
+
+
+	configure.$inject = ['$locationProvider', '$stateProvider', '$urlRouterProvider'];
+	function configure($locationProvider, $stateProvider, $urlRouterProvider) {
+
+		$stateProvider
+		.state('main.software', {
+			url: 'software',
+			views: {
+				'': {
+					templateUrl: '/app/shared/table/table.view.html',
+					controller: 'SoftwareCtrl',
+				}
+			}
+		})
+		.state('main.software.new', {
+			url: '/new',
+			views: {
+				'action': {
+					templateUrl: '/app/modules/software/action/software.action.view.html',
+					controller: 'SoftwareNewCtrl'
+				}
+			}
+		})
+		.state('main.software.edit', {
+			url: '/edit',
+			views: {
+				'action': {
+					templateUrl: '/app/modules/software/action/software.action.view.html',
+					controller: 'SoftwareEditCtrl'
+				}
+			}
+		})
+		.state('main.software.delete', {
+			url: '/delete',
+			views: {
+				'action': {
+					templateUrl: '/app/modules/software/action/software.action.delete.view.html',
+					controller: 'SoftwareDeleteCtrl'
+				}
+			}
+		});
+
+	}
+
+})();
+
+(function () {
+    'use strict';
+
+    angular.module('main')
+    .service('SoftwareService', function ($http) {
+
+        var urlBase = '/soft';
+
+        this.getAll = function () {
+            return $http.get(urlBase);
+        };
+
+        this.get = function (id) {
+            return $http.get(urlBase + '/' + id);
+        };
+
+        this.new = function (software) {
+            return $http.post(urlBase, software);
+        };
+
+        this.update = function (software) {
+            return $http.put(urlBase, software)
+        };
+
+        this.delete = function (id) {
+            return $http.delete(urlBase, { 
+                    params: { 
+                        id: id
+                    }
+                }); 
+        };
+
+        this.getPage = function (currentPage, size) {
+            return $http.get(urlBase, { 
+                    params: { 
+                        page: currentPage, 
+                        size: size 
+                    }
+            });
+        };
+
+    });
+
+})();
+
+(function () {
     'use strict';
 
     angular
@@ -621,8 +629,8 @@
         sc.reverse = false;
 
         sc.sort = function(fieldName) {
-            $scope.reverse = ($scope.fieldName === fieldName) ? !$scope.reverse:false;
-            $scope.fieldName = fieldName;
+            sc.reverse = (sc.fieldName === fieldName) ? !sc.reverse:false;
+            sc.fieldName = fieldName;
         }
 
         sc.isSortUp = function(fieldName) {
@@ -680,13 +688,22 @@
 
 	function DeveloperDeleteCtrl ($scope, $state, $location, DeveloperService) {
 		var sc = $scope;
+		var devName;
+
+		DeveloperService.get(sc.id)
+	  		.success( function (data) {
+	  			devName = data.name;
+				sc.log = 'Are you sure you want to remove developer ' + devName + '?';
+	  		});
+ 
 
 		sc.delete = function () {
 			DeveloperService.delete(sc.id)
-			.success(function (data) {
-				alert('deleted' + sc.id);
-				sc.hotel = null;
-			});
+			.then(function successCallback(response) {
+			    alert('deleted' + sc.id);
+			  }, function errorCallback(response) {
+			    	sc.log = 'Developer "' + devName + '" could not be deleted because is in use yet';
+			  }); 
 		}
 	};
 })();
@@ -704,32 +721,37 @@
 
 		DeveloperService.get(sc.id)
 		.success(function (data) {
-			sc.hotel = data;
-			sc.name = sc.hotel.name;
-			sc.country = sc.hotel.country;
-			sc.city = sc.hotel.city;
-			sc.adress = sc.hotel.adress;
-			sc.director = sc.hotel.director;
-			sc.email = sc.hotel.email;
-			sc.phoneOfDirector = sc.hotel.phoneOfDirector;
-			sc.phoneOrders = sc.hotel.phoneOrders;
+			sc.developer = data;
+
+			sc.id = sc.developer.id;
+			sc.name = sc.developer.name;
+			sc.country = sc.developer.country;
+			sc.city = sc.developer.city;
+			sc.street = sc.developer.street;
+			sc.email = sc.developer.email;
+			sc.zipcode = sc.developer.zipcode;
+			sc.website = sc.developer.website;
+			sc.phoneNumber = sc.developer.phoneNumber;
+			sc.fax = sc.developer.fax;
 
 			sc.save = function () {
-				sc.hotel = {
+				sc.developer = {
+					'id': sc.id,
 					'name': sc.name,
-					'country':sc.country,
+					'country': sc.country.name,
 					'city': sc.city,
-					'adress': sc.adress,
-					'director': sc.director,
+					'street': sc.street,
 					'email': sc.email,
-					'phoneOfDirector': sc.phoneOfDirector,
-					'phoneOrders': sc.phoneOrders
+					'zipcode': sc.zipcode,
+					'website': sc.website,
+					'phoneNumber': sc.phoneNumber,
+					'fax': sc.fax
 				}
 
-				DeveloperService.update(sc.id, sc.hotel)
+				DeveloperService.update(sc.id, sc.developer)
 				.success(function (data) {
 					alert('updated!');
-					sc.hotel = null;
+					sc.developer = null;
 				});
 			}
 		});
@@ -748,170 +770,36 @@
 
 		sc.action = 'Add';
 
+		sc.id = null;
 		sc.name = null;
 		sc.country = null;
 		sc.city = null;
-		sc.adress = null;
-		sc.director = null;
+		sc.street = null;
 		sc.email = null;
-		sc.phoneOfDirector = null;
-		sc.phoneOrders = null;
+		sc.zipcode = null;
+		sc.website = null;
+		sc.phoneNumber = null;
+		sc.fax = null;
 
 		
 		sc.save = function () {
-			sc.hotel = {
-				'name': sc.name,
-				'country':sc.country,
-				'city': sc.city,
-				'adress': sc.adress,
-				'director': sc.director,
-				'email': sc.email,
-				'phoneOfDirector': sc.phoneOfDirector,
-				'phoneOrders': sc.phoneOrders
-			}
-
-			DeveloperService.new(sc.hotel)
-			.success(function (data) {
-				alert('added!');
-				sc.hotel = null;
-			});
-		}
-	};
-})();
-
-(function () {
-	'use strict';
-
-	angular
-	.module('main')
-	.controller('RoomEditCtrl', RoomEditCtrl);
-
-	function RoomEditCtrl ($scope, $state, $location, RoomsService) {
-		var sc = $scope;
-		sc.action = 'Edit';
-
-		RoomsService.get(sc.id)
-		.success(function (data) {
-			sc.room = data;
-			sc.roomType = sc.room.roomType;
-			sc.numberOfRooms = sc.room.numberOfRooms;
-			sc.typeOfBed = sc.room.typeOfBed;
-			sc.breakfast = sc.room.breakfast;
-			sc.price = sc.room.price;
-
-			sc.save = function () {
-				sc.room = {
-					'room': sc.name,
-					'roomType':sc.roomType,
-					'numberOfRooms': sc.numberOfRooms,
-					'typeOfBed': sc.typeOfBed,
-					'breakfast': sc.breakfast,
-					'price': sc.price
+			sc.developer = {
+					'id': sc.id,
+					'name': sc.name,
+					'country': sc.country.name,
+					'city': sc.city,
+					'street': sc.street,
+					'email': sc.email,
+					'zipcode': sc.zipcode,
+					'website': sc.website,
+					'phoneNumber': sc.phoneNumber,
+					'fax': sc.fax
 				}
 
-				RoomsService.update(sc.id, sc.room)
-				.success(function (data) {
-					alert('updated!');
-					sc.room = null;
-				});
-			}
-		});
-	}
-})();
-
-(function () {
-	'use strict';
-
-	angular
-	.module('main')
-	.controller('RoomNewCtrl', RoomNewCtrl);
-
-	function RoomNewCtrl ($scope, $state, $location, RoomsService) {
-		var sc = $scope;
-		sc.action = 'Edit';
-
-		RoomsService.get(sc.id)
-		.success(function (data) {
-			sc.room = data;
-			sc.roomType = sc.room.roomType;
-			sc.numberOfRooms = sc.room.numberOfRooms;
-			sc.typeOfBed = sc.room.typeOfBed;
-			sc.breakfast = sc.room.breakfast;
-			sc.price = sc.room.price;
-
-			sc.save = function () {
-				sc.room = {
-					'room': sc.name,
-					'roomType':sc.roomType,
-					'numberOfRooms': sc.numberOfRooms,
-					'typeOfBed': sc.typeOfBed,
-					'breakfast': sc.breakfast,
-					'price': sc.price
-				}
-
-				RoomsService.update(sc.id, sc.room)
-				.success(function (data) {
-					alert('updated!');
-					sc.room = null;
-				});
-			}
-		});
-	}
-})();
-
-(function () {
-	'use strict';
-
-	angular
-	.module('main')
-	.controller('RoomNewCtrl', RoomNewCtrl);
-
-	function RoomNewCtrl ($scope, $state, $location, RoomsService) {
-		var sc = $scope;
-
-		sc.action = 'Add';
-
-		sc.roomType = null;
-		sc.numberOfRooms = null;
-		sc.typeOfBed = null;
-		sc.breakfast = null;
-		sc.price = null;
-
-
-		sc.save = function () {
-			sc.room = {
-				'room': sc.name,
-				'roomType':sc.roomType,
-				'numberOfRooms': sc.numberOfRooms,
-				'typeOfBed': sc.typeOfBed,
-				'breakfast': sc.breakfast,
-				'price': sc.price
-			}
-
-			RoomsService.new(sc.room)
+			DeveloperService.new(sc.developer)
 			.success(function (data) {
 				alert('added!');
-				sc.room = null;
-			});
-		}
-	}
-})();
-
-(function () {
-	'use strict';
-
-	angular
-	.module('main')
-	.controller('RoomDeleteCtrl', RoomDeleteCtrl);
-
-	function RoomDeleteCtrl ($scope, $state, $location, RoomsService) {
-		var sc = $scope;
-
-		sc.delete = function () {
-			RoomsService.delete(sc.id)
-			.success(function (data) {
-				alert('deleted' + sc.id);
-				sc.room = null;
+				sc.developer = null;
 			});
 		}
 	};
@@ -1024,4 +912,128 @@
 			});
 		}
 	};
+})();
+
+(function () {
+	'use strict';
+
+	angular
+	.module('main')
+	.controller('SoftwareDeleteCtrl', SoftwareDeleteCtrl);
+
+	function SoftwareDeleteCtrl ($scope, $state, $location, SoftwareService) {
+		var sc = $scope;
+
+		sc.delete = function () {
+			SoftwareService.delete(sc.id)
+			.success(function (data) {
+				alert('deleted' + sc.id);
+			});
+		}
+	};
+})();
+
+(function () {
+	'use strict';
+
+	angular
+	.module('main')
+	.controller('SoftwareEditCtrl', SoftwareEditCtrl);
+
+	function SoftwareEditCtrl ($scope, $state, $location, SoftwareService, DeveloperService) {
+		var sc = $scope;
+
+		sc.action = 'Edit';
+
+		SoftwareService.get(sc.id)
+		.success(function (data) {
+			sc.software = data;
+
+			sc.id = sc.software.id;
+			sc.name = sc.software.name;
+			sc.version = sc.software.version;
+			sc.releaseValue = sc.software.release;
+			sc.license = sc.software.license;
+			sc.developer = sc.software.developer;
+			sc.windows = sc.software.windows;
+			sc.linux = sc.software.linux;
+			sc.macOS = sc.software.macOS;
+
+			sc.release = new Date(sc.software.release);
+
+			sc.selDeveloper = { id: sc.id };
+
+			DeveloperService.getAll().success( function (data) {
+				sc.developers = data.content;
+			});
+
+			sc.save = function () {
+				sc.soft = {
+					'id': sc.id,
+					'name': sc.name,
+					'version': sc.version,
+					'release': sc.release.getFullYear() + '-' + (sc.release.getMonth() + 1) + '-' + sc.release.getDate(),
+					'license': sc.license,
+					'developer': sc.developers[sc.selDeveloper.id - 1],
+					'windows': sc.windows,
+					'linux': sc.linux,
+					'macOS': sc.macOS
+				}
+
+				SoftwareService.update(sc.soft)
+				.success(function (data) {
+					alert('updated!');
+					sc.soft = null;
+				});
+			}
+		});
+	}
+})();
+
+(function () {
+	'use strict';
+
+	angular
+	.module('main')
+	.controller('SoftwareNewCtrl', SoftwareNewCtrl);
+
+	function SoftwareNewCtrl ($scope, $state, $location, SoftwareService, DeveloperService) {
+		var sc = $scope;
+
+		sc.action = 'Add';
+
+		sc.name = null;
+		sc.version = null;
+		sc.release = null;
+		sc.license = null;
+		sc.windows = false;
+		sc.linux = false;
+		sc.macOS = false;
+		
+		sc.selDeveloper = { id: null };
+
+		DeveloperService.getAll().success( function (data) {
+			sc.developers = data.content;
+		});
+
+		sc.save = function () {
+
+			sc.soft = {
+				'name': sc.name,
+				'version': sc.version,
+				'license': {"id":1,"name":"license1","type":"FREE","minimumUsers":1,"maximumUsers":100,"expiration":256,"priceForOne":0.0,"priceForTen":0.0,"priceForHundred":0.0},
+				'developer': sc.developers[sc.selDeveloper.id - 1],
+				'release': sc.release.getFullYear() + '-' + sc.release.getMonth() + '-' + sc.release.getDate(),
+				'windows': sc.windows,
+				'linux': sc.linux,
+				'macOS': sc.macOS
+			}
+
+			SoftwareService.new(sc.soft)
+			.success(function (data) {
+				alert('added!');
+				sc.soft = null;
+			});
+		}
+	}
 })();

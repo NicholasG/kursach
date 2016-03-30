@@ -11,32 +11,37 @@
 
 		DeveloperService.get(sc.id)
 		.success(function (data) {
-			sc.hotel = data;
-			sc.name = sc.hotel.name;
-			sc.country = sc.hotel.country;
-			sc.city = sc.hotel.city;
-			sc.adress = sc.hotel.adress;
-			sc.director = sc.hotel.director;
-			sc.email = sc.hotel.email;
-			sc.phoneOfDirector = sc.hotel.phoneOfDirector;
-			sc.phoneOrders = sc.hotel.phoneOrders;
+			sc.developer = data;
+
+			sc.id = sc.developer.id;
+			sc.name = sc.developer.name;
+			sc.country = sc.developer.country;
+			sc.city = sc.developer.city;
+			sc.street = sc.developer.street;
+			sc.email = sc.developer.email;
+			sc.zipcode = sc.developer.zipcode;
+			sc.website = sc.developer.website;
+			sc.phoneNumber = sc.developer.phoneNumber;
+			sc.fax = sc.developer.fax;
 
 			sc.save = function () {
-				sc.hotel = {
+				sc.developer = {
+					'id': sc.id,
 					'name': sc.name,
-					'country':sc.country,
+					'country': sc.country.name,
 					'city': sc.city,
-					'adress': sc.adress,
-					'director': sc.director,
+					'street': sc.street,
 					'email': sc.email,
-					'phoneOfDirector': sc.phoneOfDirector,
-					'phoneOrders': sc.phoneOrders
+					'zipcode': sc.zipcode,
+					'website': sc.website,
+					'phoneNumber': sc.phoneNumber,
+					'fax': sc.fax
 				}
 
-				DeveloperService.update(sc.id, sc.hotel)
+				DeveloperService.update(sc.id, sc.developer)
 				.success(function (data) {
 					alert('updated!');
-					sc.hotel = null;
+					sc.developer = null;
 				});
 			}
 		});

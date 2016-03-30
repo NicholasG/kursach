@@ -10,32 +10,36 @@
 
 		sc.action = 'Add';
 
+		sc.id = null;
 		sc.name = null;
 		sc.country = null;
 		sc.city = null;
-		sc.adress = null;
-		sc.director = null;
+		sc.street = null;
 		sc.email = null;
-		sc.phoneOfDirector = null;
-		sc.phoneOrders = null;
+		sc.zipcode = null;
+		sc.website = null;
+		sc.phoneNumber = null;
+		sc.fax = null;
 
 		
 		sc.save = function () {
-			sc.hotel = {
-				'name': sc.name,
-				'country':sc.country,
-				'city': sc.city,
-				'adress': sc.adress,
-				'director': sc.director,
-				'email': sc.email,
-				'phoneOfDirector': sc.phoneOfDirector,
-				'phoneOrders': sc.phoneOrders
-			}
+			sc.developer = {
+					'id': sc.id,
+					'name': sc.name,
+					'country': sc.country.name,
+					'city': sc.city,
+					'street': sc.street,
+					'email': sc.email,
+					'zipcode': sc.zipcode,
+					'website': sc.website,
+					'phoneNumber': sc.phoneNumber,
+					'fax': sc.fax
+				}
 
-			DeveloperService.new(sc.hotel)
+			DeveloperService.new(sc.developer)
 			.success(function (data) {
 				alert('added!');
-				sc.hotel = null;
+				sc.developer = null;
 			});
 		}
 	};

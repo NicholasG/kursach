@@ -2,24 +2,24 @@
     'use strict';
 
     angular.module('main')
-    .service('DeveloperService', function ($http) {
+    .service('SoftwareService', function ($http) {
 
-        var urlBase = '/dev';
+        var urlBase = '/soft';
 
         this.getAll = function () {
             return $http.get(urlBase);
-        };  
+        };
 
         this.get = function (id) {
             return $http.get(urlBase + '/' + id);
         };
 
-        this.new = function (dev) {
-            return $http.post(urlBase, dev);
+        this.new = function (software) {
+            return $http.post(urlBase, software);
         };
 
-        this.update = function (id, dev) {
-            return $http.put(urlBase, dev)
+        this.update = function (software) {
+            return $http.put(urlBase, software)
         };
 
         this.delete = function (id) {
@@ -30,11 +30,9 @@
                 }); 
         };
 
-        this.getPage = function (currentPage, size, name, country) {
+        this.getPage = function (currentPage, size) {
             return $http.get(urlBase, { 
                     params: { 
-                        name: name,
-                        country: country,
                         page: currentPage, 
                         size: size 
                     }
