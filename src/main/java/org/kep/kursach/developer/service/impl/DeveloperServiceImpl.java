@@ -12,6 +12,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Base64Utils;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * Created by NicholasG on 05.03.2016.
@@ -81,4 +86,19 @@ public class DeveloperServiceImpl implements DeveloperService {
         return repository.findAllByNameAndCountry( pageable, name, country );
     }
 
+    @Override
+    public ResponseEntity<Void> updateLogo( Long id, MultipartFile multipartFile ) {
+        return repository.findOneById( id )
+                .map( d -> {
+                    try {
+                        d.setLogo( Base64Utils.encodeToString( multipartFile.getBytes() ) );
+                    } catch ( IOException e ) {
+                        LOG.warn( Arrays.toString( e.getStackTrace() ) );
+                    }
+                    repository.saveAndFlush( d );
+                    LOG.info( "Logo has been updated" );
+                    return ResponseEntity.ok().build();
+                } )
+                .orElseGet( () -> new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR ) );
+    }
 }

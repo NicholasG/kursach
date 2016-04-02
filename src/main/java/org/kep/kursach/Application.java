@@ -13,6 +13,8 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan
 public class Application extends SpringBootServletInitializer {
 
+    public static final String ROOT = "C:\\Users\\yar65\\Desktop\\test\\kursach\\src\\main\\resources";
+
     @Override
     protected SpringApplicationBuilder configure( SpringApplicationBuilder builder ) {
         return builder.sources( Application.class );

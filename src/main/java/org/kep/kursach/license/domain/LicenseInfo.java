@@ -69,15 +69,14 @@ public class LicenseInfo {
     public LicenseInfo() {
     }
 
-    public LicenseInfo(
-            String name,
-            Type type,
-            int minimumUsers,
-            int maximumUsers,
-            int expiration,
-            double priceForOne,
-            double priceForTen,
-            double priceForHundred
+    public LicenseInfo( String name,
+                        Type type,
+                        int minimumUsers,
+                        int maximumUsers,
+                        int expiration,
+                        double priceForOne,
+                        double priceForTen,
+                        double priceForHundred
     ) {
         this.name = name;
         this.type = type;

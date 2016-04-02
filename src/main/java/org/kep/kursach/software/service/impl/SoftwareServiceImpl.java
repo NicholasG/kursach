@@ -48,8 +48,8 @@ public class SoftwareServiceImpl implements SoftwareService {
                     s.setLinux( software.isLinux() );
                     s.setMacOS( software.isMacOS() );
                     repository.saveAndFlush( s );
-                    LOG.info( "Software '{}' has been edited", software.getName() );
-                    return ResponseEntity.ok().body( software );
+                    LOG.info( "Software '{}' has been edited", s.getName() );
+                    return ResponseEntity.ok().body( s );
                 } )
                 .orElseGet( () -> new ResponseEntity( HttpStatus.INTERNAL_SERVER_ERROR ) );
     }
@@ -70,7 +70,11 @@ public class SoftwareServiceImpl implements SoftwareService {
     }
 
     @Override
-    public Page<SoftwareInfo> searchFor( Pageable pageable, String name, String release, String licName, String devName ) {
+    public Page<SoftwareInfo> searchFor( Pageable pageable,
+                                         String name,
+                                         String release,
+                                         String licName,
+                                         String devName ) {
         if ( name == null || name.equals( "" ) ) name = "%";
         else name += "%";
 

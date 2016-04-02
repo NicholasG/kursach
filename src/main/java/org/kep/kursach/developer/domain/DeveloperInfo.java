@@ -53,19 +53,21 @@ public class DeveloperInfo implements Serializable {
     @OneToMany( targetEntity = SoftwareInfo.class, cascade = ALL, mappedBy = "developer" )
     private Set<SoftwareInfo> products = new HashSet<>();
 
+    @Column( name = "logo", length = 7000000)
+    private String logo;
+
     public DeveloperInfo() {
     }
 
-    public DeveloperInfo(
-            String name,
-            String country,
-            String city,
-            String street,
-            String zipcode,
-            String email,
-            String website,
-            String phoneNumber,
-            String fax
+    public DeveloperInfo( String name,
+                          String country,
+                          String city,
+                          String street,
+                          String zipcode,
+                          String email,
+                          String website,
+                          String phoneNumber,
+                          String fax
     ) {
         this.name = name;
         this.country = country;
@@ -164,6 +166,14 @@ public class DeveloperInfo implements Serializable {
 
     public void setFax( String fax ) {
         this.fax = fax;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo( String logo ) {
+        this.logo = logo;
     }
 
 }

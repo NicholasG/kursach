@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Created by NicholasG on 05.03.2016.
@@ -36,7 +37,7 @@ public class DeveloperController {
     )
     public ResponseEntity<Page<DeveloperInfo>> search( Pageable pageable, String name, String country ) {
         LOG.info( "Searching for developer by name='{}', country='{}'", name, country );
-        Page<DeveloperInfo> page = developerService.searchFor( pageable, name,country );
+        Page<DeveloperInfo> page = developerService.searchFor( pageable, name, country );
 
         return ResponseEntity.ok( page );
     }
@@ -81,6 +82,18 @@ public class DeveloperController {
                 .findOneById( id )
                 .map( ResponseEntity::ok )
                 .orElseGet( () -> new ResponseEntity( HttpStatus.NOT_FOUND ) );
+    }
+
+    @RequestMapping(
+            value = "/upload",
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<Void> handleFileUpload( @RequestParam( "id" ) Long id,
+                                                    @RequestParam( "file" ) MultipartFile multipartFile ) {
+        LOG.info( "Updating dev='{}' logo" );
+
+        return developerService.updateLogo(id, multipartFile);
     }
 
 }

@@ -47,15 +47,14 @@ public class SoftwareInfo {
     public SoftwareInfo() {
     }
 
-    public SoftwareInfo(
-            String name,
-            String version,
-            Date release,
-            DeveloperInfo developer,
-            LicenseInfo license,
-            boolean windows,
-            boolean linux,
-            boolean macOS
+    public SoftwareInfo( String name,
+                         String version,
+                         Date release,
+                         DeveloperInfo developer,
+                         LicenseInfo license,
+                         boolean windows,
+                         boolean linux,
+                         boolean macOS
     ) {
         this.name = name;
         this.version = version;

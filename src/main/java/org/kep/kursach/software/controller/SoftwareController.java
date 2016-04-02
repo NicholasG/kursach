@@ -34,12 +34,11 @@ public class SoftwareController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Page<SoftwareInfo>> search(
-            Pageable pageable,
-            String name,
-            String release,
-            String devName,
-            String licName ) {
+    public ResponseEntity<Page<SoftwareInfo>> search( Pageable pageable,
+                                                      String name,
+                                                      String release,
+                                                      String devName,
+                                                      String licName ) {
         if ( release != null && !release.equals( "" ) ) {
             LOG.info( "Searching for some software by " +
                             "name='{}', release='{}', devName='{}', licName='{}'",
@@ -78,8 +77,7 @@ public class SoftwareController {
 
     @RequestMapping(
             method = RequestMethod.DELETE,
-            produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.APPLICATION_JSON_VALUE
+            produces = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<Void> deleteSoftware( @RequestParam( "id" ) Long id ) {
         LOG.info( "Deleting software id={}", id );
