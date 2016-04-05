@@ -85,7 +85,7 @@ public class DeveloperController {
     }
 
     @RequestMapping(
-            value = "/upload",
+            value = "/logo",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
