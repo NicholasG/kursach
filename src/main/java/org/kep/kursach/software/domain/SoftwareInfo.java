@@ -15,7 +15,7 @@ import static javax.persistence.CascadeType.ALL;
  * Created by NicholasG on 02.03.2016.
  */
 @Entity
-@Table( name = "softwareInfo" )
+@Table( name = "software_info" )
 public class SoftwareInfo {
 
     @Id
@@ -29,15 +29,15 @@ public class SoftwareInfo {
     @Column( name = "version" )
     private String version;
 
-    @Column( name = "release" )
+    @Column( name = "_release" )
     private Date release;
 
     @ManyToOne
-    @JoinColumn( name = "developerId", nullable = false )
+    @JoinColumn( name = "developer_id", nullable = false )
     private DeveloperInfo developer;
 
     @ManyToOne
-    @JoinColumn( name = "licenseId", nullable = false )
+    @JoinColumn( name = "license_id", nullable = false )
     private LicenseInfo license;
 
     @Column( name = "windows" )

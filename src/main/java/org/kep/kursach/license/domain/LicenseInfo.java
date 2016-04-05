@@ -13,7 +13,7 @@ import static javax.persistence.CascadeType.ALL;
  * Created by NicholasG on 02.03.2016.
  */
 @Entity
-@Table( name = "licenseInfo" )
+@Table( name = "license_info" )
 public class LicenseInfo {
 
     public enum Type {
@@ -44,22 +44,22 @@ public class LicenseInfo {
     @Column( name = "type" )
     private Type type;
 
-    @Column( name = "minimumUsers" )
+    @Column( name = "minimum_users" )
     private int minimumUsers;
 
-    @Column( name = "maximumUsers" )
+    @Column( name = "maximum_users" )
     private int maximumUsers;
 
     @Column( name = "expiration" )
     private int expiration;
 
-    @Column( name = "priceForOne" )
+    @Column( name = "price_for_one" )
     private double priceForOne;
 
-    @Column( name = "priceForTen" )
+    @Column( name = "price_for_ten" )
     private double priceForTen;
 
-    @Column( name = "priceForHundred" )
+    @Column( name = "price_for_hundred" )
     private double priceForHundred;
 
     @JsonIgnore

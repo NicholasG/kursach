@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
@@ -16,8 +17,9 @@ import java.util.Properties;
 /**
  * Created by NicholasG on 05.03.2016.
  */
+@Profile( "dev" )
 @Configuration
-@PropertySource( "classpath:/application.properties" )
+@PropertySource( "classpath:/dev.properties" )
 @EnableTransactionManagement
 public class H2Configuration implements ApplicationListener<ContextRefreshedEvent> {
 

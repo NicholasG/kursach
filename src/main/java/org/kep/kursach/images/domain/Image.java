@@ -22,7 +22,7 @@ public class Image {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn( name = "softwareId", nullable = false )
+    @JoinColumn( name = "software_id", nullable = false )
     private SoftwareInfo software;
 
     public Image( String image ) {
