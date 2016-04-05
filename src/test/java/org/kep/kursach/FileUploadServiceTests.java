@@ -24,7 +24,7 @@ public class FileUploadServiceTests {
         parts.add( "id", 1L );
         parts.add( "image", new FileSystemResource( filename ) );
 
-        String url = "http://localhost:8080/dev/upload";
+        String url = "http://localhost:8080/dev/logo";
 
         long requestLength = new FileSystemResource( filename ).getFile().length();
         System.out.println( "Request length = " + requestLength );
