@@ -89,8 +89,7 @@ public class DeveloperController {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Void> updateLogo( @RequestParam( "id" ) Long id,
-                                            @RequestParam( "image" ) MultipartFile logo ) {
+    public ResponseEntity<Void> updateLogo( Long id, MultipartFile logo ) {
         LOG.info( "Updating dev='{}' logo" );
 
         return developerService.updateLogo( id, logo );
