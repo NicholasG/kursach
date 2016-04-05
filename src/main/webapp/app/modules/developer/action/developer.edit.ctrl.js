@@ -27,7 +27,7 @@
 			sc.fax = sc.developer.fax;
 
 			var flow = new Flow({ 
-				target: '/dev/upload?id=' + sc.id,
+				target: '/dev/logo?id=' + sc.id,
 				testChunks: false,
 				singleFile: true
 			});
