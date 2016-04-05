@@ -11,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface DeveloperService {
 
-
     ResponseEntity<DeveloperInfo> add( DeveloperInfo developer );
 
     ResponseEntity<?> edit( DeveloperInfo developer );
@@ -21,4 +20,5 @@ public interface DeveloperService {
     Page<DeveloperInfo> searchFor( Pageable pageable, String name, String country );
 
     ResponseEntity<Void> updateLogo( Long id, MultipartFile multipartFile );
+
 }

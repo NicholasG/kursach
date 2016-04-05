@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Created by NicholasG on 05.03.2016.
@@ -95,6 +96,18 @@ public class SoftwareController {
                 .findOneById( id )
                 .map( ResponseEntity::ok )
                 .orElseGet( () -> new ResponseEntity( HttpStatus.NOT_FOUND ) );
+    }
+
+    @RequestMapping(
+            value = "/images",
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<Void> addImage( @RequestParam( "id" ) Long id,
+                                          @RequestParam( "image" ) MultipartFile image ) {
+        LOG.info( "Setting image for software id='{}'" );
+
+        return softwareService.addImage( id, image );
     }
 
 }
