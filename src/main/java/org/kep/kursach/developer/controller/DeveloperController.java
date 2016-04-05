@@ -89,10 +89,10 @@ public class DeveloperController {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Void> updateLogo( Long id, MultipartFile logo ) {
-        LOG.info( "Updating dev='{}' logo" );
+    public ResponseEntity<Void> updateLogo( Long id, MultipartFile image ) {
+        LOG.info( "Updating dev='{}' image" );
 
-        return developerService.updateLogo( id, logo );
+        return developerService.updateLogo( id, image );
     }
 
 }
