@@ -9,7 +9,7 @@
             <i class="fa fa-dashboard"></i>  <a href="#/home" translate>home</a>
           </li>
           <li class="active" translate>
-            <i class="fa fa-table" ></i> {{table}}
+            <i class="fa fa-table"></i> {{table}}
           </li>
         </ol>
       </div>
@@ -24,7 +24,7 @@
           <tbody ng-switch="table">
             <tr ng-switch-when="developer" ng-repeat="row in data = (main.content | filter: filterField | orderBy: fieldName:reverse)" ng-dblclick="openEdit(row.id)"
               >
-              <td>{{row.name}}</td>
+              <td><a ng-href="#/developer/{{row.id}}">{{row.name}}</a></td>
               <td><span uib-popover="{{row.city}}, {{row.street}}, {{row.zipcode}}" popover-trigger="mouseenter" popover-title="Adress" popover-placement="top-left">{{row.country}}</span></td>
               <td>{{row.email}}</td>
               <td>{{row.website}}</td>
@@ -36,14 +36,15 @@
               </td>
             </tr>
             <tr ng-switch-when="software" ng-repeat="row in data = (main.content | filter: filterField | orderBy: fieldName:reverse)" ng-dblclick="openEdit(row.id)">
-              <td>{{row.name}}</td>
+              <td><a href="#/software/{{row.id}}">{{row.name}}</a></td>
               <td>{{row.version}}</td>
               <td>{{row.release}}</td>
               <td>{{row.developer.name}}</td>
-              <td ng-switch="row.license.type">
-                <span ng-switch-when="FREE" class="label label-success">free</span>
-                <span ng-switch-when="TRIAL" class="label label-warning">trail</span>
-                <span ng-switch-when="PAID" class="label label-primary">paid</span>
+              <td ng-switch="row.license.type" >
+                <span ng-switch-when="FREE" class="label label-success" uib-popover="{{row.license.name}} {{row.license.priceForOne}}, {{row.license.minimumUsers}}" popover-trigger="mouseenter" popover-title="License" popover-placement="top-left">free</span>
+                <span ng-switch-when="TRIAL" class="label label-warning" uib-popover="{{row.license.name}}, {{row.license.priceForOne}}, {{row.license.minimumUsers}}" popover-trigger="mouseenter" popover-title="License" popover-placement="top-left">trial</span>
+                <span ng-switch-when="PAID" class="label label-primary" uib-popover="{{row.license.name}}, {{row.license.priceForOne}}, {{row.license.minimumUsers}}" popover-trigger="mouseenter" popover-title="License" popover-placement="top-left">paid</span>
+                <span ></span>
               </td>
               <td><span ng-show="row.windows" class="glyphicon glyphicon-ok"></span></td>
               <td><span ng-show="row.linux" class="glyphicon glyphicon-ok"></span></td>
@@ -53,16 +54,19 @@
                 <i class="glyphicon glyphicon-remove action" ng-click="openDelete(row.id)"></i>
               </td>
             </tr>
-            <tr ng-switch-when="rooms" ng-repeat="row in data = (main.content | filter: filterField | orderBy: fieldName:reverse)" ng-dblclick="openEdit(row.id)">
-              <td>{{$index + 1}}</td>
-              <td>{{row.roomType}}</td>
-              <td>{{row.numberOfRooms}}</td>
-              <td>{{row.typeOfBed}}</td>
-              <td ng-switch="row.breakfast">
-                <span ng-switch-when="true" class="label label-success">available</span>
-                <span ng-switch-when="false" class="label label-warning">not available</span>
+            <tr ng-switch-when="license" ng-repeat="row in data = (main.content | filter: filterField | orderBy: fieldName:reverse)" ng-dblclick="openEdit(row.id)">
+              <td>{{row.name}}</td>
+              <td ng-switch="row.type">
+                <span ng-switch-when="FREE" class="label label-success">free</span>
+                <span ng-switch-when="TRIAL" class="label label-warning">trial</span>
+                <span ng-switch-when="PAID" class="label label-primary">paid</span>
               </td>
-              <td>{{row.price | currency:"$"}}</td>
+              <td>{{row.minimumUsers}}</td>
+              <td>{{row.maximumUsers}}</td>
+              <td>{{row.expiration}}</td>
+              <td>{{row.priceForOne | currency:"$"}}</td>
+              <td>{{row.priceForTen | currency:"$"}}</td>
+              <td>{{row.priceForHundred | currency:"$"}}</td>
               <td>
                 <i class="glyphicon glyphicon-pencil action" ng-click="openEdit(row.id)"></i>
                 <i class="glyphicon glyphicon-remove action" ng-click="openDelete(row.id)"></i>
@@ -87,38 +91,14 @@
       <div class="panel-heading">
         <h3 class="panel-title" translate>filter</h3>
       </div>
-      <div class="panel-body">
-        <label translate>name</label>
-        <input name="name" ng-model="name" type="text" class="form-control" placeholder="Enter dev name" ng-change="loadPage(1)" pattern="[A-z^\s]*">
-        <label>country</label>
-        <input name="country" type="text" ng-model="country" placeholder="Enter country" uib-typeahead="country as country.name for country in countriesWithFlags | filter:{name:$viewValue}" typeahead-template-url="app/shared/dropdown/countries/dropdown.countries.html" class="form-control" typeahead-show-hint="true" typeahead-min-length="0" ng-change="loadPage(1)">
-       <!--  <div ng-show="false">
-          <label translate>roomOfType</label>
-          <select class="form-control" ng-model="roomOfType" ng-change="searchByField(tableHeader[0], roomOfType)">
-            <option></option>
-            <option>qwe</option>
-            <option>qwe</option>
-            <option>qwe</option>
-            <option>qwe</option>
-          </select>
-          <label translate>numberOfRooms</label>
-          <input name="numberOfRooms" ng-model="numberOfRooms" type="number" class="form-control" ng-change="searchByField(tableHeader[1], numberOfRooms)" min="0" max="10">
-          <label translate>typeOfBed</label>
-          <select class="form-control" ng-model="typeOfBed" ng-change="searchByField(tableHeader[2], typeOfBed)">
-            <option></option>
-            <option>qwe</option>
-            <option>qwe</option>
-            <option>qwe</option>
-            <option>qwe</option>
-          </select>
-          <label translate>breakfast</label>
-          <div class="btn-group btn-group-justified">
-            <label class="btn btn-default" ng-model="breakfast" uib-btn-radio="'true'" ng-change="searchByField(tableHeader[3], breakfast)"><span translate>avilable</span></label>
-            <label class="btn btn-default" ng-model="breakfast" uib-btn-radio="'false'" ng-change="searchByField(tableHeader[3], breakfast)"><span translate>notAvilable</span></label>
-          </div>
+      <div class="panel-body" ui-view="filter">
+        <!-- <div>
+          <label translate>name</label>
+          <input name="name" ng-model="name" type="text" class="form-control" placeholder="Enter dev name" ng-change="loadPage(1)" pattern="[A-z^\s]*">
         </div> -->
       </div>
     </div>
     <button class="btn btn-success full-width" ng-click="openAdd()"><i class="glyphicon glyphicon-plus"></i> <span translate>add</span></button>
   </div>
-  <div ui-view="action"></div>
+</div>
+<div ui-view="action"></div>

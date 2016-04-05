@@ -11,5 +11,6 @@
         sc.location = function() {
             return $location.path();
         }    
+
     }
 })();

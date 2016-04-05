@@ -1,8 +1,7 @@
-<div class="popup-container" ng-click="close()"></div>
-<div id="dev-add" class="panel panel-default popup" ng-cotroller="ActionCtrl">
+<div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title"><i class="fa fa-long-arrow-right fa-fw"></i>{{action}}</h3>
-    <i class="glyphicon glyphicon-remove action action-close right" ng-click="close()"></i>
+    <i class="glyphicon glyphicon-remove action action-close right" ng-click="closeThisDialog(true)"></i>
   </div>
   <div class="panel-body">
     <div class="col-lg-6">
@@ -14,9 +13,11 @@
         <label>city</label>
         <input name="city" type="text" class="form-control" ng-model="city" placeholder="Enter city" pattern="[A-z^\s]*" maxlength="35" uib-tooltip="Only numbers" tooltip-is-open="devForm.city.$invalid" tooltip-trigger="none">
         <label>street</label>
-        <input type="text" class="form-control" ng-model="street" placeholder="Enter street" maxlength="100"> 
+        <input type="text" class="form-control" ng-model="street" placeholder="Enter street" maxlength="100">
+        <label>Photo</label><br>
+        <button id="browseButton" class="btn btn-default">Upload File</button>
       </form>
-    </div>    
+    </div>
     <div class="col-lg-6">
       <form name="devForm">
         <label>zipcode</label>
@@ -30,12 +31,15 @@
         <input name="phoneNumber" type="text" class="form-control" ng-model="phoneNumber" placeholder="Example: 0986171061" pattern="^([0-9]*)$" maxlength="10"
         uib-tooltip="Only numbers"  tooltip-is-open="devForm.phoneNumber.$invalid" tooltip-trigger="none">
         <label>fax</label>
-        <input type="text" class="form-control" ng-model="fax" placeholder="Enter zipcode" maxlength="60">
+        <input type="text" class="form-control" ng-model="fax" placeholder="Enter zipcode" maxlength="60">    
       </form>
-    </div>    
+    </div>
+    <div class="col-lg-12">
+      {{previewImage}}
+    </div>
     <div class="col-lg-12 tools">
       <button class="btn btn-primary" ng-click="save()"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
-      <button class="btn btn-default right" ng-click="close()" style="margin-right: 15px;">Cancel</button>
+      <button class="btn btn-default right" ng-click="closeThisDialog(true)" style="margin-right: 15px;">Cancel</button>
     </div>
   </div>
 </div>

@@ -23,11 +23,14 @@
           <option value="" disabled>{{developer.name}}</option>
         </select>
         <label>license</label>
-        <div class="btn-group btn-group-justified">
+        <select class="form-control" ng-options="lic.name for lic in licensies" ng-model="selLicense">
+          <option value="" disabled>{{license.name}}</option>
+        </select>
+        <!-- <div class="btn-group btn-group-justified">
           <label class="btn btn-default" ng-class="{ 'btn-success': license.type == 'FREE'}" ng-model="license.type" uib-btn-radio="'FREE'">free</label>
           <label class="btn btn-default" ng-class="{ 'btn-warning': license.type == 'TRIAL'}" ng-model="license.type" uib-btn-radio="'TRIAL'">trial</label>
           <label class="btn btn-default" ng-class="{ 'btn-primary': license.type == 'PAID'}" ng-model="license.type" uib-btn-radio="'PAID'">paid</label>
-        </div>
+        </div> -->
         <label>operationSystem</label>
         <div class="btn-group btn-group-justified">
           <label class="btn btn-default" ng-model="windows" uib-btn-checkbox>windows</label>

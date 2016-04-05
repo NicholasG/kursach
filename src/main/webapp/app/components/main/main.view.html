@@ -1,5 +1,4 @@
 <div id="wrapper">
-
   <!-- Navigation -->
   <nav id="sidebar-wrapper">
     <ul class="sidebar-nav" ng-init="activePage()">
@@ -14,26 +13,20 @@
       <li ng-class="{'active': location() == '/developer'}">
         <a href="#/developer"><i class="glyphicon glyphicon-home"></i> <span translate>developer</span></a>
       </li>
-      <li ng-class="{'active': location() == '/workers'}" >
-        <a href="#/workers"><i class="glyphicon glyphicon-user"></i> <span translate>license</span></a>
+      <li ng-class="{'active': location() == '/license'}" >
+        <a href="#/license"><i class="glyphicon glyphicon-user"></i> <span translate>license</span></a>
       </li>
       <li ng-class="{'active': location() == '/software'}">
         <a href="#/software"><i class="glyphicon glyphicon-th-large"></i> <span translate>software</span></a>
       </li>
     </ul>
   </nav>
-
   <div id="page-content-wrapper">
-
     <div class="container-fluid">
-
       <ui-view></ui-view>
-
     </div>
     <!-- /.container-fluid -->
-
   </div>
   <!-- /#page-wrapper -->
-
 </div>
 <!-- /#wrapper -->

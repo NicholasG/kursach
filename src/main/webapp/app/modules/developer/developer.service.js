@@ -41,6 +41,16 @@
             });
         };
 
+        this.uploadImage = function (file, id) {
+            var fd = new FormData();
+            fd.append('file', file);
+
+            return $http.post(urlBase + '/upload', fd, {
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined },
+                params: { id: id }
+            });
+        }
     });
 
 })();

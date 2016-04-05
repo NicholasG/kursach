@@ -10,11 +10,17 @@
     "angular-resource": "1.4.x",
     "angular-ui-router":"0.2.x",
     "angular-animate": "~1.4.x",
+    "angular-base64": "",
+    "ng-flow": "",
+    "ng-dialog": "",
     "angular-translate":"2.9.x",
-    "angular-translate-loader-static-files":"2.9.x",
-    "bootstrap":"3.3.x",
-    "Chart.js":"1.0.x",
+    "angular-translate-loader-static-files":"~2.9.x",
+    "bootstrap":"~3.3.x",
+    "Chart.js":"~1.0.x",
     "jscs":"~2.0.0"
+  },
+  "resolutions": {
+    "angular": "~1.4.x"
   }
 }
  

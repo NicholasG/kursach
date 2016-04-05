@@ -5,7 +5,7 @@
 	.module('main')
 	.controller('SoftwareEditCtrl', SoftwareEditCtrl);
 
-	function SoftwareEditCtrl ($scope, $state, $location, SoftwareService, DeveloperService) {
+	function SoftwareEditCtrl ($scope, $state, $location, SoftwareService, DeveloperService, LicenseService) {
 		var sc = $scope;
 
 		sc.action = 'Edit';
@@ -26,10 +26,15 @@
 
 			sc.release = new Date(sc.software.release);
 
-			sc.selDeveloper = {};
+			sc.selDeveloper = sc.software.developer;
+			sc.selLicense = sc.software.license;
 
 			DeveloperService.getAll().success( function (data) {
 				sc.developers = data.content;
+			});
+
+			LicenseService.getAll().success( function (data) {
+				sc.licensies = data.content;
 			});
 
 			sc.save = function () {
@@ -38,7 +43,7 @@
 					'name': sc.name,
 					'version': sc.version,
 					'release': sc.release.getFullYear() + '-' + (sc.release.getMonth() + 1) + '-' + sc.release.getDate(),
-					'license': sc.license,
+					'license': sc.selLicense,
 					'developer': sc.selDeveloper,
 					'windows': sc.windows,
 					'linux': sc.linux,

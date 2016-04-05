@@ -3,19 +3,22 @@
 
 	var main = angular.module('main', [
 		'developer',
-		'workers',
+		'license',
 		'software',
 		'ui.router',
 		'ui.bootstrap',
 		'ngResource',
-		'pascalprecht.translate'
+		'pascalprecht.translate',
+		'base64',
+		'flow',
+		'ngDialog'
 		])
 	.config(configure).
 	run(run);
 
 
 	configure.$inject = ['$stateProvider', '$urlRouterProvider', '$translateProvider'];
-	function configure($stateProvider, $urlRouterProvider, $translateProvider) {
+	function configure ($stateProvider, $urlRouterProvider, $translateProvider) {
 
 		$urlRouterProvider.otherwise(function ($injector) {
 			var $state = $injector.get("$state");

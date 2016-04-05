@@ -1,0 +1,38 @@
+<div class="popup-container" ng-click="close()"></div>
+<div id="lic-add" class="panel panel-default popup">
+  <div class="panel-heading">
+    <h3 class="panel-title"><i class="fa fa-long-arrow-right fa-fw"></i>{{action}}</h3>
+    <i class="glyphicon glyphicon-remove action action-close right" ng-click="close()"></i>
+  </div>
+  <div class="panel-body">
+    <div class="col-lg-6">
+      <label>name</label>
+      <input name="name" ng-model="name" type="text" class="form-control">
+      <label>type</label>
+      <select class="form-control" ng-model="type">
+        <option value="" disabled>{{type}}</option>
+        <option value="FREE">free</option>
+        <option value="TRIAL">trial</option>
+        <option value="PAID">paid</option>
+      </select>
+      <label>minimumUsers</label>
+      <input name="minimumUsers" ng-model="minimumUsers" type="number" class="form-control" min="0">
+      <label>maximumUsers</label>
+      <input name="maximumUsers" ng-model="maximumUsers" type="number" class="form-control" min="0">
+    </div><!-- /.col-lg-6 -->
+    <div class="col-lg-6">
+      <label>expiration</label>
+      <input name="expiration" ng-model="expiration" type="number" class="form-control" min="0">
+      <label>priceForOne</label>
+      <input name="priceForOne" ng-model="priceForOne" type="number" class="form-control">
+      <label>priceForTen</label>
+      <input name="priceForTen" ng-model="priceForTen" type="number" class="form-control">
+      <label>priceForHundred</label>
+      <input name="priceForHundred" ng-model="priceForHundred" type="number" class="form-control">
+    </div><!-- /.col-lg-6 -->   
+    <div class="col-lg-12 tools">
+     <button class="btn btn-primary" ng-click="save()"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+     <button class="btn btn-default right" ng-click="close()" style="margin-right: 15px;">Cancel</button>
+   </div>  
+ </div>
+</div>

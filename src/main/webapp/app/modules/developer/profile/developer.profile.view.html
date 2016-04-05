@@ -1,0 +1,57 @@
+<!-- /.row -->
+<div class="row profile">
+  <div class="col-lg-9">
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading" style="padding: 0">
+        <ol class="breadcrumb" style="margin: 0">
+          <li>
+            <i class="fa fa-dashboard"></i>  <a href="#/home" translate>home</a>
+          </li>
+          <li>
+            <i class="fa fa-dashboard"></i>  <a href="#/{{table}}" translate>{{table}}</a>
+          </li>
+          <li class="active" translate>
+            <i class="fa fa-table" ></i> {{profile.name}}
+          </li>
+        </ol>
+      </div>
+      <div class="panel-body">
+        <div class="col-lg-6">
+          <img class="avatar" ng-src="data:image/png;base64, {{profile.logo}}" onerror="this.src = '/dist/img/no_image.gif'">
+        </div>
+        <div class="col-lg-6">
+          <table class="table">
+            <tr>
+              <td translate>name</td><td><b>{{profile.name}}</b></td>
+            </tr>
+            <tr>
+              <td translate>city</td><td><b>{{profile.city}}</b></td>
+            </tr>
+            <tr>
+              <td translate>street</td><td><b>{{profile.street}}</b></td>
+            </tr>
+            <tr>
+              <td translate>zipcode</td><td><b>{{profile.zipcode}}</b></td>
+            </tr>
+            <tr>
+              <td translate>country</td><td><b>{{profile.country}}</b></td>
+            </tr>
+            <tr>
+              <td translate>email</td><td><b>{{profile.email}}</b></td>
+            </tr>
+            <tr>
+              <td translate>website</td><td><b>{{profile.website}}</b></td>
+            </tr>
+            <tr>
+              <td translate>phoneNumber</td><td><b>{{profile.phoneNumber | phone}}</b></td>
+            </tr>
+            <tr>
+              <td translate>fax</td><td><b>{{profile.fax}}</b></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

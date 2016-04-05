@@ -20,6 +20,7 @@
 		sc.phoneNumber = null;
 		sc.fax = null;
 
+		sc.target = { target: '/dev/upload?id=' + sc.id };
 		
 		sc.save = function () {
 			sc.developer = {

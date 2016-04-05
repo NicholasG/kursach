@@ -3,12 +3,12 @@
 
 	angular
 	.module('main')
-	.controller('WorkersCtrl', WorkersCtrl);
+	.controller('LicenseCtrl', LicenseCtrl);
 
-	function WorkersCtrl($scope, $state, WorkersService) {
+	function LicenseCtrl($scope, $state, LicenseService) {
 		var sc = $scope;
 
-		sc.table = 'workers';
+		sc.table = 'license';
 		sc.base = '/' + sc.table;
 
 		sc.currentDate = new Date().getFullYear();
@@ -20,27 +20,27 @@
 
 		sc.tableHeader = 
 		[
-		'fullName', 
-		'position',
-		'birthday',
-		'age',
-		'sex',
-		'experience',
-		'previousPosition',
-		'date'
+		'name', 
+		'type',
+		'minimumUsers',
+		'maximumUsers',
+		'expiration',
+		'priceForOne',
+		'priceForTen',
+		'priceForHundred'
 		];
 
 		sc.openEdit = function (id) {
-			$state.go('main.workers.edit');
+			$state.go('main.license.edit');
 			sc.id = id;
 		};
 
 		sc.openAdd = function () {
-			$state.go('main.workers.new');
+			$state.go('main.license.new');
 		};
 
 		sc.openDelete = function (id) {
-			$state.go('main.workers.delete');
+			$state.go('main.license.delete');
 			sc.id = id;
 		};
 
@@ -49,20 +49,10 @@
 		};
 
 		sc.loadPage = function(currentPage) {
-			WorkersService.getPage(currentPage, 10)
+			LicenseService.getPage(currentPage - 1, 10)
 			.success(function (data){
 				sc.main = data;
 			});
-		};
-
-		sc.searchByField = function(field, value) {
-			if (value != '') {
-				WorkersService.searchByField(field, value)
-				.success(function (data){
-					sc.main = data;
-				});
-			}
-			else sc.loadPage(1); 
 		};
 
 		sc.loadPage(1); 

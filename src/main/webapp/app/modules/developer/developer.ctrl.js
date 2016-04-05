@@ -5,14 +5,14 @@
 	.module('main')
 	.controller('DeveloperCtrl', DeveloperCtrl);
 
-	function DeveloperCtrl ($scope, $state, $http, $translate, DeveloperService) {
+	function DeveloperCtrl ($scope, $state, $http, $base64, $translate, ngDialog, DeveloperService) {
 		var sc = $scope;
 
 		sc.table = 'developer';
 		sc.base = '/' + sc.table;
 
 		sc.tableHeader = 
-		[
+		[ 
 		'name', 
 		'country',
 		'email',
@@ -21,13 +21,26 @@
 		'fax'
 		];
 
+		sc.filterViewUrl = 'app/modules/' + sc.table + '/filter/' + sc.table + '.filter.view.html';
+
 		sc.openEdit = function (id) {
-			$state.go('main.developer.edit');
-			sc.id = id;
+			ngDialog.open({ 
+				template: '/app/modules/developer/action/developer.action.view.html', 
+				className: 'ngdialog-theme-dev',
+				showClose: false,
+				controller: 'DeveloperEditCtrl',
+				scope: $scope
+			});
+			sc.id = id; 
 		};
 
 		sc.openAdd = function () {
-			$state.go('main.developer.new');
+			ngDialog.open({ 
+				template: '/app/modules/developer/action/developer.action.view.html', 
+				className: 'ngdialog-theme-dev',
+				showClose: false,
+				controller: 'DeveloperNewCtrl'
+			});
 		};
 
 		sc.openDelete = function (id) {
@@ -55,7 +68,17 @@
 			sc.countriesWithFlags = data;
 		});
 
-		// sc.keys = Object.keys(sc.country);
+		 $scope.imageStrings = [];
+		 $scope.processFiles = function(files) {
+		    angular.forEach(files, function(flowFile, i) {
+		        var fileReader = new FileReader();
+		          fileReader.onload = function (event) {
+		            var uri = event.target.result;
+		              $scope.imageStrings[i] = uri;     
+		          };
+		          fileReader.readAsDataURL(flowFile.file);
+		    });
+		 };
 		
 	};
 })();

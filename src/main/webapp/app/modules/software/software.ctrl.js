@@ -23,6 +23,10 @@
 		'macOS'
 		];
 
+		sc.getFilterView = function (table) {
+        	return 'app/modules/' + table + '.filter.view.html';
+        }
+
 		sc.openEdit = function (id) {
 			$state.go('main.software.edit');
 			sc.id = id;

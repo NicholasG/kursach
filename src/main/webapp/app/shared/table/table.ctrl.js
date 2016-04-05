@@ -30,5 +30,6 @@
         sc.isSortDown = function(fieldName) {
         	return sc.fieldName === fieldName && sc.reverse;
         };
+    
     }
 })();

@@ -3,19 +3,22 @@
 
 	var main = angular.module('main', [
 		'developer',
-		'workers',
+		'license',
 		'software',
 		'ui.router',
 		'ui.bootstrap',
 		'ngResource',
-		'pascalprecht.translate'
+		'pascalprecht.translate',
+		'base64',
+		'flow',
+		'ngDialog'
 		])
 	.config(configure).
 	run(run);
 
 
 	configure.$inject = ['$stateProvider', '$urlRouterProvider', '$translateProvider'];
-	function configure($stateProvider, $urlRouterProvider, $translateProvider) {
+	function configure ($stateProvider, $urlRouterProvider, $translateProvider) {
 
 		$urlRouterProvider.otherwise(function ($injector) {
 			var $state = $injector.get("$state");
@@ -61,14 +64,14 @@
 	.module('main')
 	.controller('DeveloperCtrl', DeveloperCtrl);
 
-	function DeveloperCtrl ($scope, $state, $http, $translate, DeveloperService) {
+	function DeveloperCtrl ($scope, $state, $http, $base64, $translate, ngDialog, DeveloperService) {
 		var sc = $scope;
 
 		sc.table = 'developer';
 		sc.base = '/' + sc.table;
 
 		sc.tableHeader = 
-		[
+		[ 
 		'name', 
 		'country',
 		'email',
@@ -77,13 +80,26 @@
 		'fax'
 		];
 
+		sc.filterViewUrl = 'app/modules/' + sc.table + '/filter/' + sc.table + '.filter.view.html';
+
 		sc.openEdit = function (id) {
-			$state.go('main.developer.edit');
-			sc.id = id;
+			ngDialog.open({ 
+				template: '/app/modules/developer/action/developer.action.view.html', 
+				className: 'ngdialog-theme-dev',
+				showClose: false,
+				controller: 'DeveloperEditCtrl',
+				scope: $scope
+			});
+			sc.id = id; 
 		};
 
 		sc.openAdd = function () {
-			$state.go('main.developer.new');
+			ngDialog.open({ 
+				template: '/app/modules/developer/action/developer.action.view.html', 
+				className: 'ngdialog-theme-dev',
+				showClose: false,
+				controller: 'DeveloperNewCtrl'
+			});
 		};
 
 		sc.openDelete = function (id) {
@@ -111,7 +127,17 @@
 			sc.countriesWithFlags = data;
 		});
 
-		// sc.keys = Object.keys(sc.country);
+		 $scope.imageStrings = [];
+		 $scope.processFiles = function(files) {
+		    angular.forEach(files, function(flowFile, i) {
+		        var fileReader = new FileReader();
+		          fileReader.onload = function (event) {
+		            var uri = event.target.result;
+		              $scope.imageStrings[i] = uri;     
+		          };
+		          fileReader.readAsDataURL(flowFile.file);
+		    });
+		 };
 		
 	};
 })();
@@ -131,41 +157,27 @@
 		$stateProvider
 		.state('main.developer', {
 			url: 'developer',
+			abstract: true,
+			template: '<div ui-view="content"></div>'
+		})
+		.state('main.developer.table', {
+			url: '',
 			views: {
-				'': {
+				'content@main.developer': {
 					templateUrl: '/app/shared/table/table.view.html',
-					controller: 'DeveloperCtrl'
+					controller: 'DeveloperCtrl',
 				}
 			}
 		})
-		.state('main.developer.new', {
-			url: '/new',
+		.state('main.developer.profile', { 
+			url: '/:id',
 			views: {
-				'action': {
-					templateUrl: '/app/modules/developer/action/developer.action.view.html',
-					controller: 'DeveloperNewCtrl'
-				}
-			}
-		})
-		.state('main.developer.edit', {
-			url: '/edit',
-			views: {
-				'action': {
-					templateUrl: '/app/modules/developer/action/developer.action.view.html',
-					controller: 'DeveloperEditCtrl'
-				}
-			}
-		})
-		.state('main.developer.delete', {
-			url: '/delete',
-			views: {
-				'action': {
-					templateUrl: '/app/modules/developer/action/developer.action.delete.view.html',
-					controller: 'DeveloperDeleteCtrl'
+				'content@main.developer': {
+					templateUrl: '/app/modules/developer/profile/developer.profile.view.html',
+					controller: 'DeveloperProfileCtrl'
 				}
 			}
 		});
-
 	}
 
 })();
@@ -213,6 +225,16 @@
             });
         };
 
+        this.uploadImage = function (file, id) {
+            var fd = new FormData();
+            fd.append('file', file);
+
+            return $http.post(urlBase + '/upload', fd, {
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined },
+                params: { id: id }
+            });
+        }
     });
 
 })();
@@ -222,12 +244,12 @@
 
 	angular
 	.module('main')
-	.controller('WorkersCtrl', WorkersCtrl);
+	.controller('LicenseCtrl', LicenseCtrl);
 
-	function WorkersCtrl($scope, $state, WorkersService) {
+	function LicenseCtrl($scope, $state, LicenseService) {
 		var sc = $scope;
 
-		sc.table = 'workers';
+		sc.table = 'license';
 		sc.base = '/' + sc.table;
 
 		sc.currentDate = new Date().getFullYear();
@@ -239,27 +261,27 @@
 
 		sc.tableHeader = 
 		[
-		'fullName', 
-		'position',
-		'birthday',
-		'age',
-		'sex',
-		'experience',
-		'previousPosition',
-		'date'
+		'name', 
+		'type',
+		'minimumUsers',
+		'maximumUsers',
+		'expiration',
+		'priceForOne',
+		'priceForTen',
+		'priceForHundred'
 		];
 
 		sc.openEdit = function (id) {
-			$state.go('main.workers.edit');
+			$state.go('main.license.edit');
 			sc.id = id;
 		};
 
 		sc.openAdd = function () {
-			$state.go('main.workers.new');
+			$state.go('main.license.new');
 		};
 
 		sc.openDelete = function (id) {
-			$state.go('main.workers.delete');
+			$state.go('main.license.delete');
 			sc.id = id;
 		};
 
@@ -268,20 +290,10 @@
 		};
 
 		sc.loadPage = function(currentPage) {
-			WorkersService.getPage(currentPage, 10)
+			LicenseService.getPage(currentPage - 1, 10)
 			.success(function (data){
 				sc.main = data;
 			});
-		};
-
-		sc.searchByField = function(field, value) {
-			if (value != '') {
-				WorkersService.searchByField(field, value)
-				.success(function (data){
-					sc.main = data;
-				});
-			}
-			else sc.loadPage(1); 
 		};
 
 		sc.loadPage(1); 
@@ -292,7 +304,7 @@
 (function () {
 	'use strict';
 
-	var workers = angular.module('workers', [
+	var license = angular.module('license', [
 		'ui.router'
 		])
 	.config(configure);
@@ -302,39 +314,39 @@
 	function configure($locationProvider, $stateProvider, $urlRouterProvider) {
 
 		$stateProvider
-		.state('main.workers', {
-			url: 'workers',
+		.state('main.license', {
+			url: 'license',
 			views: {
 				'': {
 					templateUrl: '/app/shared/table/table.view.html',
-					controller: 'WorkersCtrl',
+					controller: 'LicenseCtrl',
 				}
 			}
 		})
-		.state('main.workers.new', {
+		.state('main.license.new', {
 			url: '/new',
 			views: {
 				'action': {
-					templateUrl: '/app/modules/workers/action/workers.action.view.html',
-					controller: 'WorkersNewCtrl'
+					templateUrl: '/app/modules/license/action/license.action.view.html',
+					controller: 'LicenseNewCtrl'
 				}
 			}
 		})
-		.state('main.workers.edit', {
+		.state('main.license.edit', {
 			url: '/edit',
 			views: {
 				'action': {
-					templateUrl: '/app/modules/workers/action/workers.action.view.html',
-					controller: 'WorkersEditCtrl'
+					templateUrl: '/app/modules/license/action/license.action.view.html',
+					controller: 'LicenseEditCtrl'
 				}
 			}
 		})
-		.state('main.workers.delete', {
+		.state('main.license.delete', {
 			url: '/delete',
 			views: {
 				'action': {
-					templateUrl: '/app/modules/workers/action/workers.action.delete.view.html',
-					controller: 'WorkersDeleteCtrl'
+					templateUrl: '/app/modules/license/action/license.action.delete.view.html',
+					controller: 'LicenseDeleteCtrl'
 				}
 			}
 		});
@@ -347,36 +359,41 @@
     'use strict';
 
     angular.module('main')
-    .service('WorkersService', function ($http) {
+    .service('LicenseService', function ($http) {
 
-        var urlBase = '../data/workers/';
+        var urlBase = '/license';
 
         this.getAll = function () {
-            return $http.get(urlBase + 'workers.list.json');
+            return $http.get(urlBase);
         };
 
         this.get = function (id) {
-            return $http.get(urlBase + id + '.json');
+            return $http.get(urlBase + '/' + id);
         };
 
-        this.new = function (hotel) {
-            return $http.post(urlBase, hotel);
+        this.new = function (license) {
+            return $http.post(urlBase, license);
         };
 
-        this.update = function (id, hotel) {
-            return $http.put(urlBase + id, hotel)
+        this.update = function (license) {
+            return $http.put(urlBase, license)
         };
 
         this.delete = function (id) {
-            return $http.delete(urlBase + id);
-        };
-
-        this.searchByField = function (field, value) {
-            return $http.get(urlBase + 'workers_search_' + field + '=' + value + '.json');
+            return $http.delete(urlBase, { 
+                    params: { 
+                        id: id
+                    }
+                }); 
         };
 
         this.getPage = function (currentPage, size) {
-            return $http.get(urlBase + 'workers_page=' + currentPage + '_size=' + size + '.json');
+            return $http.get(urlBase, { 
+                    params: { 
+                        page: currentPage, 
+                        size: size 
+                    }
+            });
         };
 
     });
@@ -407,6 +424,10 @@
 		'linux',
 		'macOS'
 		];
+
+		sc.getFilterView = function (table) {
+        	return 'app/modules/' + table + '.filter.view.html';
+        }
 
 		sc.openEdit = function (id) {
 			$state.go('main.software.edit');
@@ -456,8 +477,13 @@
 		$stateProvider
 		.state('main.software', {
 			url: 'software',
+			abstract: true,
+			template: '<div ui-view="content"></div>'
+		})
+		.state('main.software.table', {
+			url: '',
 			views: {
-				'': {
+				'content@main.software': {
 					templateUrl: '/app/shared/table/table.view.html',
 					controller: 'SoftwareCtrl',
 				}
@@ -466,7 +492,7 @@
 		.state('main.software.new', {
 			url: '/new',
 			views: {
-				'action': {
+				'action @main.software': {
 					templateUrl: '/app/modules/software/action/software.action.view.html',
 					controller: 'SoftwareNewCtrl'
 				}
@@ -478,6 +504,15 @@
 				'action': {
 					templateUrl: '/app/modules/software/action/software.action.view.html',
 					controller: 'SoftwareEditCtrl'
+				}
+			}
+		})
+		.state('main.software.profile', { 
+			url: '/:id',
+			views: {
+				'content@main.software': {
+					templateUrl: '/app/shared/profile/profile.view.html',
+					controller: 'SoftwareProfileCtrl'
 				}
 			}
 		})
@@ -605,6 +640,7 @@
         sc.location = function() {
             return $location.path();
         }    
+
     }
 })();
 
@@ -640,6 +676,7 @@
         sc.isSortDown = function(fieldName) {
         	return sc.fieldName === fieldName && sc.reverse;
         };
+    
     }
 })();
 
@@ -719,6 +756,8 @@
 	function DeveloperEditCtrl ($scope, $state, $location, DeveloperService) {
 		var sc = $scope;
 		sc.action = 'Edit';
+		var fileLimit = 2000000;
+		var fileLimitSuccess = false;
 
 		DeveloperService.get(sc.id)
 		.success(function (data) {
@@ -735,7 +774,21 @@
 			sc.phoneNumber = sc.developer.phoneNumber;
 			sc.fax = sc.developer.fax;
 
+			var flow = new Flow({ 
+				target: '/dev/upload?id=' + sc.id,
+				testChunks: false,
+				singleFile: true
+			});
+			flow.assignBrowse(document.getElementById('browseButton'));
 
+			flow.on('fileAdded', function(file, event){
+				if (file.size <= fileLimit) { fileLimitSuccess = true; }
+				else {
+					fileLimitSuccess = false;
+					alert('This file is over 2Mb');
+				}
+			});
+ 
 			sc.save = function () {
 				sc.developer = {
 					'id': sc.id,
@@ -749,6 +802,7 @@
 					'phoneNumber': sc.phoneNumber,
 					'fax': sc.fax 
 				}
+    			if (fileLimitSuccess) flow.upload();  
 
 				DeveloperService.update(sc.developer)
 				.success(function (data) {
@@ -783,6 +837,7 @@
 		sc.phoneNumber = null;
 		sc.fax = null;
 
+		sc.target = { target: '/dev/upload?id=' + sc.id };
 		
 		sc.save = function () {
 			sc.developer = {
@@ -812,16 +867,38 @@
 
 	angular
 	.module('main')
-	.controller('WorkersDeleteCtrl', WorkersDeleteCtrl);
+	.controller('DeveloperProfileCtrl', DeveloperProfileCtrl);
 
-	function WorkersDeleteCtrl ($scope, $state, $location, WorkersService) {
+	function DeveloperProfileCtrl ($scope, $state, $stateParams, DeveloperService) {
+		var sc = $scope;
+		sc.table = 'developer';
+
+		DeveloperService.get($stateParams.id)
+	  		.success( function (data) {
+	  			sc.profile = data;
+	  			sc.columns = Object.keys(data);
+	  		});
+
+
+ 
+	};
+})();
+
+(function () {
+	'use strict';
+
+	angular
+	.module('main')
+	.controller('LicenseDeleteCtrl', LicenseDeleteCtrl);
+
+	function LicenseDeleteCtrl ($scope, $state, $location, LicenseService) {
 		var sc = $scope;
 
 		sc.delete = function () {
-			WorkersService.delete(sc.id)
+			LicenseService.delete(sc.id)
 			.success(function (data) {
 				alert('deleted' + sc.id);
-				sc.hotel = null;
+				sc.loadPage(1);
 			});
 		}
 	};
@@ -832,41 +909,44 @@
 
 	angular
 	.module('main')
-	.controller('WorkersEditCtrl', WorkersEditCtrl);
+	.controller('LicenseEditCtrl', LicenseEditCtrl);
 
-	function WorkersEditCtrl ($scope, $state, $location, WorkersService) {
+	function LicenseEditCtrl ($scope, $state, $location, LicenseService) {
 		var sc = $scope;
 		sc.action = 'Edit';
 
-		WorkersService.get(sc.id)
+		LicenseService.get(sc.id)
 		.success(function (data) {
-			sc.worker = data;
+			sc.license = data;
 
-			sc.fullName = sc.worker.name;
-			sc.position = sc.worker.position;
-			sc.birthday = sc.worker.birthday;
-			sc.age = sc.worker.age;
-			sc.sex = sc.worker.sex;
-			sc.experience = sc.worker.experience;
-			sc.previousPosition = sc.worker.previousPosition;
-			sc.date = sc.worker.date;
+			sc.id = sc.license.id;
+			sc.name = sc.license.name;
+			sc.type = sc.license.type;
+			sc.minimumUsers = sc.license.minimumUsers;
+			sc.maximumUsers = sc.license.maximumUsers;
+			sc.expiration = sc.license.expiration;
+			sc.priceForOne = sc.license.priceForOne;
+			sc.priceForTen = sc.license.priceForTen;
+			sc.priceForHundred = sc.license.priceForHundred;
 
 			sc.save = function () {
-				sc.worker = {
-					'fullName': sc.fullName,
-					'position':sc.position,
-					'birthday': sc.birthday,
-					'age': sc.age,
-					'sex': sc.sex,
-					'experience': sc.experience,
-					'previousPosition': sc.previousPosition,
-					'date': sc.date,
+				sc.license = {
+					'id': sc.id,
+					'name': sc.name,
+					'type': sc.type,
+					'minimumUsers':sc.minimumUsers,
+					'maximumUsers': sc.maximumUsers,
+					'expiration': sc.expiration,
+					'priceForOne': sc.priceForOne,
+					'priceForTen': sc.priceForTen,
+					'priceForHundred': sc.priceForHundred
 				}
 
-				WorkersService.update(sc.id, sc.worker)
+				LicenseService.update(sc.license)
 				.success(function (data) {
 					alert('updated!');
-					sc.worker = null;
+					sc.license = null;
+					sc.loadPage(1);
 				});
 			}
 		});
@@ -878,39 +958,39 @@
 
 	angular
 	.module('main')
-	.controller('WorkersNewCtrl', WorkersNewCtrl);
+	.controller('LicenseNewCtrl', LicenseNewCtrl);
 
-	function WorkersNewCtrl ($scope, $state, $location, WorkersService) {
+	function LicenseNewCtrl ($scope, $state, $location, LicenseService) {
 		var sc = $scope;
 
 		sc.action = 'Add';
 
-		sc.fullName = null;
-		sc.position = null;
-		sc.birthday = null;
-		sc.age = null;
-		sc.sex = null;
-		sc.experience = null;
-		sc.previousPosition = null;
-		sc.date = null;
-
+		sc.name = null;
+		sc.type = null;
+		sc.minimumUsers = null;
+		sc.maximumUsers = null;
+		sc.expiration = null;
+		sc.priceForOne = null;
+		sc.priceForTen = null;
+		sc.priceForHundred = null;
 		
 		sc.save = function () {
-			sc.worker = {
-				'fullName': sc.fullName,
-				'position':sc.position,
-				'birthday': sc.birthday,
-				'age': sc.age,
-				'sex': sc.sex,
-				'experience': sc.experience,
-				'previousPosition': sc.previousPosition,
-				'date': sc.date,
+			sc.license = {
+				'name': sc.name,
+				'type': sc.type,
+				'minimumUsers':sc.minimumUsers,
+				'maximumUsers': sc.maximumUsers,
+				'expiration': sc.expiration,
+				'priceForOne': sc.priceForOne,
+				'priceForTen': sc.priceForTen,
+				'priceForHundred': sc.priceForHundred
 			}
 
-			WorkersService.new(sc.worker)
+			LicenseService.new(sc.license)
 			.success(function (data) {
 				alert('added!');
-				sc.worker = null;
+				sc.license = null;
+				sc.loadPage(1);
 			});
 		}
 	};
@@ -943,7 +1023,7 @@
 	.module('main')
 	.controller('SoftwareEditCtrl', SoftwareEditCtrl);
 
-	function SoftwareEditCtrl ($scope, $state, $location, SoftwareService, DeveloperService) {
+	function SoftwareEditCtrl ($scope, $state, $location, SoftwareService, DeveloperService, LicenseService) {
 		var sc = $scope;
 
 		sc.action = 'Edit';
@@ -964,10 +1044,15 @@
 
 			sc.release = new Date(sc.software.release);
 
-			sc.selDeveloper = {};
+			sc.selDeveloper = sc.software.developer;
+			sc.selLicense = sc.software.license;
 
 			DeveloperService.getAll().success( function (data) {
 				sc.developers = data.content;
+			});
+
+			LicenseService.getAll().success( function (data) {
+				sc.licensies = data.content;
 			});
 
 			sc.save = function () {
@@ -976,7 +1061,7 @@
 					'name': sc.name,
 					'version': sc.version,
 					'release': sc.release.getFullYear() + '-' + (sc.release.getMonth() + 1) + '-' + sc.release.getDate(),
-					'license': sc.license,
+					'license': sc.selLicense,
 					'developer': sc.selDeveloper,
 					'windows': sc.windows,
 					'linux': sc.linux,
@@ -1001,7 +1086,7 @@
 	.module('main')
 	.controller('SoftwareNewCtrl', SoftwareNewCtrl);
 
-	function SoftwareNewCtrl ($scope, $state, $location, SoftwareService, DeveloperService) {
+	function SoftwareNewCtrl ($scope, $state, $location, SoftwareService, DeveloperService, LicenseService) {
 		var sc = $scope;
 
 		sc.action = 'Add';
@@ -1015,9 +1100,14 @@
 		sc.macOS = false;
 		
 		sc.selDeveloper = {};
+		sc.selLicense = {};
 
 		DeveloperService.getAll().success( function (data) {
 			sc.developers = data.content;
+		});
+
+		LicenseService.getAll().success( function (data) {
+			sc.licensies = data.content;
 		});
 
 		sc.save = function () {
@@ -1025,7 +1115,7 @@
 			sc.soft = {
 				'name': sc.name,
 				'version': sc.version,
-				'license': {"id":1,"name":"license1","type":"FREE","minimumUsers":1,"maximumUsers":100,"expiration":256,"priceForOne":0.0,"priceForTen":0.0,"priceForHundred":0.0},
+				'license': sc.selLicense,
 				'developer': sc.selDeveloper,
 				'release': sc.release.getFullYear() + '-' + sc.release.getMonth() + '-' + sc.release.getDate(),
 				'windows': sc.windows,
@@ -1041,4 +1131,26 @@
 			});
 		}
 	}
+})();
+
+(function () {
+	'use strict';
+
+	angular
+	.module('main')
+	.controller('SoftwareProfileCtrl', SoftwareProfileCtrl);
+
+	function SoftwareProfileCtrl ($scope, $state, $stateParams, SoftwareService) {
+		var sc = $scope;
+		sc.table = 'software';
+
+		SoftwareService.get($stateParams.id)
+	  		.success( function (data) {
+	  			sc.profile = data;
+	  			sc.columns = Object.keys(data);
+	  		});
+
+
+ 
+	};
 })();

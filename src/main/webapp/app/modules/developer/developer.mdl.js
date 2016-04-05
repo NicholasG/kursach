@@ -13,41 +13,27 @@
 		$stateProvider
 		.state('main.developer', {
 			url: 'developer',
+			abstract: true,
+			template: '<div ui-view="content"></div>'
+		})
+		.state('main.developer.table', {
+			url: '',
 			views: {
-				'': {
+				'content@main.developer': {
 					templateUrl: '/app/shared/table/table.view.html',
-					controller: 'DeveloperCtrl'
+					controller: 'DeveloperCtrl',
 				}
 			}
 		})
-		.state('main.developer.new', {
-			url: '/new',
+		.state('main.developer.profile', { 
+			url: '/:id',
 			views: {
-				'action': {
-					templateUrl: '/app/modules/developer/action/developer.action.view.html',
-					controller: 'DeveloperNewCtrl'
-				}
-			}
-		})
-		.state('main.developer.edit', {
-			url: '/edit',
-			views: {
-				'action': {
-					templateUrl: '/app/modules/developer/action/developer.action.view.html',
-					controller: 'DeveloperEditCtrl'
-				}
-			}
-		})
-		.state('main.developer.delete', {
-			url: '/delete',
-			views: {
-				'action': {
-					templateUrl: '/app/modules/developer/action/developer.action.delete.view.html',
-					controller: 'DeveloperDeleteCtrl'
+				'content@main.developer': {
+					templateUrl: '/app/modules/developer/profile/developer.profile.view.html',
+					controller: 'DeveloperProfileCtrl'
 				}
 			}
 		});
-
 	}
 
 })();
