@@ -14,7 +14,7 @@ import static javax.persistence.CascadeType.ALL;
  * Created by NicholasG on 02.03.2016.
  */
 @Entity
-@Table( name = "developerInfo" )
+@Table( name = "developer_info" )
 public class DeveloperInfo implements Serializable {
 
     @Id
@@ -43,7 +43,7 @@ public class DeveloperInfo implements Serializable {
     @Column( name = "website", length = 200 )
     private String website;
 
-    @Column( name = "phoneNumber", length = 20 )
+    @Column( name = "phone_number", length = 20 )
     private String phoneNumber;
 
     @Column( name = "fax", length = 20 )
@@ -53,7 +53,7 @@ public class DeveloperInfo implements Serializable {
     @OneToMany( targetEntity = SoftwareInfo.class, cascade = ALL, mappedBy = "developer" )
     private Set<SoftwareInfo> products = new HashSet<>();
 
-    @Column( name = "logo", length = 7000000)
+    @Column( name = "logo", length = 3000000 )
     private String logo;
 
     public DeveloperInfo() {
@@ -92,7 +92,7 @@ public class DeveloperInfo implements Serializable {
         return id;
     }
 
-    public void setId( long id ) {
+    public void setId( Long id ) {
         this.id = id;
     }
 

@@ -1,16 +1,21 @@
 package org.kep.kursach.software.domain;
 
 import org.kep.kursach.developer.domain.DeveloperInfo;
+import org.kep.kursach.images.domain.Image;
 import org.kep.kursach.license.domain.LicenseInfo;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
+
+import static javax.persistence.CascadeType.ALL;
 
 /**
  * Created by NicholasG on 02.03.2016.
  */
 @Entity
-@Table( name = "softwareInfo" )
+@Table( name = "software_info" )
 public class SoftwareInfo {
 
     @Id
@@ -24,15 +29,15 @@ public class SoftwareInfo {
     @Column( name = "version" )
     private String version;
 
-    @Column( name = "release" )
+    @Column( name = "_release" )
     private Date release;
 
     @ManyToOne
-    @JoinColumn( name = "developerId", nullable = false )
+    @JoinColumn( name = "developer_id", nullable = false )
     private DeveloperInfo developer;
 
     @ManyToOne
-    @JoinColumn( name = "licenseId", nullable = false )
+    @JoinColumn( name = "license_id", nullable = false )
     private LicenseInfo license;
 
     @Column( name = "windows" )
@@ -43,6 +48,9 @@ public class SoftwareInfo {
 
     @Column( name = "macOS" )
     private boolean macOS;
+
+    @OneToMany( targetEntity = Image.class, cascade = ALL, mappedBy = "software" )
+    private Set<Image> images = new HashSet<>();
 
     public SoftwareInfo() {
     }
@@ -70,7 +78,7 @@ public class SoftwareInfo {
         return id;
     }
 
-    public void setId( long id ) {
+    public void setId( Long id ) {
         this.id = id;
     }
 
@@ -136,5 +144,13 @@ public class SoftwareInfo {
 
     public void setMacOS( boolean macOS ) {
         this.macOS = macOS;
+    }
+
+    public Set<Image> getImages() {
+        return images;
+    }
+
+    public void setImages( Set<Image> images ) {
+        this.images = images;
     }
 }

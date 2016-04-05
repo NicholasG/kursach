@@ -50,17 +50,17 @@ INSERT INTO license_info(name, minimum_users, maximum_users, expiration, price_f
 INSERT INTO license_info(name, minimum_users, maximum_users, expiration, price_for_one, price_for_ten, price_for_hundred, type)
   VALUES('license3', 10, 2000, 450, 5000.0, 25000.0, 50000.0, 2);
 
-INSERT INTO software_info(name, version, release, windows, macos, linux, developer_id, license_id)
+INSERT INTO software_info(name, version, _release, windows, macos, linux, developer_id, license_id)
   VALUES('Office', '2013', '2012-01-12', true, true, false, 1, 3);
-INSERT INTO software_info(name, version, release, windows, macos, linux, developer_id, license_id)
+INSERT INTO software_info(name, version, _release, windows, macos, linux, developer_id, license_id)
   VALUES('Adobe Photoshop', 'cc15', '2015-05-21', true, true, true, 2, 1);
-INSERT INTO software_info(name, version, release, windows, macos, linux, developer_id, license_id)
+INSERT INTO software_info(name, version, _release, windows, macos, linux, developer_id, license_id)
   VALUES('Skype', '7.21.0.100', '2016-01-31', true, true, true, 3, 2);
-INSERT INTO software_info(name, version, release, windows, macos, linux, developer_id, license_id)
+INSERT INTO software_info(name, version, _release, windows, macos, linux, developer_id, license_id)
   VALUES('Android', '4.4 KitKat', '2013-11-30', false, false, false, 4, 1);
-INSERT INTO software_info(name, version, release, windows, macos, linux, developer_id, license_id)
+INSERT INTO software_info(name, version, _release, windows, macos, linux, developer_id, license_id)
   VALUES('UltraISO', '5.44', '2012-04-02', true, false, false, 5, 2);
 
 -- developer_info (city varchar(50), country varchar(50), email varchar(200), fax varchar(20), name varchar(200), phone_number varchar(20), street varchar(50), website varchar(200), zipcode varchar(50)
 -- license_info (expiration integer, maximum_users integer, minimum_users integer, name varchar(250), price_for_hundred double, price_for_one double, price_for_ten double, type integer)
--- software_info (linux boolean, macos boolean, name varchar(250), release date, version varchar(255), windows boolean, developer_id bigint, license_id bigint)
+-- software_info (linux boolean, macos boolean, name varchar(250), _release date, version varchar(255), windows boolean, developer_id bigint, license_id bigint)

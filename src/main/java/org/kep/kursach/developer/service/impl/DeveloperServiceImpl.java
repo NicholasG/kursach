@@ -87,11 +87,11 @@ public class DeveloperServiceImpl implements DeveloperService {
     }
 
     @Override
-    public ResponseEntity<Void> updateLogo( Long id, MultipartFile multipartFile ) {
+    public ResponseEntity<Void> updateLogo( Long id, MultipartFile logo ) {
         return repository.findOneById( id )
                 .map( d -> {
                     try {
-                        d.setLogo( Base64Utils.encodeToString( multipartFile.getBytes() ) );
+                        d.setLogo( Base64Utils.encodeToString( logo.getBytes() ) );
                     } catch ( IOException e ) {
                         LOG.warn( Arrays.toString( e.getStackTrace() ) );
                     }

@@ -1,5 +1,6 @@
 package org.kep.kursach.software.service.impl;
 
+import org.kep.kursach.images.domain.Image;
 import org.kep.kursach.software.domain.SoftwareInfo;
 import org.kep.kursach.software.reporitory.SoftwareRepository;
 import org.kep.kursach.software.service.SoftwareService;
@@ -12,9 +13,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Base64Utils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Created by NicholasG on 05.03.2016.
@@ -97,6 +102,32 @@ public class SoftwareServiceImpl implements SoftwareService {
                     name,
                     devName,
                     licName );
+    }
+
+    @Override
+    public ResponseEntity<Void> addImage( Long id, MultipartFile image ) {
+        return repository.findOneById( id )
+                .map( s -> {
+                    Image img = null;
+                    try {
+                        img = getImage( image );
+                        img.setSoftware( s );
+                    } catch ( IOException e ) {
+                        e.printStackTrace();
+                    }
+
+                    Set<Image> images = s.getImages();
+                    images.add( img );
+                    s.setImages( images );
+                    repository.saveAndFlush( s );
+                    return ResponseEntity.ok().build();
+                } )
+                .orElseGet( () -> new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR ) );
+    }
+
+    private Image getImage( MultipartFile image ) throws IOException {
+        String imgAsString = Base64Utils.encodeToString( image.getBytes() );
+        return new Image( imgAsString );
     }
 }
 

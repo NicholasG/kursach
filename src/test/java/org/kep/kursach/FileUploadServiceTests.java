@@ -2,7 +2,7 @@ package org.kep.kursach;
 
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -16,23 +16,44 @@ import org.testng.annotations.Test;
 @WebAppConfiguration
 public class FileUploadServiceTests {
 
-    private static final String filename = "Snake_River_(5mb).jpg";
+    private static final String filename = "test.jpg";
 
     @Test
-    public void fileUploadTest() throws Exception {
+    public void setLogoForDeveloperTest() throws Exception {
         MultiValueMap<String, Object> parts = new LinkedMultiValueMap<>();
         parts.add( "id", 1L );
-        parts.add( "file", new FileSystemResource( filename ) );
+        parts.add( "image", new FileSystemResource( filename ) );
 
-        RestTemplate restTemplate = new RestTemplate();
-        String url = "http://localhost:8080/dev/upload";
+        String url = "http://localhost:8080/dev/logo";
 
         long requestLength = new FileSystemResource( filename ).getFile().length();
         System.out.println( "Request length = " + requestLength );
 
-        ResponseEntity<String> stringResponseEntity = restTemplate.postForEntity( url, parts, String.class );
+        postImageTo( parts, url );
+    }
 
-        System.out.println( "\n\nResponse headers: " + stringResponseEntity.getHeaders().toString() );
+    @Test
+    public void setImageForSoftwareTest() {
+        MultiValueMap<String, Object> parts = new LinkedMultiValueMap<>();
+        parts.add( "id", 1L );
+        parts.add( "image", new FileSystemResource( filename ) );
+
+        String url = "http://localhost:8080/soft/images";
+
+        long requestLength = new FileSystemResource( filename ).getFile().length();
+        System.out.println( "Request length = " + requestLength );
+
+        postImageTo( parts, url );
+    }
+
+    private void postImageTo( MultiValueMap<String, Object> parts, String url ) {
+        HttpHeaders requestHeaders = new HttpHeaders();
+        requestHeaders.setContentType( MediaType.MULTIPART_FORM_DATA );
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>( parts, requestHeaders );
+
+        ResponseEntity<String> responseEntity = new RestTemplate().exchange( url, HttpMethod.POST, requestEntity, String.class );
+
+        System.out.println( "\n\nResponse headers: " + responseEntity.getHeaders() );
     }
 
 }

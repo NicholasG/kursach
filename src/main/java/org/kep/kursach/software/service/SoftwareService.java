@@ -4,6 +4,7 @@ import org.kep.kursach.software.domain.SoftwareInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Created by NicholasG on 05.03.2016.
@@ -18,4 +19,5 @@ public interface SoftwareService {
 
     Page<SoftwareInfo> searchFor( Pageable pageable, String name, String release, String licName, String devName );
 
+    ResponseEntity<Void> addImage( Long id, MultipartFile image );
 }
