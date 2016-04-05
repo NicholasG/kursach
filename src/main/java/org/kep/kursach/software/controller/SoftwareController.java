@@ -103,8 +103,7 @@ public class SoftwareController {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Void> addImage( @RequestParam( "id" ) Long id,
-                                          @RequestParam( "image" ) MultipartFile image ) {
+    public ResponseEntity<Void> addImage( Long id, MultipartFile image ) {
         LOG.info( "Setting image for software id='{}'" );
 
         return softwareService.addImage( id, image );
