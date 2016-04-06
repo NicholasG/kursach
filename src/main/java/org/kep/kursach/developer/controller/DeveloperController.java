@@ -86,6 +86,18 @@ public class DeveloperController {
 
     @RequestMapping(
             value = "/logo",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<String> getLogo( @RequestParam( "id" ) Long id ) {
+        LOG.info( "Getting a logo for dev id='{}'", id );
+        return developerRepository.findOneById( id )
+                .map( d -> ResponseEntity.ok().body( d.getLogo() ) )
+                .orElseGet( () -> new ResponseEntity<>( HttpStatus.NOT_FOUND ) );
+    }
+
+    @RequestMapping(
+            value = "/logo",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE
     )

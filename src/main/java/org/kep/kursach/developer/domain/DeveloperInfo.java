@@ -53,6 +53,7 @@ public class DeveloperInfo implements Serializable {
     @OneToMany( targetEntity = SoftwareInfo.class, cascade = ALL, mappedBy = "developer" )
     private Set<SoftwareInfo> products = new HashSet<>();
 
+    @JsonIgnore
     @Column( name = "logo", length = 3000000 )
     private String logo;
 
