@@ -22,7 +22,7 @@ public class FileUploadServiceTests {
     public void setLogoForDeveloperTest() throws Exception {
         MultiValueMap<String, Object> parts = new LinkedMultiValueMap<>();
         parts.add( "id", 1L );
-        parts.add( "image", new FileSystemResource( filename ) );
+        parts.add( "file", new FileSystemResource( filename ) );
 
         String url = "http://localhost:8080/dev/logo";
 
@@ -36,7 +36,7 @@ public class FileUploadServiceTests {
     public void setImageForSoftwareTest() {
         MultiValueMap<String, Object> parts = new LinkedMultiValueMap<>();
         parts.add( "id", 1L );
-        parts.add( "image", new FileSystemResource( filename ) );
+        parts.add( "file", new FileSystemResource( filename ) );
 
         String url = "http://localhost:8080/soft/images";
 
