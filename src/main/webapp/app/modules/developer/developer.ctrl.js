@@ -21,8 +21,6 @@
 		'fax'
 		];
 
-		sc.filterViewUrl = 'app/modules/' + sc.table + '/filter/' + sc.table + '.filter.view.html';
-
 		sc.openEdit = function (id) {
 			ngDialog.open({ 
 				template: '/app/modules/developer/action/developer.action.view.html', 
@@ -39,24 +37,31 @@
 				template: '/app/modules/developer/action/developer.action.view.html', 
 				className: 'ngdialog-theme-dev',
 				showClose: false,
-				controller: 'DeveloperNewCtrl'
+				controller: 'DeveloperNewCtrl',
+				scope: $scope
 			});
 		};
 
 		sc.openDelete = function (id) {
-			$state.go('main.developer.delete');
-			sc.id = id;
+			sc.id = id; 
+			ngDialog.open({ 
+				template: '/app/modules/developer/action/developer.action.delete.view.html', 
+				className: 'ngdialog-theme-dev',
+				showClose: false,
+				controller: 'DeveloperDeleteCtrl',
+				scope: $scope
+			});
 		};
 
 		sc.close = function () {
 			$state.go('main.' + sc.table);
 		};
 
-		sc.loadPage = function(currentPage) {
-			if (sc.name == '') sc.name = null;
-			if (sc.country == '') sc.country = null;
+		sc.loadPage = function(currentPage, name, country) {
+			if (name == '') name = null;
+			if (country == '') country = null;
 			
-			DeveloperService.getPage(currentPage - 1, 10, sc.name, sc.country)
+			DeveloperService.getPage(currentPage - 1, 10, name, country)
 			.success(function (data){
 				sc.main = data;
 			});

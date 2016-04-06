@@ -1,3 +1,4 @@
 <label translate>name</label>
-<input name="name" ng-model="name" type="text" class="form-control" placeholder="Enter dev name" ng-change="loadPage(1)" pattern="[A-z^\s]*">
-<label>country</label>
+<input name="name" ng-model="name" type="text" class="form-control" placeholder="Enter dev name" ng-change="loadPage(1, name, country)" pattern="[A-z^\s]*">
+<label translate>country</label>
+<input name="country" ng-model="country" type="text" class="form-control" placeholder="Enter country" ng-change="loadPage(1, name, country)" pattern="[A-z^\s]*">

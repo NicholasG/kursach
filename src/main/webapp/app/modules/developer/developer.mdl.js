@@ -21,8 +21,12 @@
 			views: {
 				'content@main.developer': {
 					templateUrl: '/app/shared/table/table.view.html',
-					controller: 'DeveloperCtrl',
+					controller: 'DeveloperCtrl'
+				},
+				'filter@main.developer.table': {
+					templateUrl: '/app/modules/developer/filter/developer.filter.view.html'
 				}
+
 			}
 		})
 		.state('main.developer.profile', { 

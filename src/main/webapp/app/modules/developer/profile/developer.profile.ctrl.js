@@ -12,10 +12,13 @@
 		DeveloperService.get($stateParams.id)
 	  		.success( function (data) {
 	  			sc.profile = data;
-	  			sc.columns = Object.keys(data);
 	  		});
 
+	  	DeveloperService.getLogo($stateParams.id)
+	  		.success( function (data) {
+	  			sc.devLogo = '';
+	  			sc.devLogo = data;
+	  		});
 
- 
 	};
 })();

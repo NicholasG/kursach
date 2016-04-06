@@ -1,5 +1,4 @@
 <div id="wrapper">
-  <!-- Navigation -->
   <nav id="sidebar-wrapper">
     <ul class="sidebar-nav" ng-init="activePage()">
       <li class="sidebar-brand">
@@ -23,10 +22,9 @@
   </nav>
   <div id="page-content-wrapper">
     <div class="container-fluid">
-      <ui-view></ui-view>
+      <div class="row">
+        <ui-view></ui-view>
+      </div>
     </div>
-    <!-- /.container-fluid -->
   </div>
-  <!-- /#page-wrapper -->
 </div>
-<!-- /#wrapper -->

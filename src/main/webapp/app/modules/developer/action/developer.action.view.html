@@ -31,14 +31,12 @@
         <input name="phoneNumber" type="text" class="form-control" ng-model="phoneNumber" placeholder="Example: 0986171061" pattern="^([0-9]*)$" maxlength="10"
         uib-tooltip="Only numbers"  tooltip-is-open="devForm.phoneNumber.$invalid" tooltip-trigger="none">
         <label>fax</label>
-        <input type="text" class="form-control" ng-model="fax" placeholder="Enter zipcode" maxlength="60">    
+        <input type="text" class="form-control" ng-model="fax" placeholder="Enter zipcode" maxlength="60">
       </form>
     </div>
-    <div class="col-lg-12">
-      {{previewImage}}
-    </div>
+    <div id="dropTarget" class="col-lg-12">Upload File</div>
     <div class="col-lg-12 tools">
-      <button class="btn btn-primary" ng-click="save()"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+      <button type="submit" class="btn btn-primary" ng-click="save()"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
       <button class="btn btn-default right" ng-click="closeThisDialog(true)" style="margin-right: 15px;">Cancel</button>
     </div>
   </div>

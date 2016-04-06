@@ -51,6 +51,14 @@
                 params: { id: id }
             });
         }
+
+        this.getLogo = function (id) {
+            return $http.get(urlBase + '/logo', { 
+                    params: { 
+                        id: id
+                    }
+            });
+        }
     });
 
 })();

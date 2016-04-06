@@ -80,8 +80,6 @@
 		'fax'
 		];
 
-		sc.filterViewUrl = 'app/modules/' + sc.table + '/filter/' + sc.table + '.filter.view.html';
-
 		sc.openEdit = function (id) {
 			ngDialog.open({ 
 				template: '/app/modules/developer/action/developer.action.view.html', 
@@ -98,24 +96,31 @@
 				template: '/app/modules/developer/action/developer.action.view.html', 
 				className: 'ngdialog-theme-dev',
 				showClose: false,
-				controller: 'DeveloperNewCtrl'
+				controller: 'DeveloperNewCtrl',
+				scope: $scope
 			});
 		};
 
 		sc.openDelete = function (id) {
-			$state.go('main.developer.delete');
-			sc.id = id;
+			sc.id = id; 
+			ngDialog.open({ 
+				template: '/app/modules/developer/action/developer.action.delete.view.html', 
+				className: 'ngdialog-theme-dev',
+				showClose: false,
+				controller: 'DeveloperDeleteCtrl',
+				scope: $scope
+			});
 		};
 
 		sc.close = function () {
 			$state.go('main.' + sc.table);
 		};
 
-		sc.loadPage = function(currentPage) {
-			if (sc.name == '') sc.name = null;
-			if (sc.country == '') sc.country = null;
+		sc.loadPage = function(currentPage, name, country) {
+			if (name == '') name = null;
+			if (country == '') country = null;
 			
-			DeveloperService.getPage(currentPage - 1, 10, sc.name, sc.country)
+			DeveloperService.getPage(currentPage - 1, 10, name, country)
 			.success(function (data){
 				sc.main = data;
 			});
@@ -165,8 +170,12 @@
 			views: {
 				'content@main.developer': {
 					templateUrl: '/app/shared/table/table.view.html',
-					controller: 'DeveloperCtrl',
+					controller: 'DeveloperCtrl'
+				},
+				'filter@main.developer.table': {
+					templateUrl: '/app/modules/developer/filter/developer.filter.view.html'
 				}
+
 			}
 		})
 		.state('main.developer.profile', { 
@@ -233,6 +242,14 @@
                 transformRequest: angular.identity,
                 headers: {'Content-Type': undefined },
                 params: { id: id }
+            });
+        }
+
+        this.getLogo = function (id) {
+            return $http.get(urlBase + '/logo', { 
+                    params: { 
+                        id: id
+                    }
             });
         }
     });
@@ -779,6 +796,7 @@
 				testChunks: false,
 				singleFile: true
 			});
+			
 			flow.assignBrowse(document.getElementById('browseButton'));
 
 			flow.on('fileAdded', function(file, event){
@@ -822,8 +840,11 @@
 	.module('main')
 	.controller('DeveloperNewCtrl', DeveloperNewCtrl);
 
-	function DeveloperNewCtrl ($scope, $state, $location, DeveloperService) {
+	function DeveloperNewCtrl ($scope, $state, $location, $document, DeveloperService) {
 		var sc = $scope;
+
+		var fileLimit = 2000000;
+		var fileLimitSuccess = false;
 
 		sc.action = 'Add';
 
@@ -837,8 +858,6 @@
 		sc.phoneNumber = null;
 		sc.fax = null;
 
-		sc.target = { target: '/dev/upload?id=' + sc.id };
-		
 		sc.save = function () {
 			sc.developer = {
 					'name': sc.name,
@@ -859,6 +878,25 @@
 				sc.developer = null;
 			});
 		}
+		var flow = new Flow({ 
+				target: '/dev/logo' + sc.id,
+				testChunks: false,
+				singleFile: true
+			});
+			
+		flow.on('fileAdded', function(file, event){
+			if (file.size <= fileLimit) { fileLimitSuccess = true; }
+			else {
+				fileLimitSuccess = false;
+				alert('This file is over 2Mb');
+			}
+		});
+
+		window.onload = function(){
+			flow.assignBrowse(document.getElementById('browseButton'));
+		}
+		// sc.someHandlerMethod( $files, $event, $flow )
+
 	};
 })();
 
@@ -876,11 +914,14 @@
 		DeveloperService.get($stateParams.id)
 	  		.success( function (data) {
 	  			sc.profile = data;
-	  			sc.columns = Object.keys(data);
 	  		});
 
+	  	DeveloperService.getLogo($stateParams.id)
+	  		.success( function (data) {
+	  			sc.devLogo = '';
+	  			sc.devLogo = data;
+	  		});
 
- 
 	};
 })();
 

@@ -5,8 +5,11 @@
 	.module('main')
 	.controller('DeveloperNewCtrl', DeveloperNewCtrl);
 
-	function DeveloperNewCtrl ($scope, $state, $location, DeveloperService) {
+	function DeveloperNewCtrl ($scope, $state, $location, $document, DeveloperService) {
 		var sc = $scope;
+
+		var fileLimit = 2000000;
+		var fileLimitSuccess = false;
 
 		sc.action = 'Add';
 
@@ -20,8 +23,6 @@
 		sc.phoneNumber = null;
 		sc.fax = null;
 
-		sc.target = { target: '/dev/upload?id=' + sc.id };
-		
 		sc.save = function () {
 			sc.developer = {
 					'name': sc.name,
@@ -42,5 +43,24 @@
 				sc.developer = null;
 			});
 		}
+		var flow = new Flow({ 
+				target: '/dev/logo' + sc.id,
+				testChunks: false,
+				singleFile: true
+			});
+			
+		flow.on('fileAdded', function(file, event){
+			if (file.size <= fileLimit) { fileLimitSuccess = true; }
+			else {
+				fileLimitSuccess = false;
+				alert('This file is over 2Mb');
+			}
+		});
+
+		window.onload = function(){
+			flow.assignBrowse(document.getElementById('browseButton'));
+		}
+		// sc.someHandlerMethod( $files, $event, $flow )
+
 	};
 })();

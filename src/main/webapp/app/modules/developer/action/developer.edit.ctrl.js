@@ -31,6 +31,7 @@
 				testChunks: false,
 				singleFile: true
 			});
+			
 			flow.assignBrowse(document.getElementById('browseButton'));
 
 			flow.on('fileAdded', function(file, event){
