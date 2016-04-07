@@ -1,5 +1,6 @@
 package org.kep.kursach.software.controller;
 
+import org.kep.kursach.images.domain.Image;
 import org.kep.kursach.software.domain.SoftwareInfo;
 import org.kep.kursach.software.reporitory.SoftwareRepository;
 import org.kep.kursach.software.service.SoftwareService;
@@ -14,6 +15,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Set;
 
 /**
  * Created by NicholasG on 05.03.2016.
@@ -96,6 +99,19 @@ public class SoftwareController {
                 .findOneById( id )
                 .map( ResponseEntity::ok )
                 .orElseGet( () -> new ResponseEntity( HttpStatus.NOT_FOUND ) );
+    }
+
+
+    @RequestMapping(
+            value = "/images",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<Set<Image>> getAllImages( @RequestParam( "id" ) Long id ) {
+        LOG.info( "Getting soft's id='{}' images", id );
+        return softwareRepository.findOneById( id )
+                .map( s -> ResponseEntity.ok().body( s.getImages() ) )
+                .orElseGet( () -> new ResponseEntity<>( HttpStatus.NOT_FOUND ) );
     }
 
     @RequestMapping(

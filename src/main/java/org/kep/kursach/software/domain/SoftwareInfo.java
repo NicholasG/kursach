@@ -1,5 +1,6 @@
 package org.kep.kursach.software.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.kep.kursach.developer.domain.DeveloperInfo;
 import org.kep.kursach.images.domain.Image;
 import org.kep.kursach.license.domain.LicenseInfo;
@@ -49,6 +50,7 @@ public class SoftwareInfo {
     @Column( name = "macOS" )
     private boolean macOS;
 
+    @JsonIgnore
     @OneToMany( targetEntity = Image.class, cascade = ALL, mappedBy = "software" )
     private Set<Image> images = new HashSet<>();
 
