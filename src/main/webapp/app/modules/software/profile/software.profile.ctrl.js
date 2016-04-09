@@ -12,10 +12,11 @@
 		SoftwareService.get($stateParams.id)
 	  		.success( function (data) {
 	  			sc.profile = data;
-	  			sc.columns = Object.keys(data);
 	  		});
 
-
- 
+	  	SoftwareService.getImages($stateParams.id)
+	  		.success( function (data) {
+	  			sc.images = data;
+	  		});
 	};
 })();

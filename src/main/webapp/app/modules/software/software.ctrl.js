@@ -5,7 +5,7 @@
 	.module('main')
 	.controller('SoftwareCtrl', SoftwareCtrl);
 
-	function SoftwareCtrl ($scope, $state, SoftwareService, DeveloperService) {
+	function SoftwareCtrl ($scope, $state, SoftwareService, DeveloperService, LicenseService, ngDialog) {
 		var sc = $scope;
 		
 		sc.table = 'software';
@@ -23,37 +23,60 @@
 		'macOS'
 		];
 
-		sc.getFilterView = function (table) {
-        	return 'app/modules/' + table + '.filter.view.html';
-        }
-
 		sc.openEdit = function (id) {
-			$state.go('main.software.edit');
+			ngDialog.open({ 
+				template: '/app/modules/software/action/software.action.view.html', 
+				className: 'ngdialog-theme-dev',
+				showClose: false,
+				controller: 'SoftwareEditCtrl',
+				scope: $scope
+			});
 			sc.id = id;
-		}
+		};
 
 		sc.openAdd = function () {
-			$state.go('main.software.new');
-		}
+			ngDialog.open({ 
+				template: '/app/modules/software/action/software.action.view.html', 
+				className: 'ngdialog-theme-dev',
+				showClose: false,
+				controller: 'SoftwareNewCtrl',
+				scope: $scope
+			});
+		};
 
 		sc.openDelete = function (id) {
-			$state.go('main.software.delete');
-			sc.id = id;
-		}
+			sc.id = id; 
+			ngDialog.open({ 
+				template: '/app/modules/software/action/software.action.delete.view.html', 
+				className: 'ngdialog-theme-dev',
+				showClose: false,
+				controller: 'DeveloperDeleteCtrl',
+				scope: $scope
+			});
+		};
 
-		sc.close = function () {
-			$state.go('main.' + sc.table);
-		}
+		sc.loadPage = function(currentPage, name, release, devName, licName) {
+			if (release != null) {
+				var date = new Date(release);
+				release = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+			}
 
-		sc.loadPage = function(currentPage) {
-			if (sc.name == '') sc.name = null;
-			if (sc.country == '') sc.country = null;
-			
-			SoftwareService.getPage(currentPage - 1, 10, sc.name, sc.country)
+			SoftwareService.getPage(currentPage - 1, 10, name, release, devName, licName)
 			.success(function (data){
 				sc.main = data;
 			});
 		};
+
+		sc.devName = {};
+		sc.licName = {};
+
+		DeveloperService.getAll().success( function (data) {
+			sc.developers = data.content;
+		});
+
+		LicenseService.getAll().success( function (data) {
+			sc.licensies = data.content;
+		});
 
 		sc.loadPage(1); 
 	};

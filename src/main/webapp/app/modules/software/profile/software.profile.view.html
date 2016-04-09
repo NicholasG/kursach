@@ -1,0 +1,91 @@
+<div class="row profile">
+  <div class="col-lg-12">
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading" style="padding: 0">
+        <ol class="breadcrumb" style="margin: 0">
+          <li>
+            <i class="fa fa-dashboard"></i>  <a href="#/home" translate>home</a>
+          </li>
+          <li>
+            <i class="fa fa-dashboard"></i>  <a href="#/{{table}}" translate>{{table}}</a>
+          </li>
+          <li class="active" translate>
+            <i class="fa fa-table" ></i> {{profile.name}}
+          </li>
+        </ol>
+      </div>
+      <div class="panel-body">
+        <div class="col-lg-6">
+          <uib-carousel active="active" interval="5000" style="height: 350px">
+          <uib-slide ng-repeat="image in images" index="$index">
+          <img ng-src="data:image/png;base64, {{image.image}}" style="margin: auto" onerror="this.src = '/dist/img/no_image.gif'">
+          </uib-slide>
+          </uib-carousel>
+        </div>
+        <div class="col-lg-3">
+          <table class="table">
+            <tr>
+              <td translate>name</td><td><b>{{profile.name}}</b></td>
+            </tr>
+            <tr>
+              <td translate>city</td><td><b>{{profile.version}}</b></td>
+            </tr>
+            <tr>
+              <td translate>city</td><td><b>{{profile.release}}</b></td>
+            </tr>
+          </table>
+          <h3><span class="label label-success" translate>developer</span></h3>
+          <table class="table">
+            <tr>
+              <td translate>name</td><td><b>{{profile.developer.name}}</b></td>
+            </tr>
+            <tr>
+              <td translate>city</td><td><b>{{profile.developer.city}}</b></td>
+            </tr>
+            <tr>
+              <td translate>country</td><td><b>{{profile.developer.country}}</b></td>
+            </tr>
+            <tr>
+              <td translate>website</td><td><b>{{profile.developer.website}}</b></td>
+            </tr>
+            <tr>
+              <td translate>phoneNumber</td><td><b>{{profile.developer.phoneNumber | phone}}</b></td>
+            </tr>
+            <tr>
+              <td translate>fax</td><td><b>{{profile.developer.fax}}</b></td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-lg-3">
+          <h3><span class="label label-success" translate>license</span></h3>
+          <table class="table">
+            <tr>
+              <td translate>name</td><td><b>{{profile.license.name}}</b></td>
+            </tr>
+            <tr>
+              <td translate>type</td>
+              <td ng-switch="profile.license.type">
+                <span ng-switch-when="FREE" class="label label-success"><b>free</b></span>
+                <span ng-switch-when="TRIAL" class="label label-warning"><b>trial</b></span>
+                <span ng-switch-when="PAID" class="label label-primary"><b>paid</b></span>
+              </td>
+            </tr>
+            <tr>
+              <td translate>minimumUsers</td><td><b>{{profile.license.minimumUsers}}</b></td>
+            </tr>
+            <tr>
+              <td translate>maximumUsers</td><td><b>{{profile.license.maximumUsers}}</b></td>
+            </tr>
+            <tr>
+              <td translate>expiration</td><td><b>{{profile.license.expiration}}</b></td>
+            </tr>
+            <tr>
+              <td translate>priceForOne</td><td><b>{{profile.license.priceForOne}}</b></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

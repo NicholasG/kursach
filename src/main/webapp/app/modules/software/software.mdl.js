@@ -17,29 +17,14 @@
 			template: '<div ui-view="content"></div>'
 		})
 		.state('main.software.table', {
-			url: '',
+			url: '', 
 			views: {
 				'content@main.software': {
 					templateUrl: '/app/shared/table/table.view.html',
 					controller: 'SoftwareCtrl',
-				}
-			}
-		})
-		.state('main.software.new', {
-			url: '/new',
-			views: {
-				'action @main.software': {
-					templateUrl: '/app/modules/software/action/software.action.view.html',
-					controller: 'SoftwareNewCtrl'
-				}
-			}
-		})
-		.state('main.software.edit', {
-			url: '/edit',
-			views: {
-				'action': {
-					templateUrl: '/app/modules/software/action/software.action.view.html',
-					controller: 'SoftwareEditCtrl'
+				},
+				'filter@main.software.table': {
+					templateUrl: '/app/modules/software/filter/software.filter.view.html'
 				}
 			}
 		})
@@ -47,21 +32,11 @@
 			url: '/:id',
 			views: {
 				'content@main.software': {
-					templateUrl: '/app/shared/profile/profile.view.html',
+					templateUrl: '/app/modules/software/profile/software.profile.view.html',
 					controller: 'SoftwareProfileCtrl'
 				}
 			}
-		})
-		.state('main.software.delete', {
-			url: '/delete',
-			views: {
-				'action': {
-					templateUrl: '/app/modules/software/action/software.action.delete.view.html',
-					controller: 'SoftwareDeleteCtrl'
-				}
-			}
 		});
-
 	}
 
 })();

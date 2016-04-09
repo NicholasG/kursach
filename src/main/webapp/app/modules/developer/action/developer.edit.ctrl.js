@@ -11,13 +11,19 @@
 		var fileLimit = 2000000;
 		var fileLimitSuccess = false;
 
+		sc.target = { 
+				target: '/dev/logo?id=' + sc.id,
+				testChunks: false,
+				singleFile: true
+			};
+
 		DeveloperService.get(sc.id)
 		.success(function (data) {
 			sc.developer = data;
 
 			sc.id = sc.developer.id;
 			sc.name = sc.developer.name;
-			sc.country = { name: sc.developer.country }
+			sc.country = sc.developer.country;
 			sc.city = sc.developer.city;
 			sc.street = sc.developer.street;
 			sc.email = sc.developer.email;
@@ -25,28 +31,12 @@
 			sc.website = sc.developer.website;
 			sc.phoneNumber = sc.developer.phoneNumber;
 			sc.fax = sc.developer.fax;
-
-			var flow = new Flow({ 
-				target: '/dev/logo?id=' + sc.id,
-				testChunks: false,
-				singleFile: true
-			});
-			
-			flow.assignBrowse(document.getElementById('browseButton'));
-
-			flow.on('fileAdded', function(file, event){
-				if (file.size <= fileLimit) { fileLimitSuccess = true; }
-				else {
-					fileLimitSuccess = false;
-					alert('This file is over 2Mb');
-				}
-			});
  
 			sc.save = function () {
 				sc.developer = {
 					'id': sc.id,
-					'name': sc.name,
-					'country': sc.country.name,
+					'name': document.getElementById('name').value,
+					'country': sc.country,
 					'city': sc.city,
 					'street': sc.street,
 					'email': sc.email,
@@ -55,7 +45,6 @@
 					'phoneNumber': sc.phoneNumber,
 					'fax': sc.fax 
 				}
-    			if (fileLimitSuccess) flow.upload();  
 
 				DeveloperService.update(sc.developer)
 				.success(function (data) {

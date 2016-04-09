@@ -26,7 +26,7 @@
 		sc.save = function () {
 			sc.developer = {
 					'name': sc.name,
-					'country': sc.country.name,
+					'country': sc.country,
 					'city': sc.city,
 					'street': sc.street,
 					'email': sc.email,
@@ -40,26 +40,19 @@
 			.success(function (data) {
 				alert('added!');
 				sc.loadPage(1);
-				sc.developer = null;
 			});
 		}
-		var flow = new Flow({ 
-				target: '/dev/logo' + sc.id,
-				testChunks: false,
-				singleFile: true
-			});
-			
-		flow.on('fileAdded', function(file, event){
-			if (file.size <= fileLimit) { fileLimitSuccess = true; }
-			else {
-				fileLimitSuccess = false;
-				alert('This file is over 2Mb');
-			}
+
+		DeveloperService.getAll().success( function (data) {
+			sc.contentLength = data.content.length;
 		});
 
-		window.onload = function(){
-			flow.assignBrowse(document.getElementById('browseButton'));
-		}
+		sc.target = { 
+				target: '/dev/logo?id=' + (sc.contentLength + 1),
+				testChunks: false,
+				singleFile: true
+			};
+		
 		// sc.someHandlerMethod( $files, $event, $flow )
 
 	};

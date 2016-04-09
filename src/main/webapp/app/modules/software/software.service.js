@@ -30,14 +30,26 @@
                 }); 
         };
 
-        this.getPage = function (currentPage, size) {
+        this.getPage = function (currentPage, size, name, release, devName, licName) {
             return $http.get(urlBase, { 
                     params: { 
                         page: currentPage, 
-                        size: size 
+                        size: size,
+                        name: name,
+                        release: release,
+                        devName: devName,
+                        licName: licName
                     }
             });
         };
+
+        this.getImages = function (id) {
+            return $http.get(urlBase + '/images', { 
+                    params: { 
+                        id: id
+                    }
+            });
+        }
 
     });
 

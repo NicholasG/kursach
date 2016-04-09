@@ -10,6 +10,11 @@
 
 		sc.action = 'Edit';
 
+		sc.target = { 
+				target: '/soft/images?id=' + sc.id,
+				testChunks: false
+			};
+
 		SoftwareService.get(sc.id)
 		.success(function (data) {
 			sc.software = data;

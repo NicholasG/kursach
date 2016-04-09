@@ -1,5 +1,4 @@
-<div class="popup-container" ng-click="close()"></div>
-<div id="soft-add" class="panel panel-default popup" ng-cotroller="ActionCtrl">
+<div class="panel panel-default popup">
   <div class="panel-heading">
     <h3 class="panel-title"><i class="fa fa-long-arrow-right fa-fw"></i>{{action}}</h3>
     <i class="glyphicon glyphicon-remove action action-close right" ng-click="close()"></i>
@@ -39,9 +38,27 @@
         </div>
         </div><!-- /.col-lg-6 -->
       </form>
-      <div class="col-lg-12 tools">
-        <button class="btn btn-primary" ng-click="save()"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
-        <button ng-click="close()" class="btn btn-default right" style="margin-right: 15px;">Cancel</button>
-      </div>
+      <span flow-init="target">
+        <div class="col-lg-6">
+          <br>
+          <div class="thumbnail" flow-drop style="border: 1px dashed #ddd">
+            <img flow-img="$flow.files[0]">
+            <!-- <i class="glyphicon glyphicon-remove action action-close right" ng-click="$flow.remove(); alert()"></i> -->
+            <center>
+            <p ng-if="$flow.files[0] == null" style="color: silver"><br>Drag and drop image here <br>
+            or</p>
+            </center>
+            <br>
+            <center>
+            <button class="btn btn-default" flow-btn>Browse</button>
+            </center>
+            <br>
+          </div>
+        </div>
+        <div class="col-lg-12 tools">
+          <button type="submit" class="btn btn-primary" ng-click=" $flow.upload(); save()"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+          <button class="btn btn-default right" ng-click="closeThisDialog(true)" style="margin-right: 15px;">Cancel</button>
+        </div>
+      </span>
     </div>
   </div>

@@ -112,10 +112,6 @@
 			});
 		};
 
-		sc.close = function () {
-			$state.go('main.' + sc.table);
-		};
-
 		sc.loadPage = function(currentPage, name, country) {
 			if (name == '') name = null;
 			if (country == '') country = null;
@@ -130,20 +126,7 @@
 
 		$http.get('app/shared/dropdown/countries/countries.json').success(function (data) {
 			sc.countriesWithFlags = data;
-		});
-
-		 $scope.imageStrings = [];
-		 $scope.processFiles = function(files) {
-		    angular.forEach(files, function(flowFile, i) {
-		        var fileReader = new FileReader();
-		          fileReader.onload = function (event) {
-		            var uri = event.target.result;
-		              $scope.imageStrings[i] = uri;     
-		          };
-		          fileReader.readAsDataURL(flowFile.file);
-		    });
-		 };
-		
+		});		
 	};
 })();
 
@@ -424,7 +407,7 @@
 	.module('main')
 	.controller('SoftwareCtrl', SoftwareCtrl);
 
-	function SoftwareCtrl ($scope, $state, SoftwareService, DeveloperService) {
+	function SoftwareCtrl ($scope, $state, SoftwareService, DeveloperService, LicenseService, ngDialog) {
 		var sc = $scope;
 		
 		sc.table = 'software';
@@ -442,37 +425,60 @@
 		'macOS'
 		];
 
-		sc.getFilterView = function (table) {
-        	return 'app/modules/' + table + '.filter.view.html';
-        }
-
 		sc.openEdit = function (id) {
-			$state.go('main.software.edit');
+			ngDialog.open({ 
+				template: '/app/modules/software/action/software.action.view.html', 
+				className: 'ngdialog-theme-dev',
+				showClose: false,
+				controller: 'SoftwareEditCtrl',
+				scope: $scope
+			});
 			sc.id = id;
-		}
+		};
 
 		sc.openAdd = function () {
-			$state.go('main.software.new');
-		}
+			ngDialog.open({ 
+				template: '/app/modules/software/action/software.action.view.html', 
+				className: 'ngdialog-theme-dev',
+				showClose: false,
+				controller: 'SoftwareNewCtrl',
+				scope: $scope
+			});
+		};
 
 		sc.openDelete = function (id) {
-			$state.go('main.software.delete');
-			sc.id = id;
-		}
+			sc.id = id; 
+			ngDialog.open({ 
+				template: '/app/modules/software/action/software.action.delete.view.html', 
+				className: 'ngdialog-theme-dev',
+				showClose: false,
+				controller: 'DeveloperDeleteCtrl',
+				scope: $scope
+			});
+		};
 
-		sc.close = function () {
-			$state.go('main.' + sc.table);
-		}
+		sc.loadPage = function(currentPage, name, release, devName, licName) {
+			if (release != null) {
+				var date = new Date(release);
+				release = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+			}
 
-		sc.loadPage = function(currentPage) {
-			if (sc.name == '') sc.name = null;
-			if (sc.country == '') sc.country = null;
-			
-			SoftwareService.getPage(currentPage - 1, 10, sc.name, sc.country)
+			SoftwareService.getPage(currentPage - 1, 10, name, release, devName, licName)
 			.success(function (data){
 				sc.main = data;
 			});
 		};
+
+		sc.devName = {};
+		sc.licName = {};
+
+		DeveloperService.getAll().success( function (data) {
+			sc.developers = data.content;
+		});
+
+		LicenseService.getAll().success( function (data) {
+			sc.licensies = data.content;
+		});
 
 		sc.loadPage(1); 
 	};
@@ -498,29 +504,14 @@
 			template: '<div ui-view="content"></div>'
 		})
 		.state('main.software.table', {
-			url: '',
+			url: '', 
 			views: {
 				'content@main.software': {
 					templateUrl: '/app/shared/table/table.view.html',
 					controller: 'SoftwareCtrl',
-				}
-			}
-		})
-		.state('main.software.new', {
-			url: '/new',
-			views: {
-				'action @main.software': {
-					templateUrl: '/app/modules/software/action/software.action.view.html',
-					controller: 'SoftwareNewCtrl'
-				}
-			}
-		})
-		.state('main.software.edit', {
-			url: '/edit',
-			views: {
-				'action': {
-					templateUrl: '/app/modules/software/action/software.action.view.html',
-					controller: 'SoftwareEditCtrl'
+				},
+				'filter@main.software.table': {
+					templateUrl: '/app/modules/software/filter/software.filter.view.html'
 				}
 			}
 		})
@@ -528,21 +519,11 @@
 			url: '/:id',
 			views: {
 				'content@main.software': {
-					templateUrl: '/app/shared/profile/profile.view.html',
+					templateUrl: '/app/modules/software/profile/software.profile.view.html',
 					controller: 'SoftwareProfileCtrl'
 				}
 			}
-		})
-		.state('main.software.delete', {
-			url: '/delete',
-			views: {
-				'action': {
-					templateUrl: '/app/modules/software/action/software.action.delete.view.html',
-					controller: 'SoftwareDeleteCtrl'
-				}
-			}
 		});
-
 	}
 
 })();
@@ -579,14 +560,26 @@
                 }); 
         };
 
-        this.getPage = function (currentPage, size) {
+        this.getPage = function (currentPage, size, name, release, devName, licName) {
             return $http.get(urlBase, { 
                     params: { 
                         page: currentPage, 
-                        size: size 
+                        size: size,
+                        name: name,
+                        release: release,
+                        devName: devName,
+                        licName: licName
                     }
             });
         };
+
+        this.getImages = function (id) {
+            return $http.get(urlBase + '/images', { 
+                    params: { 
+                        id: id
+                    }
+            });
+        }
 
     });
 
@@ -776,13 +769,19 @@
 		var fileLimit = 2000000;
 		var fileLimitSuccess = false;
 
+		sc.target = { 
+				target: '/dev/logo?id=' + sc.id,
+				testChunks: false,
+				singleFile: true
+			};
+
 		DeveloperService.get(sc.id)
 		.success(function (data) {
 			sc.developer = data;
 
 			sc.id = sc.developer.id;
 			sc.name = sc.developer.name;
-			sc.country = { name: sc.developer.country }
+			sc.country = sc.developer.country;
 			sc.city = sc.developer.city;
 			sc.street = sc.developer.street;
 			sc.email = sc.developer.email;
@@ -790,28 +789,12 @@
 			sc.website = sc.developer.website;
 			sc.phoneNumber = sc.developer.phoneNumber;
 			sc.fax = sc.developer.fax;
-
-			var flow = new Flow({ 
-				target: '/dev/logo?id=' + sc.id,
-				testChunks: false,
-				singleFile: true
-			});
-			
-			flow.assignBrowse(document.getElementById('browseButton'));
-
-			flow.on('fileAdded', function(file, event){
-				if (file.size <= fileLimit) { fileLimitSuccess = true; }
-				else {
-					fileLimitSuccess = false;
-					alert('This file is over 2Mb');
-				}
-			});
  
 			sc.save = function () {
 				sc.developer = {
 					'id': sc.id,
-					'name': sc.name,
-					'country': sc.country.name,
+					'name': document.getElementById('name').value,
+					'country': sc.country,
 					'city': sc.city,
 					'street': sc.street,
 					'email': sc.email,
@@ -820,7 +803,6 @@
 					'phoneNumber': sc.phoneNumber,
 					'fax': sc.fax 
 				}
-    			if (fileLimitSuccess) flow.upload();  
 
 				DeveloperService.update(sc.developer)
 				.success(function (data) {
@@ -861,7 +843,7 @@
 		sc.save = function () {
 			sc.developer = {
 					'name': sc.name,
-					'country': sc.country.name,
+					'country': sc.country,
 					'city': sc.city,
 					'street': sc.street,
 					'email': sc.email,
@@ -875,26 +857,19 @@
 			.success(function (data) {
 				alert('added!');
 				sc.loadPage(1);
-				sc.developer = null;
 			});
 		}
-		var flow = new Flow({ 
-				target: '/dev/logo' + sc.id,
-				testChunks: false,
-				singleFile: true
-			});
-			
-		flow.on('fileAdded', function(file, event){
-			if (file.size <= fileLimit) { fileLimitSuccess = true; }
-			else {
-				fileLimitSuccess = false;
-				alert('This file is over 2Mb');
-			}
+
+		DeveloperService.getAll().success( function (data) {
+			sc.contentLength = data.content.length;
 		});
 
-		window.onload = function(){
-			flow.assignBrowse(document.getElementById('browseButton'));
-		}
+		sc.target = { 
+				target: '/dev/logo?id=' + (sc.contentLength + 1),
+				testChunks: false,
+				singleFile: true
+			};
+		
 		// sc.someHandlerMethod( $files, $event, $flow )
 
 	};
@@ -1069,6 +1044,11 @@
 
 		sc.action = 'Edit';
 
+		sc.target = { 
+				target: '/soft/images?id=' + sc.id,
+				testChunks: false
+			};
+
 		SoftwareService.get(sc.id)
 		.success(function (data) {
 			sc.software = data;
@@ -1188,10 +1168,11 @@
 		SoftwareService.get($stateParams.id)
 	  		.success( function (data) {
 	  			sc.profile = data;
-	  			sc.columns = Object.keys(data);
 	  		});
 
-
- 
+	  	SoftwareService.getImages($stateParams.id)
+	  		.success( function (data) {
+	  			sc.images = data;
+	  		});
 	};
 })();
