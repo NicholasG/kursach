@@ -7,7 +7,7 @@
 
 	function LicenseCtrl($scope, $state, LicenseService) {
 		var sc = $scope;
-
+  
 		sc.table = 'license';
 		sc.base = '/' + sc.table;
 
@@ -25,9 +25,7 @@
 		'minimumUsers',
 		'maximumUsers',
 		'expiration',
-		'priceForOne',
-		'priceForTen',
-		'priceForHundred'
+		'priceForOne'
 		];
 
 		sc.openEdit = function (id) {
@@ -48,8 +46,8 @@
 			$state.go('main.' + sc.table);
 		};
 
-		sc.loadPage = function(currentPage) {
-			LicenseService.getPage(currentPage - 1, 10)
+		sc.loadPage = function(currentPage, name, type) {
+			LicenseService.getPage(currentPage - 1, 10, name, type)
 			.success(function (data){
 				sc.main = data;
 			});

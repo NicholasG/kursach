@@ -13,37 +13,18 @@
 		$stateProvider
 		.state('main.license', {
 			url: 'license',
+			abstract: true,
+			template: '<div ui-view="content"></div>'
+		})
+		.state('main.license.table', {
+			url: '', 
 			views: {
-				'': {
+				'content@main.license': {
 					templateUrl: '/app/shared/table/table.view.html',
 					controller: 'LicenseCtrl',
-				}
-			}
-		})
-		.state('main.license.new', {
-			url: '/new',
-			views: {
-				'action': {
-					templateUrl: '/app/modules/license/action/license.action.view.html',
-					controller: 'LicenseNewCtrl'
-				}
-			}
-		})
-		.state('main.license.edit', {
-			url: '/edit',
-			views: {
-				'action': {
-					templateUrl: '/app/modules/license/action/license.action.view.html',
-					controller: 'LicenseEditCtrl'
-				}
-			}
-		})
-		.state('main.license.delete', {
-			url: '/delete',
-			views: {
-				'action': {
-					templateUrl: '/app/modules/license/action/license.action.delete.view.html',
-					controller: 'LicenseDeleteCtrl'
+				},
+				'filter@main.license.table': {
+					templateUrl: '/app/modules/license/filter/license.filter.view.html'
 				}
 			}
 		});

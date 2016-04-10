@@ -248,7 +248,7 @@
 
 	function LicenseCtrl($scope, $state, LicenseService) {
 		var sc = $scope;
-
+  
 		sc.table = 'license';
 		sc.base = '/' + sc.table;
 
@@ -266,9 +266,7 @@
 		'minimumUsers',
 		'maximumUsers',
 		'expiration',
-		'priceForOne',
-		'priceForTen',
-		'priceForHundred'
+		'priceForOne'
 		];
 
 		sc.openEdit = function (id) {
@@ -289,8 +287,8 @@
 			$state.go('main.' + sc.table);
 		};
 
-		sc.loadPage = function(currentPage) {
-			LicenseService.getPage(currentPage - 1, 10)
+		sc.loadPage = function(currentPage, name, type) {
+			LicenseService.getPage(currentPage - 1, 10, name, type)
 			.success(function (data){
 				sc.main = data;
 			});
@@ -316,37 +314,18 @@
 		$stateProvider
 		.state('main.license', {
 			url: 'license',
+			abstract: true,
+			template: '<div ui-view="content"></div>'
+		})
+		.state('main.license.table', {
+			url: '', 
 			views: {
-				'': {
+				'content@main.license': {
 					templateUrl: '/app/shared/table/table.view.html',
 					controller: 'LicenseCtrl',
-				}
-			}
-		})
-		.state('main.license.new', {
-			url: '/new',
-			views: {
-				'action': {
-					templateUrl: '/app/modules/license/action/license.action.view.html',
-					controller: 'LicenseNewCtrl'
-				}
-			}
-		})
-		.state('main.license.edit', {
-			url: '/edit',
-			views: {
-				'action': {
-					templateUrl: '/app/modules/license/action/license.action.view.html',
-					controller: 'LicenseEditCtrl'
-				}
-			}
-		})
-		.state('main.license.delete', {
-			url: '/delete',
-			views: {
-				'action': {
-					templateUrl: '/app/modules/license/action/license.action.delete.view.html',
-					controller: 'LicenseDeleteCtrl'
+				},
+				'filter@main.license.table': {
+					templateUrl: '/app/modules/license/filter/license.filter.view.html'
 				}
 			}
 		});
@@ -387,11 +366,13 @@
                 }); 
         };
 
-        this.getPage = function (currentPage, size) {
+        this.getPage = function (currentPage, size, name, type) {
             return $http.get(urlBase, { 
                     params: { 
                         page: currentPage, 
-                        size: size 
+                        size: size ,
+                        name: name,
+                        type: type
                     }
             });
         };

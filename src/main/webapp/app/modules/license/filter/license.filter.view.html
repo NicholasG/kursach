@@ -1,0 +1,9 @@
+<label translate>name</label>
+<input name="name" ng-model="name" type="text" class="form-control" placeholder="Enter name" ng-change="loadPage(1, name, type)">
+<label translate>type</label>
+<select class="form-control" ng-model="type" ng-change="loadPage(1, name, type)">
+	<option value=""></option>
+	<option value="FREE">free</option>
+	<option value="TRIAL">trial</option>
+	<option value="PAID">paid</option>
+</select>

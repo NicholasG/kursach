@@ -30,11 +30,13 @@
                 }); 
         };
 
-        this.getPage = function (currentPage, size) {
+        this.getPage = function (currentPage, size, name, type) {
             return $http.get(urlBase, { 
                     params: { 
                         page: currentPage, 
-                        size: size 
+                        size: size ,
+                        name: name,
+                        type: type
                     }
             });
         };
