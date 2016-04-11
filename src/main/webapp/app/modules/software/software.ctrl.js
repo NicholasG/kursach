@@ -50,7 +50,7 @@
 				template: '/app/modules/software/action/software.action.delete.view.html', 
 				className: 'ngdialog-theme-dev',
 				showClose: false,
-				controller: 'DeveloperDeleteCtrl',
+				controller: 'SoftwareDeleteCtrl',
 				scope: $scope
 			});
 		};

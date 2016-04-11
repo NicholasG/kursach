@@ -1,8 +1,7 @@
-<div class="popup-container" ng-click="close()"></div>
-<div id="lic-add" class="panel panel-default popup">
+<div class="panel panel-default popup">
   <div class="panel-heading">
     <h3 class="panel-title"><i class="fa fa-long-arrow-right fa-fw"></i>{{action}}</h3>
-    <i class="glyphicon glyphicon-remove action action-close right" ng-click="close()"></i>
+    <i class="glyphicon glyphicon-remove action action-close right" ng-click="closeThisDialog(true)"></i>
   </div>
   <div class="panel-body">
     <div class="col-lg-6">
@@ -32,7 +31,7 @@
     </div><!-- /.col-lg-6 -->   
     <div class="col-lg-12 tools">
      <button class="btn btn-primary" ng-click="save()"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
-     <button class="btn btn-default right" ng-click="close()" style="margin-right: 15px;">Cancel</button>
+     <button class="btn btn-default right" ng-click="closeThisDialog(true)" style="margin-right: 15px;">Cancel</button>
    </div>  
  </div>
 </div>

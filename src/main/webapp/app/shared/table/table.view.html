@@ -64,7 +64,7 @@
               <td>{{row.minimumUsers}}</td>
               <td>{{row.maximumUsers}}</td>
               <td>{{row.expiration}}</td>
-              <td><span uib-popover="priceForTen: {{row.priceForTen | currency:'$'}}, row.priceForHundred: {{row.priceForHundred | currency:'$'}}" popover-trigger="mouseenter" popover-title="Price" popover-placement="top-left">{{row.priceForOne | currency:"$"}}</span></td>
+              <td><span uib-popover="priceForTen: {{row.priceForTen | currency:'$'}}, priceForHundred: {{row.priceForHundred | currency:'$'}}" popover-trigger="mouseenter" popover-title="Price" popover-placement="top">{{row.priceForOne | currency:"$"}}</span></td>
               <td>
                 <i class="glyphicon glyphicon-pencil action" ng-click="openEdit(row.id)"></i>
                 <i class="glyphicon glyphicon-remove action" ng-click="openDelete(row.id)"></i>

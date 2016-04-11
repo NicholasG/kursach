@@ -12,7 +12,7 @@
 
 		sc.name = null;
 		sc.version = null;
-		sc.release = null;
+		sc.release = new Date();
 		sc.license = null;
 		sc.windows = false;
 		sc.linux = false;
@@ -42,12 +42,19 @@
 				'macOS': sc.macOS
 			}
 
-			SoftwareService.new(sc.soft)
-			.success(function (data) {
-				alert('added!');
-				sc.loadPage(1);
-				sc.soft = null;
-			});
+			if (sc.name != null 
+				&& sc.version != null
+				&& sc.selLicense != {}
+				&& sc.selDeveloper != {}
+				) {
+				SoftwareService.new(sc.soft)
+				.success(function (data) {
+					alert('added!');
+					sc.loadPage(1);
+					sc.soft = null;
+				});
+			}
+			else alert('Error');
 		}
 	}
 })();

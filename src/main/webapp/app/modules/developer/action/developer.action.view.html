@@ -5,32 +5,32 @@
 </div>
 <div class="panel-body">
   <div class="col-lg-6">
-    <label>name</label>
+    <label translate>name</label>
     <input id="name" name="name" type="name" class="form-control" ng-model="name" placeholder="Enter name"  maxlength="20">
-    <label>country</label>
+    <label translate>country</label>
     <input name="country" type="text" class="form-control" ng-model="country" placeholder="Enter country">
-    <label>city</label>
+    <label translate>city</label>
     <input name="city" type="text" class="form-control" ng-model="city" placeholder="Enter city" pattern="[A-z^\s]*" maxlength="35" uib-tooltip="Only numbers" tooltip-is-open="devForm.city.$invalid" tooltip-trigger="none">
   </div>
   <div class="col-lg-6">
     <form name="devForm">
-      <label>email</label>
+      <label translate>email</label>
       <input name="email" type="email" class="form-control" ng-model="email" placeholder="Enter email"
       uib-tooltip="Is no email adress"  tooltip-is-open="devForm.email.$invalid" tooltip-trigger="none">
-      <label>street</label>
+      <label translate>street</label>
       <input type="text" class="form-control" ng-model="street" placeholder="Enter street" maxlength="100">
-      <label>zipcode</label>
+      <label translate>zipcode</label>
       <input type="text" class="form-control" ng-model="zipcode" placeholder="Enter zipcode" maxlength="60">
     </form>
   </div>
   <div class="col-lg-6">
     <form name="devForm">
-      <label>website</label>
+      <label translate>website</label>
       <input type="text" class="form-control" ng-model="website" placeholder="Enter website" pattern="^[A-Za-z]+$" maxlength="60">
-      <label>phoneNumber</label>
+      <label translate>phoneNumber</label>
       <input name="phoneNumber" type="text" class="form-control" ng-model="phoneNumber" placeholder="Example: 0986171061" pattern="^([0-9]*)$" maxlength="10"
       uib-tooltip="Only numbers"  tooltip-is-open="devForm.phoneNumber.$invalid" tooltip-trigger="none">
-      <label>fax</label>
+      <label translate>fax</label>
       <input type="text" class="form-control" ng-model="fax" placeholder="Enter zipcode" maxlength="60">
     </form>
   </div>
@@ -41,18 +41,17 @@
         <img flow-img="$flow.files[0]">
         <!-- <i class="glyphicon glyphicon-remove action action-close right" ng-click="$flow.remove(); alert()"></i> -->
         <center>
-        <p ng-if="$flow.files[0] == null" style="color: silver"><br>Drag and drop image here <br>
-        or</p>
+        <p ng-if="$flow.files[0] == null" style="color: silver"><br><span translate>dragAndDrop</span></p>
         </center>
         <br>
         <center>
-        <button class="btn btn-default" flow-btn>Browse</button>
+        <button class="btn btn-default" flow-btn translate>browse</button>
         </center>
         <br>
       </div>
     </div>
     <div class="col-lg-12 tools">
-      <button type="submit" class="btn btn-primary" ng-click=" $flow.upload(); save()"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+      <button type="submit" class="btn btn-primary" ng-click=" $flow.upload(); save()" translate><i class="glyphicon glyphicon-floppy-disk"></i> save</button>
       <button class="btn btn-default right" ng-click="closeThisDialog(true)" style="margin-right: 15px;">Cancel</button>
     </div>
   </span>

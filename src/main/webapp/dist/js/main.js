@@ -49,11 +49,6 @@
 
 	function run($translate, $rootScope, $templateCache) {
 		// $translate.use('en');
-
-		// $rootScope.$on('$viewContentLoaded', function() {
-  //     		$templateCache.removeAll();
-  //  		});
-
 	}
 })();
 
@@ -246,7 +241,7 @@
 	.module('main')
 	.controller('LicenseCtrl', LicenseCtrl);
 
-	function LicenseCtrl($scope, $state, LicenseService) {
+	function LicenseCtrl($scope, $state, LicenseService, ngDialog) {
 		var sc = $scope;
   
 		sc.table = 'license';
@@ -270,21 +265,35 @@
 		];
 
 		sc.openEdit = function (id) {
-			$state.go('main.license.edit');
+			ngDialog.open({ 
+				template: '/app/modules/license/action/license.action.view.html', 
+				className: 'ngdialog-theme-dev',
+				showClose: false,
+				controller: 'LicenseEditCtrl',
+				scope: $scope
+			});
 			sc.id = id;
 		};
 
 		sc.openAdd = function () {
-			$state.go('main.license.new');
+			ngDialog.open({ 
+				template: '/app/modules/license/action/license.action.view.html', 
+				className: 'ngdialog-theme-dev',
+				showClose: false,
+				controller: 'LicenseNewCtrl',
+				scope: $scope
+			});
 		};
 
 		sc.openDelete = function (id) {
-			$state.go('main.license.delete');
 			sc.id = id;
-		};
-
-		sc.close = function () {
-			$state.go('main.' + sc.table);
+			ngDialog.open({ 
+				template: '/app/modules/license/action/license.action.delete.view.html', 
+				className: 'ngdialog-theme-dev',
+				showClose: false,
+				controller: 'LicenseDeleteCtrl',
+				scope: $scope
+			});
 		};
 
 		sc.loadPage = function(currentPage, name, type) {
@@ -433,7 +442,7 @@
 				template: '/app/modules/software/action/software.action.delete.view.html', 
 				className: 'ngdialog-theme-dev',
 				showClose: false,
-				controller: 'DeveloperDeleteCtrl',
+				controller: 'SoftwareDeleteCtrl',
 				scope: $scope
 			});
 		};
@@ -1025,11 +1034,6 @@
 
 		sc.action = 'Edit';
 
-		sc.target = { 
-				target: '/soft/images?id=' + sc.id,
-				testChunks: false
-			};
-
 		SoftwareService.get(sc.id)
 		.success(function (data) {
 			sc.software = data;
@@ -1095,7 +1099,7 @@
 
 		sc.name = null;
 		sc.version = null;
-		sc.release = null;
+		sc.release = new Date();
 		sc.license = null;
 		sc.windows = false;
 		sc.linux = false;
@@ -1125,12 +1129,19 @@
 				'macOS': sc.macOS
 			}
 
-			SoftwareService.new(sc.soft)
-			.success(function (data) {
-				alert('added!');
-				sc.loadPage(1);
-				sc.soft = null;
-			});
+			if (sc.name != null 
+				&& sc.version != null
+				&& sc.selLicense != {}
+				&& sc.selDeveloper != {}
+				) {
+				SoftwareService.new(sc.soft)
+				.success(function (data) {
+					alert('added!');
+					sc.loadPage(1);
+					sc.soft = null;
+				});
+			}
+			else alert('Error');
 		}
 	}
 })();
@@ -1142,10 +1153,20 @@
 	.module('main')
 	.controller('SoftwareProfileCtrl', SoftwareProfileCtrl);
 
-	function SoftwareProfileCtrl ($scope, $state, $stateParams, SoftwareService) {
+	function SoftwareProfileCtrl ($scope, $state, $stateParams, SoftwareService, DeveloperService, ngDialog) {
 		var sc = $scope;
 		sc.table = 'software';
+		sc.imgIndex = 0;
 
+		sc.target = { 
+				target: '/soft/images?id=' + $stateParams.id,
+				testChunks: false
+			};
+
+		sc.getImage = function (index) {
+			sc.imgIndex = index;
+		}
+ 
 		SoftwareService.get($stateParams.id)
 	  		.success( function (data) {
 	  			sc.profile = data;
@@ -1154,6 +1175,27 @@
 	  	SoftwareService.getImages($stateParams.id)
 	  		.success( function (data) {
 	  			sc.images = data;
+				if (sc.images != '') sc.currentImage = sc.images[0].image;
 	  		});
+
+	  	DeveloperService.getLogo($stateParams.id)
+	  		.success( function (data) {
+	  			sc.devLogo = data.logo;
+	  		});
+
+	  	DeveloperService.get($stateParams.id)
+	  		.success( function (data) {
+	  			sc.dev = data;
+	  		});
+
+	  	sc.openImageById = function (index) {
+			ngDialog.open({ 
+				template: '/app/shared/image/image.fullsreen.view.html', 
+				className: 'ngdialog-theme-dev',
+				showClose: false,
+				scope: $scope
+			});
+			sc.imgIndex = index;
+		};
 	};
 })();

@@ -5,7 +5,7 @@
 	.module('main')
 	.controller('LicenseCtrl', LicenseCtrl);
 
-	function LicenseCtrl($scope, $state, LicenseService) {
+	function LicenseCtrl($scope, $state, LicenseService, ngDialog) {
 		var sc = $scope;
   
 		sc.table = 'license';
@@ -29,21 +29,35 @@
 		];
 
 		sc.openEdit = function (id) {
-			$state.go('main.license.edit');
+			ngDialog.open({ 
+				template: '/app/modules/license/action/license.action.view.html', 
+				className: 'ngdialog-theme-dev',
+				showClose: false,
+				controller: 'LicenseEditCtrl',
+				scope: $scope
+			});
 			sc.id = id;
 		};
 
 		sc.openAdd = function () {
-			$state.go('main.license.new');
+			ngDialog.open({ 
+				template: '/app/modules/license/action/license.action.view.html', 
+				className: 'ngdialog-theme-dev',
+				showClose: false,
+				controller: 'LicenseNewCtrl',
+				scope: $scope
+			});
 		};
 
 		sc.openDelete = function (id) {
-			$state.go('main.license.delete');
 			sc.id = id;
-		};
-
-		sc.close = function () {
-			$state.go('main.' + sc.table);
+			ngDialog.open({ 
+				template: '/app/modules/license/action/license.action.delete.view.html', 
+				className: 'ngdialog-theme-dev',
+				showClose: false,
+				controller: 'LicenseDeleteCtrl',
+				scope: $scope
+			});
 		};
 
 		sc.loadPage = function(currentPage, name, type) {
