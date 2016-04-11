@@ -67,11 +67,11 @@
             <tr>
               <td translate>website</td>
               <td>
-                <a href="{{dev.website}}">{{dev.website}}</a>
+                <a href="{{profile.developer.website}}">{{profile.developer.website}}</a>
               </td>
             </tr>
           </table>
-          <a href="#/developer/{{dev.id}}"><img ng-src="data:image/png;base64, {{devLogo}}" onerror="this.src = '/dist/img/no_image.gif'" style="height: 50px">{{dev.name}}</a>
+          <a href="#/developer/{{profile.developer.id}}"><img ng-src="data:image/png;base64, {{devLogo}}" onerror="this.src = '/dist/img/no_image.gif'" style="height: 50px">{{profile.developer.name}}</a>
         </div>
         </uib-tab>
         <uib-tab index="1" heading="developer">

@@ -1170,23 +1170,18 @@
 		SoftwareService.get($stateParams.id)
 	  		.success( function (data) {
 	  			sc.profile = data;
+
+	  			DeveloperService.getLogo(data.developer.id)
+	  			.success( function (data) {
+	  				sc.devLogo = data.logo;
+	  			});
 	  		});
 
 	  	SoftwareService.getImages($stateParams.id)
 	  		.success( function (data) {
 	  			sc.images = data;
 				if (sc.images != '') sc.currentImage = sc.images[0].image;
-	  		});
-
-	  	DeveloperService.getLogo($stateParams.id)
-	  		.success( function (data) {
-	  			sc.devLogo = data.logo;
-	  		});
-
-	  	DeveloperService.get($stateParams.id)
-	  		.success( function (data) {
-	  			sc.dev = data;
-	  		});
+	  		});	  	
 
 	  	sc.openImageById = function (index) {
 			ngDialog.open({ 
