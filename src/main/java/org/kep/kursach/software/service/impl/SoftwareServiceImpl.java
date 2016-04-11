@@ -1,6 +1,7 @@
 package org.kep.kursach.software.service.impl;
 
 import org.kep.kursach.images.domain.Image;
+import org.kep.kursach.images.repository.ImageRepository;
 import org.kep.kursach.software.domain.SoftwareInfo;
 import org.kep.kursach.software.reporitory.SoftwareRepository;
 import org.kep.kursach.software.service.SoftwareService;
@@ -31,6 +32,9 @@ public class SoftwareServiceImpl implements SoftwareService {
 
     @Autowired
     private SoftwareRepository repository;
+
+    @Autowired
+    private ImageRepository imageRepository;
 
     @Override
     public ResponseEntity<SoftwareInfo> add( SoftwareInfo software ) {
@@ -123,6 +127,12 @@ public class SoftwareServiceImpl implements SoftwareService {
                     return ResponseEntity.ok().build();
                 } )
                 .orElseGet( () -> new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR ) );
+    }
+
+    @Override
+    public ResponseEntity<Void> removeImage( Long imageId ) {
+        imageRepository.delete( imageId );
+        return ResponseEntity.ok().build();
     }
 
     private Image getImage( MultipartFile image ) throws IOException {

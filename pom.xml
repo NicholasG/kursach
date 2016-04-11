@@ -24,14 +24,6 @@
         <spring-context-support.version>3.2.4.RELEASE</spring-context-support.version>
         <spring-context.version>4.2.4.RELEASE</spring-context.version>
         <c3p0.version>0.9.1.2</c3p0.version>
-        <commons-lang.version>2.3</commons-lang.version>
-        <javax.inject.version>1</javax.inject.version>
-        <ecwid-mailchimp.version>2.0.1.0</ecwid-mailchimp.version>
-        <spring-context-support.version>3.2.4.RELEASE</spring-context-support.version>
-        <spring-context.version>4.2.4.RELEASE</spring-context.version>
-        <c3p0.version>0.9.1.2</c3p0.version>
-        <commons-lang.version>2.3</commons-lang.version>
-        <mail.version>1.4.7</mail.version>
     </properties>
 
     <dependencyManagement>

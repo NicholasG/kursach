@@ -20,4 +20,7 @@ public interface SoftwareService {
     Page<SoftwareInfo> searchFor( Pageable pageable, String name, String release, String licName, String devName );
 
     ResponseEntity<Void> addImage( Long id, MultipartFile image );
+
+    ResponseEntity<Void> removeImage( Long imageId );
+
 }

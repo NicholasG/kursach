@@ -43,20 +43,11 @@ public class SoftwareController {
                                                       String release,
                                                       String devName,
                                                       String licName ) {
-        if ( release != null && !release.equals( "" ) ) {
-            LOG.info( "Searching for some software by " +
-                            "name='{}', release='{}', devName='{}', licName='{}'",
-                    name, release, devName, licName );
-            Page<SoftwareInfo> page = softwareService.searchFor( pageable, name, release, devName, licName );
-            return ResponseEntity.ok( page );
-        } else {
-            LOG.info( "Searching for some software by " +
-                            "name='{}', devName='{}', licName='{}'",
-                    name, devName, licName );
-            Page<SoftwareInfo> page = softwareService.searchFor( pageable, name, release, devName, licName );
-
-            return ResponseEntity.ok( page );
-        }
+        LOG.info( "Searching for some software by " +
+                        "name='{}', release='{}', devName='{}', licName='{}'",
+                name, release, devName, licName );
+        Page<SoftwareInfo> page = softwareService.searchFor( pageable, name, release, devName, licName );
+        return ResponseEntity.ok( page );
     }
 
     @RequestMapping(
@@ -124,6 +115,16 @@ public class SoftwareController {
         LOG.info( "Setting image for software id='{}'", id );
 
         return softwareService.addImage( id, image );
+    }
+
+    @RequestMapping(
+            value = "/images",
+            method = RequestMethod.DELETE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<Void> removeImage( @RequestParam( "id" ) Long imageId ) {
+        LOG.info( "Deleting an image id='{}'", imageId);
+        return softwareService.removeImage( imageId );
     }
 
 }
