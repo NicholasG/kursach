@@ -51,6 +51,14 @@
             });
         }
 
+        this.deleteImageById = function (id) {
+            return $http.delete(urlBase + '/images', { 
+                    params: { 
+                        id: id
+                    }
+            });
+        }
+
     });
 
 })();

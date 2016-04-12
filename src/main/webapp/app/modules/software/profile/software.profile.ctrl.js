@@ -29,11 +29,13 @@
 	  			});
 	  		});
 
-	  	SoftwareService.getImages($stateParams.id)
+	  	sc.getImages = function () {
+	  		SoftwareService.getImages($stateParams.id)
 	  		.success( function (data) {
 	  			sc.images = data;
 				if (sc.images != '') sc.currentImage = sc.images[0].image;
 	  		});	  	
+	  	}
 
 	  	sc.openImageById = function (index) {
 			ngDialog.open({ 
@@ -44,5 +46,14 @@
 			});
 			sc.imgIndex = index;
 		};
+
+		sc.deleteImage = function (id) {
+			SoftwareService.deleteImageById(id).success( function (data) {
+	  			alert('Deleted' + id);
+	  			sc.getImages();
+	  		});	 
+		}
+
+	  	sc.getImages();
 	};
 })();

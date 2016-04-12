@@ -133,13 +133,16 @@
         <br>
         <div class="col-lg-12">
           <div class="row">
-            <span flow-init="target" flow-file-added="$file.size < 2000000">
+            <span flow-init="target"
+              flow-file-added="$file.size < 2000000"
+              flow-file-success="alert('Images uploaded!')">
               <div class="col-lg-12">
                 <br>
                 <div class="thumbnail" flow-drop style="border: 1px dashed #ddd">
-                  <span ng-repeat="file in $flow.files" style="padding: 5px">
+                  <span ng-repeat="file in $flow.files" style="padding: 5px;">
                     <img flow-img="file" style="height: 100px; border-radius: 2px">
                     <i class="remove-image" ng-click="$flow.files[$index].cancel();" uib-tooltip="Remove"></i>
+                    <uib-progressbar class="progress-striped" value="file.progress() * 100" type="success" style="width: 150px; margin: 5px"></uib-progressbar>
                   </span>
                   <span style="padding: 5px"></span>
                   <center>
@@ -149,7 +152,7 @@
                   <br>
                   <center>
                   <button class="btn btn-default" flow-btn>Browse</button>
-                  <button type="submit" class="btn btn-primary" ng-click=" $flow.upload()"><i class="glyphicon glyphicon-arrow-up"></i> upload</button>
+                  <button type="submit" class="btn btn-primary" ng-class="{'disabled': $flow.files[0] == null}" ng-click=" $flow.upload(); getImages()"><i class="glyphicon glyphicon-arrow-up"></i> upload</button>
                   </center>
                   <br>
                 </div>
@@ -157,9 +160,10 @@
             </span>
           </div>
           <div class="row" >
-            <div class="col-md-4" ng-repeat-start="image in images">
+            <div class="col-md-4" ng-repeat-start="image in images | orderBy:'id':true">
               <center>
               <img class="thumbnail" ng-src="data:image/png;base64, {{image.image}}" style="height: 150px" onerror="this.src = '/dist/img/no_image.gif'" ng-click="openImageById($index)">
+              <i class="remove-image" ng-click="deleteImage(image.id)" uib-tooltip="Remove"></i>
               </center>
             </div>
             <div class="clearfix" ng-if="$index%3==2"></div>
