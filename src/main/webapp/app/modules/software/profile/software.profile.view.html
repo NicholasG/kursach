@@ -2,8 +2,8 @@
   <div class="col-lg-12">
     <div class="panel panel-default">
       <!-- Default panel contents -->
-      <div class="panel-heading" style="padding: 0">
-        <ol class="breadcrumb" style="margin: 0">
+      <div class="panel-heading">
+        <ol class="breadcrumb">
           <li>
             <i class="fa fa-dashboard"></i>  <a href="#/home" translate>home</a>
           </li>
@@ -22,14 +22,14 @@
         <div class="col-lg-6">
           <div class="col-lg-12">
             <center>
-            <img ng-if="images != ''" ng-src="data:image/png;base64, {{images[imgIndex].image}}" style="margin: 15px; height: 250px; cursor: pointer" ng-click="openImageById(imgIndex)">
+            <img class="image-current" ng-if="images != ''" ng-src="data:image/png;base64, {{images[imgIndex].image}}" g-click="openImageById(imgIndex)">
             <img ng-if="images == ''" src="/dist/img/no_image.gif">
             </center>
           </div>
           <div class="col-lg-12">
             <ul>
-              <li ng-repeat="image in images" index="$index" ng-mouseover="getImage($index)" style="list-style: none; display: inline-block">
-                <img class="thumbnail" ng-src="data:image/png;base64, {{image.image}}" style="margin: 10px; height: 50px" onerror="this.src = '/dist/img/no_image.gif'" ng-click="openImageById($index)">
+              <li class="image-list" ng-repeat="image in images" index="$index" ng-mouseover="getImage($index)">
+                <img class="thumbnail" ng-src="data:image/png;base64, {{image.image}}" onerror="this.src = '/dist/img/no_image.gif'" ng-click="openImageById($index)">
               </li>
             </ul>
           </div>
@@ -71,7 +71,7 @@
               </td>
             </tr>
           </table>
-          <a href="#/developer/{{profile.developer.id}}"><img ng-src="data:image/png;base64, {{devLogo}}" onerror="this.src = '/dist/img/no_image.gif'" style="height: 50px">{{profile.developer.name}}</a>
+          <a href="#/developer/{{profile.developer.id}}"><img class="dev-logo" ng-src="data:image/png;base64, {{devLogo}}" onerror="this.src = '/dist/img/no_image.gif'" >{{profile.developer.name}}</a>
         </div>
         </uib-tab>
         <uib-tab index="1" heading="developer">
@@ -135,24 +135,29 @@
           <div class="row">
             <span flow-init="target"
               flow-file-added="$file.size < 2000000"
-              flow-file-success="alert('Images uploaded!')">
+              flow-file-success="getImages()">
               <div class="col-lg-12">
                 <br>
-                <div class="thumbnail" flow-drop style="border: 1px dashed #ddd">
-                  <span ng-repeat="file in $flow.files" style="padding: 5px;">
-                    <img flow-img="file" style="height: 100px; border-radius: 2px">
-                    <i class="remove-image" ng-click="$flow.files[$index].cancel();" uib-tooltip="Remove"></i>
-                    <uib-progressbar class="progress-striped" value="file.progress() * 100" type="success" style="width: 150px; margin: 5px"></uib-progressbar>
-                  </span>
-                  <span style="padding: 5px"></span>
+                <div class="thumbnail image-upload" flow-drop>
+                  <div class="row">
+                    <div class="col-lg-2 col-md-2 col-xs-4" ng-repeat-start="file in $flow.files">
+                      <div class="image-container crop">
+                        <img flow-img="file">
+                        <i class="remove-image" ng-click="$flow.files[$index].cancel();" uib-tooltip="Remove"></i>
+                      </div>
+                      <uib-progressbar class="progress-striped" value="file.progress() * 100" type="success"></uib-progressbar>
+                    </div>
+                    <div class="clearfix" ng-if="$index%3==5"></div>
+                    <div ng-repeat-end=""></div>
+                  </div>
                   <center>
-                  <p ng-if="$flow.files[0] == null" style="color: silver"><br>Drag and drop image here (limit 2MB )<br>
+                  <p ng-if="$flow.files[0] == null"><br>Drag and drop image here (limit 2MB )<br>
                   or</p>
                   </center>
                   <br>
                   <center>
                   <button class="btn btn-default" flow-btn>Browse</button>
-                  <button type="submit" class="btn btn-primary" ng-class="{'disabled': $flow.files[0] == null}" ng-click=" $flow.upload(); getImages()"><i class="glyphicon glyphicon-arrow-up"></i> upload</button>
+                  <button type="submit" class="btn btn-primary" ng-class="{'disabled': $flow.files[0] == null}" ng-click=" $flow.upload()"><i class="glyphicon glyphicon-arrow-up"></i> upload</button>
                   </center>
                   <br>
                 </div>
@@ -160,13 +165,15 @@
             </span>
           </div>
           <div class="row" >
-            <div class="col-md-4" ng-repeat-start="image in images | orderBy:'id':true">
-              <center>
-              <img class="thumbnail" ng-src="data:image/png;base64, {{image.image}}" style="height: 150px" onerror="this.src = '/dist/img/no_image.gif'" ng-click="openImageById($index)">
-              <i class="remove-image" ng-click="deleteImage(image.id)" uib-tooltip="Remove"></i>
-              </center>
+            <div class="col-md-3 image-gallery" ng-repeat-start="image in images">
+              <div class="thumbnail crop">
+                <center>
+                <img ng-src="data:image/png;base64, {{image.image}}" onerror="this.src = '/dist/img/no_image.gif'" ng-click="openImageById($index)">
+                </center>
+              <i class="remove-image remove-image-gallery" ng-click="deleteImage(image.id)" uib-tooltip="Remove"></i>
+              </div>
             </div>
-            <div class="clearfix" ng-if="$index%3==2"></div>
+            <div class="clearfix" ng-if="$index%3==3"></div>
             <div ng-repeat-end=""></div>
           </div>
         </div>

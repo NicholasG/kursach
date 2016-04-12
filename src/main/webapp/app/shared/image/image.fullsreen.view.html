@@ -1,6 +1,13 @@
-<div class="thumbnail">
-  <img ng-src="data:image/png;base64, {{images[imgIndex].image}}" style="width: 100%" onerror="this.src = '/dist/img/no_image.gif'">
-  <ul class="nav nav-pills" ng-repeat="image in images" style="list-style: none; display: inline-block">
-    <li><img class="thumbnail" ng-src="data:image/png;base64, {{image.image}}" style="height: 50px; margin: 5px" onerror="this.src = '/dist/img/no_image.gif'" ng-click="getImage($index)"></li>
-  </ul>
+<div class="col-lg-2 col-md-2 col-xs-2 arrow" ng-click="previousImage()"><center><img src="/dist/img/arrow.left.svg" alt=""></center></div>
+<div class="col-lg-8 col-md-8 col-xs-8">
+	<div class="image-view">
+		<img ng-src="data:image/png;base64, {{images[imgIndex].image}}">
+		<div class="tool"><b>{{table}}</b> | {{imgIndex + 1}} in {{images.length}}</div>
+	</div>
+</div>
+<div class="col-lg-2 col-md-2 col-xs-2 arrow" ng-click="nextImage()">
+	<center>
+		<img src="/dist/img/arrow.right.svg" alt="">
+		<img id="close" src="/dist/img/image.close.svg" alt="" ng-click="closeThisDialog(true)">
+	</center>
 </div>

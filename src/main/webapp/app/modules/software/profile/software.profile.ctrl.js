@@ -40,7 +40,7 @@
 	  	sc.openImageById = function (index) {
 			ngDialog.open({ 
 				template: '/app/shared/image/image.fullsreen.view.html', 
-				className: 'ngdialog-theme-dev',
+				className: 'ngdialog-theme-image-view',
 				showClose: false,
 				scope: $scope
 			});
@@ -49,9 +49,18 @@
 
 		sc.deleteImage = function (id) {
 			SoftwareService.deleteImageById(id).success( function (data) {
-	  			alert('Deleted' + id);
 	  			sc.getImages();
 	  		});	 
+		}
+
+		sc.previousImage = function () {
+			if (sc.imgIndex == 0) sc.imgIndex = sc.images.length;
+			sc.imgIndex --;
+		}
+
+		sc.nextImage = function () {
+			sc.imgIndex ++;
+			if (sc.imgIndex == sc.images.length) sc.imgIndex = 0;
 		}
 
 	  	sc.getImages();
