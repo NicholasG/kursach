@@ -11,15 +11,16 @@
 	top: 0
 	right: 15px
 	background: rgba(34, 34, 34, 0.5)
-	border-radius: 2px
+	border-radius: 0 2px 0 2px
 	color: #ddd
 	cursor: pointer
 	transition: 0.2s
 	background-image: url('/dist/img/close.svg')
+	background-position: 50% 50%
 	background-repeat: no-repeat
 	background-size: 12px
-	width: 12px
-	height: 12px
+	width: 16px
+	height: 16px
 	&:hover
 		color: #fff
 		background-color: rgba(34, 34, 34, 0.9)
@@ -50,10 +51,16 @@
 	.progress-striped
 		z-index: 2000
 		margin-bottom: 15px
+	.progress
+		border-radius: 0px 0px 2px 2px
+		width: 100%
+		height: 5px
+		top: 50px
+		z-index: 5000
 	p
 		color: silver
 	.crop 
-		border-radius: 2px
+		border-radius: 2px 2px 0 0
 	.crop 
 	    width: 100%
 	    height: 80px

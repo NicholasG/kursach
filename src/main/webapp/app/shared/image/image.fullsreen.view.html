@@ -2,7 +2,10 @@
 <div class="col-lg-8 col-md-8 col-xs-8">
 	<div class="image-view">
 		<img ng-src="data:image/png;base64, {{images[imgIndex].image}}">
-		<div class="tool"><b>{{table}}</b> | {{imgIndex + 1}} in {{images.length}}</div>
+		<div class="tool">
+			{{imgIndex + 1}} in {{images.length}}
+			<span class="right" ng-click="deleteImage(getImageId(imgIndex))">delete</span>
+		</div>
 	</div>
 </div>
 <div class="col-lg-2 col-md-2 col-xs-2 arrow" ng-click="nextImage()">

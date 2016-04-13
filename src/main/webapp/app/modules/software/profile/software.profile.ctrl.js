@@ -18,6 +18,10 @@
 		sc.getImage = function (index) {
 			sc.imgIndex = index;
 		}
+
+		sc.getImageId = function (index) {
+			return sc.images[sc.imgIndex].id;
+		}
  
 		SoftwareService.get($stateParams.id)
 	  		.success( function (data) {

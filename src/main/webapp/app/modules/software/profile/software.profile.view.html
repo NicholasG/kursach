@@ -2,8 +2,8 @@
   <div class="col-lg-12">
     <div class="panel panel-default">
       <!-- Default panel contents -->
-      <div class="panel-heading">
-        <ol class="breadcrumb">
+      <div class="panel-heading no-padding">
+        <ol class="breadcrumb no-margin">
           <li>
             <i class="fa fa-dashboard"></i>  <a href="#/home" translate>home</a>
           </li>
@@ -145,7 +145,7 @@
                         <img flow-img="file">
                         <i class="remove-image" ng-click="$flow.files[$index].cancel();" uib-tooltip="Remove"></i>
                       </div>
-                      <uib-progressbar class="progress-striped" value="file.progress() * 100" type="success"></uib-progressbar>
+                      <uib-progressbar class="progress" value="file.progress() * 100" type="primary" ng-show="progressBarShow"></uib-progressbar>
                     </div>
                     <div class="clearfix" ng-if="$index%3==5"></div>
                     <div ng-repeat-end=""></div>
@@ -157,7 +157,7 @@
                   <br>
                   <center>
                   <button class="btn btn-default" flow-btn>Browse</button>
-                  <button type="submit" class="btn btn-primary" ng-class="{'disabled': $flow.files[0] == null}" ng-click=" $flow.upload()"><i class="glyphicon glyphicon-arrow-up"></i> upload</button>
+                  <button type="submit" class="btn btn-primary" ng-class="{'disabled': $flow.files[0] == null}" ng-click="$flow.upload(); progressBarShow = true"><i class="glyphicon glyphicon-arrow-up"></i> upload</button>
                   </center>
                   <br>
                 </div>
