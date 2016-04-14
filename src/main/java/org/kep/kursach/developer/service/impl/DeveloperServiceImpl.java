@@ -80,7 +80,7 @@ public class DeveloperServiceImpl implements DeveloperService {
     public Page<DeveloperInfo> searchFor( Pageable pageable, String name, String country ) {
         if ( name == null || name.equals( "" ) ) name = "%";
         else name += "%";
-        if ( country == null || !country.equals( "" ) ) country = "%";
+        if ( country == null || country.equals( "" ) ) country = "%";
         else country += "%";
 
         return repository.findAllByNameAndCountry( pageable, name, country );
