@@ -17,7 +17,7 @@ public interface SoftwareService {
 
     ResponseEntity<Void> delete( Long id );
 
-    Page<SoftwareInfo> searchFor( Pageable pageable, String name, String release, String licName, String devName );
+    Page<SoftwareInfo> searchFor( Pageable pageable, String name, String release, String devName, String licName );
 
     ResponseEntity<Void> addImage( Long id, MultipartFile image );
 

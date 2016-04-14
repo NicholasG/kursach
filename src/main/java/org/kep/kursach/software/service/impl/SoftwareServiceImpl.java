@@ -82,8 +82,8 @@ public class SoftwareServiceImpl implements SoftwareService {
     public Page<SoftwareInfo> searchFor( Pageable pageable,
                                          String name,
                                          String release,
-                                         String licName,
-                                         String devName ) {
+                                         String devName,
+                                         String licName ) {
         if ( name == null || name.equals( "" ) ) name = "%";
         else name += "%";
 

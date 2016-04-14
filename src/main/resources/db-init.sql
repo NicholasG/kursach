@@ -1,5 +1,5 @@
 INSERT INTO developer_info(name, country, city, street, zipcode, phone_number, website, email, fax)
-  VALUES('Apple', 'USA', 'California', 'Street 26', '00073', '0965727366', 'mihalich.if.com', 'mishka.b@gmail.com', '034309');
+  VALUES('GPA', 'USA', 'California', 'Street 26', '00073', '0965727366', 'mihalich.if.com', 'mishka.b@gmail.com', '034309');
 INSERT INTO developer_info(name, country, city, street, zipcode, phone_number, website, email, fax)
   VALUES('Apple', 'USA', 'California', 'Street 26', '00073', '0965727366', 'mihalich.if.com', 'mishka.b@gmail.com', '034309');
 INSERT INTO developer_info(name, country, city, street, zipcode, phone_number, website, email, fax)

@@ -92,7 +92,6 @@ public class SoftwareController {
                 .orElseGet( () -> new ResponseEntity( HttpStatus.NOT_FOUND ) );
     }
 
-
     @RequestMapping(
             value = "/images",
             method = RequestMethod.GET,
@@ -123,7 +122,7 @@ public class SoftwareController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<Void> removeImage( @RequestParam( "id" ) Long imageId ) {
-        LOG.info( "Deleting an image id='{}'", imageId);
+        LOG.info( "Deleting an image id='{}'", imageId );
         return softwareService.removeImage( imageId );
     }
 
