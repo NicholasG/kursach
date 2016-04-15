@@ -36,12 +36,23 @@
 					'priceForHundred': sc.priceForHundred
 				}
 
-				LicenseService.update(sc.license)
-				.success(function (data) {
-					alert('updated!');
-					sc.license = null;
-					sc.loadPage(1);
-				});
+				if (sc.name != '' 
+				&& sc.type != ''
+				&& sc.minimumUsers != ''
+				&& sc.maximumUsers != ''
+				&& sc.expiration != ''
+				&& sc.priceForOne != ''
+				&& sc.priceForTen != ''
+				&& sc.priceForHundred != ''
+				) {
+					LicenseService.update(sc.license)
+					.success(function (data) {
+						sc.license = null;
+						sc.closeThisDialog(true);
+						sc.loadPage(1);
+					});
+				}
+				else alert('Error');
 			}
 		});
 	}

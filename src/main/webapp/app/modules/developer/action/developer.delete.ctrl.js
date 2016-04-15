@@ -14,12 +14,11 @@
 	  			devName = data.name;
 				sc.log = 'Are you sure you want to remove developer ' + devName + '?';
 	  		});
- 
 
 		sc.delete = function () {
 			DeveloperService.delete(sc.id)
 			.then(function successCallback(response) {
-			    alert('deleted' + sc.id);
+				sc.closeThisDialog(true);
 				sc.loadPage(1);
 			  }, function errorCallback(response) {
 			    	sc.log = 'Developer "' + devName + '" could not be deleted because is in use yet';

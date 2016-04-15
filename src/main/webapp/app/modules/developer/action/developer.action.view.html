@@ -34,26 +34,9 @@
       <input type="text" class="form-control" ng-model="fax" placeholder="Enter zipcode" maxlength="60">
     </form>
   </div>
-  <span flow-init="target">
-    <div class="col-lg-6">
-      <br>
-      <div class="thumbnail" flow-drop style="border: 1px dashed #ddd">
-        <img flow-img="$flow.files[0]">
-        <!-- <i class="glyphicon glyphicon-remove action action-close right" ng-click="$flow.remove(); alert()"></i> -->
-        <center>
-        <p ng-if="$flow.files[0] == null" style="color: silver"><br><span translate>dragAndDrop</span></p>
-        </center>
-        <br>
-        <center>
-        <button class="btn btn-default" flow-btn translate>browse</button>
-        </center>
-        <br>
-      </div>
-    </div>
-    <div class="col-lg-12 tools">
-      <button type="submit" class="btn btn-primary" ng-click=" $flow.upload(); save()" translate><i class="glyphicon glyphicon-floppy-disk"></i> save</button>
-      <button class="btn btn-default right" ng-click="closeThisDialog(true)" style="margin-right: 15px;">Cancel</button>
-    </div>
-  </span>
+  <div class="col-lg-12 tools">
+    <button type="submit" class="btn btn-primary" ng-click="save()" translate><i class="glyphicon glyphicon-floppy-disk"></i> save</button>
+    <button class="btn btn-default right" ng-click="closeThisDialog(true)" style="margin-right: 15px;">Cancel</button>
+  </div>
 </div>
 </div>

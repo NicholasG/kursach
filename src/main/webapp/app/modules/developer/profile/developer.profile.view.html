@@ -2,8 +2,8 @@
   <div class="col-lg-9">
     <div class="panel panel-default">
       <!-- Default panel contents -->
-      <div class="panel-heading" style="padding: 0">
-        <ol class="breadcrumb" style="margin: 0">
+      <div class="panel-heading no-padding">
+        <ol class="breadcrumb no-margin">
           <li>
             <i class="fa fa-dashboard"></i>  <a href="#/home" translate>home</a>
           </li>
@@ -17,38 +17,65 @@
       </div>
       <div class="panel-body">
         <div class="col-lg-6">
-          <img class="avatar" ng-src="data:image/png;base64, {{devLogo.logo}}" onerror="this.src = '/dist/img/no_image.gif'">
+          <div
+            flow-init="target"
+            flow-file-added="$file.size < 2000000"
+            flow-file-success="getLogoById(id); $flow.files[0].cancel();"
+            flow-drop>
+            <div ng-init="imageUploadShow = false"
+              ng-mouseover="imageUploadShow = true"
+              ng-mouseleave="imageUploadShow = false">
+              <img class="logo" ng-if="$flow.files[0] == null" class="avatar" ng-src="data:image/png;base64, {{devLogo.logo}}" onerror="this.src = '/dist/img/no_image.gif'">
+              <div ng-if="$flow.files[0] != null">
+                <uib-progressbar id="ownerProgressUpload" class="progress" value="$flow.files[0].progress() * 100" type="primary"></uib-progressbar>
+                <img class="logo" flow-img="$flow.files[0]" width="100%">
+                <i class="remove-image" ng-click="$flow.files[0].cancel();" uib-tooltip="Remove"></i>
+              </div>
+              <div ng-show="imageUploadShow" class="owner-image-upload full-width show-hide" flow-btn>
+                <center>
+                  <div>
+                    <i class="glyphicon glyphicon-arrow-up"></i>
+                    <span ng-if="devLogo.logo != 'null'" translate>change</span>
+                    <span ng-if="devLogo.logo == 'null'" translate>add</span>
+                  </div>
+                </center>
+              </div>
+            </div>
+            <button ng-if="$flow.files[0] != null" type="submit" class="btn btn-primary full-width" ng-class="{'disabled': $flow.files[0] == null}" ng-click="$flow.upload();">apply</button>
+          </div>
         </div>
         <div class="col-lg-6">
-          <table class="table">
-            <tr>
-              <td translate>name</td><td><b>{{profile.name}}</b></td>
-            </tr>
-            <tr>
-              <td translate>city</td><td><b>{{profile.city}}</b></td>
-            </tr>
-            <tr>
-              <td translate>street</td><td><b>{{profile.street}}</b></td>
-            </tr>
-            <tr>
-              <td translate>zipcode</td><td><b>{{profile.zipcode}}</b></td>
-            </tr>
-            <tr>
-              <td translate>country</td><td><b>{{profile.country}}</b></td>
-            </tr>
-            <tr>
-              <td translate>email</td><td><b>{{profile.email}}</b></td>
-            </tr>
-            <tr>
-              <td translate>website</td><td><b>{{profile.website}}</b></td>
-            </tr>
-            <tr>
-              <td translate>phoneNumber</td><td><b>{{profile.phoneNumber | phone}}</b></td>
-            </tr>
-            <tr>
-              <td translate>fax</td><td><b>{{profile.fax}}</b></td>
-            </tr>
-          </table>
+          <div class="table-responsive">
+            <table class="table">
+              <tr>
+                <td translate>name</td><td><b>{{profile.name}}</b></td>
+              </tr>
+              <tr>
+                <td translate>city</td><td><b>{{profile.city}}</b></td>
+              </tr>
+              <tr>
+                <td translate>street</td><td><b>{{profile.street}}</b></td>
+              </tr>
+              <tr>
+                <td translate>zipcode</td><td><b>{{profile.zipcode}}</b></td>
+              </tr>
+              <tr>
+                <td translate>country</td><td><b>{{profile.country}}</b></td>
+              </tr>
+              <tr>
+                <td translate>email</td><td><b>{{profile.email}}</b></td>
+              </tr>
+              <tr>
+                <td translate>website</td><td><b>{{profile.website}}</b></td>
+              </tr>
+              <tr>
+                <td translate>phoneNumber</td><td><b>{{profile.phoneNumber | phone}}</b></td>
+              </tr>
+              <tr>
+                <td translate>fax</td><td><b>{{profile.fax}}</b></td>
+              </tr>
+            </table>
+          </div>
         </div>
       </div>
     </div>

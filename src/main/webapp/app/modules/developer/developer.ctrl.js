@@ -5,7 +5,7 @@
 	.module('main')
 	.controller('DeveloperCtrl', DeveloperCtrl);
 
-	function DeveloperCtrl ($scope, $state, $http, $base64, $translate, ngDialog, DeveloperService) {
+	function DeveloperCtrl ($scope, $state, $http, $stateParams, ngDialog, DeveloperService) {
 		var sc = $scope;
 
 		sc.table = 'developer';

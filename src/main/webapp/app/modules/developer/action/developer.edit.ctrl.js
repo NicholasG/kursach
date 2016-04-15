@@ -46,12 +46,22 @@
 					'fax': sc.fax 
 				}
 
-				DeveloperService.update(sc.developer)
-				.success(function (data) {
-					alert('updated!');
-					sc.loadPage(1);
-					// sc.developer = null;
-				});
+				if (sc.name != '' 
+	            	&& sc.country != '' 
+	            	&& sc.city != '' 
+	            	&& sc.street != '' 
+	            	&& sc.email != '' 
+	            	&& sc.zipcode != '' 
+	            	&& sc.website != '' 
+	            	&& sc.phoneNumber != ''
+	            	&& sc.fax != ''
+	            ) {
+	                DeveloperService.update(sc.developer)
+						.success(function() {
+						    sc.closeThisDialog(true);
+						    sc.loadPage(1);
+						});
+            	} else alert('Error');
 			}
 		});
 	}

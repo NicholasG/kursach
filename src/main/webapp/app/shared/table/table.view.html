@@ -22,8 +22,7 @@
             </tr>
           </thead>
           <tbody ng-switch="table">
-            <tr ng-switch-when="developer" ng-repeat="row in data = (main.content | filter: filterField | orderBy: fieldName:reverse)" ng-dblclick="openEdit(row.id)"
-              >
+            <tr ng-switch-when="developer" ng-repeat="row in data = (main.content | filter: filterField | orderBy: fieldName:reverse)" ng-dblclick="openEdit(row.id)">
               <td><a ng-href="#/developer/{{row.id}}">{{row.name}}</a></td>
               <td><span uib-popover="{{row.city}}, {{row.street}}, {{row.zipcode}}" popover-trigger="mouseenter" popover-title="Adress" popover-placement="top-left">{{row.country}}</span></td>
               <td>{{row.email}}</td>

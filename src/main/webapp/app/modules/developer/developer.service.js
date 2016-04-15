@@ -7,7 +7,12 @@
         var urlBase = '/dev';
 
         this.getAll = function () {
-            return $http.get(urlBase);
+            return $http.get(urlBase, { 
+                    params: { 
+                        page: 0, 
+                        size: 1000
+                    }
+                });
         };  
 
         this.get = function (id) {

@@ -1,59 +1,58 @@
-(function () {
-	'use strict';
+(function() {
+    'use strict';
 
-	angular
-	.module('main')
-	.controller('DeveloperNewCtrl', DeveloperNewCtrl);
+    angular
+    .module('main')
+    .controller('DeveloperNewCtrl', DeveloperNewCtrl);
 
-	function DeveloperNewCtrl ($scope, $state, $location, $document, DeveloperService) {
-		var sc = $scope;
+    function DeveloperNewCtrl($scope, $state, $location, $document, DeveloperService) {
+        var sc = $scope;
 
-		var fileLimit = 2000000;
-		var fileLimitSuccess = false;
+        var fileLimit = 2000000;
+        var fileLimitSuccess = false;
 
-		sc.action = 'Add';
+        sc.action = 'Add';
 
-		sc.name = null;
-		sc.country = null;
-		sc.city = null;
-		sc.street = null;
-		sc.email = null;
-		sc.zipcode = null;
-		sc.website = null;
-		sc.phoneNumber = null;
-		sc.fax = null;
+        sc.name = '';
+        sc.country = '';
+        sc.city = '';
+        sc.street = '';
+        sc.email = '';
+        sc.zipcode = '';
+        sc.website = '';
+        sc.phoneNumber = '';
+        sc.fax = '';
 
-		sc.save = function () {
-			sc.developer = {
-					'name': sc.name,
-					'country': sc.country,
-					'city': sc.city,
-					'street': sc.street,
-					'email': sc.email,
-					'zipcode': sc.zipcode,
-					'website': sc.website,
-					'phoneNumber': sc.phoneNumber,
-					'fax': sc.fax
-				}
+        sc.save = function() {
+            sc.developer = {
+                'name': sc.name,
+                'country': sc.country,
+                'city': sc.city,
+                'street': sc.street,
+                'email': sc.email,
+                'zipcode': sc.zipcode,
+                'website': sc.website,
+                'phoneNumber': sc.phoneNumber,
+                'fax': sc.fax
+            };
 
-			DeveloperService.new(sc.developer)
-			.success(function (data) {
-				alert('added!');
-				sc.loadPage(1);
-			});
-		}
+            if (sc.name != '' 
+            	&& sc.country != '' 
+            	&& sc.city != '' 
+            	&& sc.street != '' 
+            	&& sc.email != '' 
+            	&& sc.zipcode != '' 
+            	&& sc.website != '' 
+            	&& sc.phoneNumber != ''
+            	&& sc.fax != ''
+            ) {
+                DeveloperService.new(sc.developer)
+					.success(function() {
+					    sc.closeThisDialog(true);
+					    sc.loadPage(1);
+					});
+            } else alert('Error');
+        };
 
-		DeveloperService.getAll().success( function (data) {
-			sc.contentLength = data.content.length;
-		});
-
-		sc.target = { 
-				target: '/dev/logo?id=' + (sc.contentLength + 1),
-				testChunks: false,
-				singleFile: true
-			};
-		
-		// sc.someHandlerMethod( $files, $event, $flow )
-
-	};
+    };
 })();

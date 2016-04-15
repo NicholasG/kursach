@@ -10,14 +10,14 @@
 
 		sc.action = 'Add';
 
-		sc.name = null;
-		sc.type = null;
-		sc.minimumUsers = null;
-		sc.maximumUsers = null;
-		sc.expiration = null;
-		sc.priceForOne = null;
-		sc.priceForTen = null;
-		sc.priceForHundred = null;
+		sc.name = '';
+		sc.type = '';
+		sc.minimumUsers = '';
+		sc.maximumUsers = '';
+		sc.expiration = '';
+		sc.priceForOne = '';
+		sc.priceForTen = '';
+		sc.priceForHundred = '';
 		
 		sc.save = function () {
 			sc.license = {
@@ -31,12 +31,23 @@
 				'priceForHundred': sc.priceForHundred
 			}
 
-			LicenseService.new(sc.license)
-			.success(function (data) {
-				alert('added!');
-				sc.license = null;
-				sc.loadPage(1);
-			});
+			if (sc.name != '' 
+				&& sc.type != ''
+				&& sc.minimumUsers != ''
+				&& sc.maximumUsers != ''
+				&& sc.expiration != ''
+				&& sc.priceForOne != ''
+				&& sc.priceForTen != ''
+				&& sc.priceForHundred != ''
+				) {
+				LicenseService.new(sc.license)
+				.success(function (data) {
+					sc.license = null;
+					sc.closeThisDialog(true);
+					sc.loadPage(1);
+				});
+			}
+			else alert('Error');
 		}
 	};
 })();

@@ -8,6 +8,7 @@
 		'ui.router',
 		'ui.bootstrap',
 		'ngResource',
+		'ngAnimate',
 		'pascalprecht.translate',
 		'base64',
 		'flow',
@@ -59,7 +60,7 @@
 	.module('main')
 	.controller('DeveloperCtrl', DeveloperCtrl);
 
-	function DeveloperCtrl ($scope, $state, $http, $base64, $translate, ngDialog, DeveloperService) {
+	function DeveloperCtrl ($scope, $state, $http, $stateParams, ngDialog, DeveloperService) {
 		var sc = $scope;
 
 		sc.table = 'developer';
@@ -178,7 +179,12 @@
         var urlBase = '/dev';
 
         this.getAll = function () {
-            return $http.get(urlBase);
+            return $http.get(urlBase, { 
+                    params: { 
+                        page: 0, 
+                        size: 1000
+                    }
+                });
         };  
 
         this.get = function (id) {
@@ -527,7 +533,12 @@
         var urlBase = '/soft';
 
         this.getAll = function () {
-            return $http.get(urlBase);
+            return $http.get(urlBase, { 
+                    params: { 
+                        page: 0, 
+                        size: 1000
+                    }
+                });
         };
 
         this.get = function (id) {
@@ -740,12 +751,11 @@
 	  			devName = data.name;
 				sc.log = 'Are you sure you want to remove developer ' + devName + '?';
 	  		});
- 
 
 		sc.delete = function () {
 			DeveloperService.delete(sc.id)
 			.then(function successCallback(response) {
-			    alert('deleted' + sc.id);
+				sc.closeThisDialog(true);
 				sc.loadPage(1);
 			  }, function errorCallback(response) {
 			    	sc.log = 'Developer "' + devName + '" could not be deleted because is in use yet';
@@ -802,75 +812,84 @@
 					'fax': sc.fax 
 				}
 
-				DeveloperService.update(sc.developer)
-				.success(function (data) {
-					alert('updated!');
-					sc.loadPage(1);
-					// sc.developer = null;
-				});
+				if (sc.name != '' 
+	            	&& sc.country != '' 
+	            	&& sc.city != '' 
+	            	&& sc.street != '' 
+	            	&& sc.email != '' 
+	            	&& sc.zipcode != '' 
+	            	&& sc.website != '' 
+	            	&& sc.phoneNumber != ''
+	            	&& sc.fax != ''
+	            ) {
+	                DeveloperService.update(sc.developer)
+						.success(function() {
+						    sc.closeThisDialog(true);
+						    sc.loadPage(1);
+						});
+            	} else alert('Error');
 			}
 		});
 	}
 })();
 
-(function () {
-	'use strict';
+(function() {
+    'use strict';
 
-	angular
-	.module('main')
-	.controller('DeveloperNewCtrl', DeveloperNewCtrl);
+    angular
+    .module('main')
+    .controller('DeveloperNewCtrl', DeveloperNewCtrl);
 
-	function DeveloperNewCtrl ($scope, $state, $location, $document, DeveloperService) {
-		var sc = $scope;
+    function DeveloperNewCtrl($scope, $state, $location, $document, DeveloperService) {
+        var sc = $scope;
 
-		var fileLimit = 2000000;
-		var fileLimitSuccess = false;
+        var fileLimit = 2000000;
+        var fileLimitSuccess = false;
 
-		sc.action = 'Add';
+        sc.action = 'Add';
 
-		sc.name = null;
-		sc.country = null;
-		sc.city = null;
-		sc.street = null;
-		sc.email = null;
-		sc.zipcode = null;
-		sc.website = null;
-		sc.phoneNumber = null;
-		sc.fax = null;
+        sc.name = '';
+        sc.country = '';
+        sc.city = '';
+        sc.street = '';
+        sc.email = '';
+        sc.zipcode = '';
+        sc.website = '';
+        sc.phoneNumber = '';
+        sc.fax = '';
 
-		sc.save = function () {
-			sc.developer = {
-					'name': sc.name,
-					'country': sc.country,
-					'city': sc.city,
-					'street': sc.street,
-					'email': sc.email,
-					'zipcode': sc.zipcode,
-					'website': sc.website,
-					'phoneNumber': sc.phoneNumber,
-					'fax': sc.fax
-				}
+        sc.save = function() {
+            sc.developer = {
+                'name': sc.name,
+                'country': sc.country,
+                'city': sc.city,
+                'street': sc.street,
+                'email': sc.email,
+                'zipcode': sc.zipcode,
+                'website': sc.website,
+                'phoneNumber': sc.phoneNumber,
+                'fax': sc.fax
+            };
 
-			DeveloperService.new(sc.developer)
-			.success(function (data) {
-				alert('added!');
-				sc.loadPage(1);
-			});
-		}
+            if (sc.name != '' 
+            	&& sc.country != '' 
+            	&& sc.city != '' 
+            	&& sc.street != '' 
+            	&& sc.email != '' 
+            	&& sc.zipcode != '' 
+            	&& sc.website != '' 
+            	&& sc.phoneNumber != ''
+            	&& sc.fax != ''
+            ) {
+                DeveloperService.new(sc.developer)
+					.success(function() {
+					    sc.closeThisDialog(true);
+					    sc.loadPage(1);
+					});
+            } else alert('Error');
+        };
 
-		DeveloperService.getAll().success( function (data) {
-			sc.contentLength = data.content.length;
-		});
-
-		sc.target = { 
-				target: '/dev/logo?id=' + (sc.contentLength + 1),
-				testChunks: false,
-				singleFile: true
-			};
-		
-		// sc.someHandlerMethod( $files, $event, $flow )
-
-	};
+    };
 })();
 
 (function () {
@@ -880,20 +899,41 @@
 	.module('main')
 	.controller('DeveloperProfileCtrl', DeveloperProfileCtrl);
 
-	function DeveloperProfileCtrl ($scope, $state, $stateParams, DeveloperService) {
+	function DeveloperProfileCtrl ($scope, $state, $stateParams, ngDialog, DeveloperService) {
 		var sc = $scope;
 		sc.table = 'developer';
+
+		sc.id = $stateParams.id;
+
+		sc.target = { 
+				target: '/dev/logo?id=' + $stateParams.id,
+				testChunks: false,
+				singleFile: true
+			};
 
 		DeveloperService.get($stateParams.id)
 	  		.success( function (data) {
 	  			sc.profile = data;
 	  		});
 
-	  	DeveloperService.getLogo($stateParams.id)
+	  	sc.getLogoById = function (id) {
+	  		DeveloperService.getLogo(id)
 	  		.success( function (data) {
 	  			sc.devLogo = '';
 	  			sc.devLogo = data;
 	  		});
+	  	}
+
+	  	sc.openLogoUpload = function () {
+	  		ngDialog.open({ 
+				template: '/app/modules/developer/profile/developer.logo.upload.view.html', 
+				className: 'ngdialog-theme-default',
+				showClose: true,
+				scope: $scope
+			});
+	  	}
+
+	  	sc.getLogoById(sc.id);
 
 	};
 })();
@@ -907,13 +947,23 @@
 
 	function LicenseDeleteCtrl ($scope, $state, $location, LicenseService) {
 		var sc = $scope;
+		var licName;
+
+		LicenseService.get(sc.id)
+	  		.success( function (data) {
+	  			licName = data.name;
+				sc.log = 'Are you sure you want to remove sicense ' + licName + '?';
+	  		});
 
 		sc.delete = function () {
 			LicenseService.delete(sc.id)
-			.success(function (data) {
-				alert('deleted' + sc.id);
+			.then(function successCallback(response) {
+				sc.closeThisDialog(true);
 				sc.loadPage(1);
-			});
+			  }, function errorCallback(response) {
+			    	sc.log = 'License "'+ licName +'" could not be deleted because is in use yet';
+			  }); 
+
 		}
 	};
 })();
@@ -956,12 +1006,23 @@
 					'priceForHundred': sc.priceForHundred
 				}
 
-				LicenseService.update(sc.license)
-				.success(function (data) {
-					alert('updated!');
-					sc.license = null;
-					sc.loadPage(1);
-				});
+				if (sc.name != '' 
+				&& sc.type != ''
+				&& sc.minimumUsers != ''
+				&& sc.maximumUsers != ''
+				&& sc.expiration != ''
+				&& sc.priceForOne != ''
+				&& sc.priceForTen != ''
+				&& sc.priceForHundred != ''
+				) {
+					LicenseService.update(sc.license)
+					.success(function (data) {
+						sc.license = null;
+						sc.closeThisDialog(true);
+						sc.loadPage(1);
+					});
+				}
+				else alert('Error');
 			}
 		});
 	}
@@ -979,14 +1040,14 @@
 
 		sc.action = 'Add';
 
-		sc.name = null;
-		sc.type = null;
-		sc.minimumUsers = null;
-		sc.maximumUsers = null;
-		sc.expiration = null;
-		sc.priceForOne = null;
-		sc.priceForTen = null;
-		sc.priceForHundred = null;
+		sc.name = '';
+		sc.type = '';
+		sc.minimumUsers = '';
+		sc.maximumUsers = '';
+		sc.expiration = '';
+		sc.priceForOne = '';
+		sc.priceForTen = '';
+		sc.priceForHundred = '';
 		
 		sc.save = function () {
 			sc.license = {
@@ -1000,12 +1061,23 @@
 				'priceForHundred': sc.priceForHundred
 			}
 
-			LicenseService.new(sc.license)
-			.success(function (data) {
-				alert('added!');
-				sc.license = null;
-				sc.loadPage(1);
-			});
+			if (sc.name != '' 
+				&& sc.type != ''
+				&& sc.minimumUsers != ''
+				&& sc.maximumUsers != ''
+				&& sc.expiration != ''
+				&& sc.priceForOne != ''
+				&& sc.priceForTen != ''
+				&& sc.priceForHundred != ''
+				) {
+				LicenseService.new(sc.license)
+				.success(function (data) {
+					sc.license = null;
+					sc.closeThisDialog(true);
+					sc.loadPage(1);
+				});
+			}
+			else alert('Error');
 		}
 	};
 })();
@@ -1023,8 +1095,8 @@
 		sc.delete = function () {
 			SoftwareService.delete(sc.id)
 			.success(function (data) {
-				alert('deleted' + sc.id);
 				sc.loadPage(1);
+				sc.closeThisDialog(true);
 			});
 		}
 	};
@@ -1082,12 +1154,20 @@
 					'macOS': sc.macOS
 				}
 
-				SoftwareService.update(sc.soft)
-				.success(function (data) {
-					alert('updated!');
-					sc.loadPage(1);
-					sc.soft = null;
-				});
+
+			if (sc.name != '' 
+				&& sc.version != ''
+				&& sc.selDeveloper != {}
+				&& sc.selLicense != {}
+				) {
+					SoftwareService.update(sc.soft)
+					.success(function (data) {
+						sc.loadPage(1);
+						sc.soft = null;
+					});
+					sc.closeThisDialog(true);
+				}
+			else alert('Error');
 			}
 		});
 	}
@@ -1105,16 +1185,15 @@
 
 		sc.action = 'Add';
 
-		sc.name = null;
-		sc.version = null;
+		sc.name = '';
+		sc.version = '';
 		sc.release = new Date();
-		sc.license = null;
+		sc.license = '';
 		sc.windows = false;
 		sc.linux = false;
 		sc.macOS = false;
-		
-		sc.selDeveloper = {};
-		sc.selLicense = {};
+		sc.selDeveloper = '';
+		sc.selLicense = '';
 
 		DeveloperService.getAll().success( function (data) {
 			sc.developers = data.content;
@@ -1137,16 +1216,16 @@
 				'macOS': sc.macOS
 			}
 
-			if (sc.name != null 
-				&& sc.version != null
-				&& sc.selLicense != {}
-				&& sc.selDeveloper != {}
+		if (sc.name != '' 
+			&& sc.version != ''
+				&& sc.selLicense != ''
+				&& sc.selDeveloper != ''
 				) {
 				SoftwareService.new(sc.soft)
 				.success(function (data) {
-					alert('added!');
 					sc.loadPage(1);
 					sc.soft = null;
+					sc.closeThisDialog(true);
 				});
 			}
 			else alert('Error');

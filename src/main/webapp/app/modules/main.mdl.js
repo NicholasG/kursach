@@ -8,6 +8,7 @@
 		'ui.router',
 		'ui.bootstrap',
 		'ngResource',
+		'ngAnimate',
 		'pascalprecht.translate',
 		'base64',
 		'flow',

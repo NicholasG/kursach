@@ -1,0 +1,29 @@
+<div
+  flow-init="target"
+  flow-file-added="$file.size < 2000000"
+  flow-file-success="getLogoById(id); closeThisDialog(true)"
+  class="thumbnail image-upload logo-upload" 
+  >
+  <br>
+  <div class=" " flow-drop>
+    <div class="row">
+      <div class="col-lg-12" ng-if="$flow.files[0] != null">
+        <div class="image-container">
+          <img flow-img="$flow.files[0]" width="100%">
+          <i class="remove-image" ng-click="$flow.files[0].cancel();" uib-tooltip="Remove"></i>
+        </div>
+        <uib-progressbar class="progress" value="$flow.files[0].progress() * 100" type="primary"></uib-progressbar>
+      </div>
+    </div>
+    <center>
+    <p ng-if="$flow.files[0] == null"><br>Drag and drop image here (limit 2MB )<br>
+    or</p>
+    </center>
+    <br>
+    <center>
+    <button class="btn btn-default" flow-btn>Browse</button>
+    <button type="submit" class="btn btn-primary" ng-class="{'disabled': $flow.files[0] == null}" ng-click="$flow.upload();"><i class="glyphicon glyphicon-arrow-up"></i> upload</button>
+    </center>
+    <br>
+  </div>
+</div>

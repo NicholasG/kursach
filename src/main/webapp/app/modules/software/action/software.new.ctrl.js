@@ -10,16 +10,15 @@
 
 		sc.action = 'Add';
 
-		sc.name = null;
-		sc.version = null;
+		sc.name = '';
+		sc.version = '';
 		sc.release = new Date();
-		sc.license = null;
+		sc.license = '';
 		sc.windows = false;
 		sc.linux = false;
 		sc.macOS = false;
-		
-		sc.selDeveloper = {};
-		sc.selLicense = {};
+		sc.selDeveloper = '';
+		sc.selLicense = '';
 
 		DeveloperService.getAll().success( function (data) {
 			sc.developers = data.content;
@@ -42,16 +41,16 @@
 				'macOS': sc.macOS
 			}
 
-			if (sc.name != null 
-				&& sc.version != null
-				&& sc.selLicense != {}
-				&& sc.selDeveloper != {}
+		if (sc.name != '' 
+			&& sc.version != ''
+				&& sc.selLicense != ''
+				&& sc.selDeveloper != ''
 				) {
 				SoftwareService.new(sc.soft)
 				.success(function (data) {
-					alert('added!');
 					sc.loadPage(1);
 					sc.soft = null;
+					sc.closeThisDialog(true);
 				});
 			}
 			else alert('Error');

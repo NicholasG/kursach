@@ -50,12 +50,20 @@
 					'macOS': sc.macOS
 				}
 
-				SoftwareService.update(sc.soft)
-				.success(function (data) {
-					alert('updated!');
-					sc.loadPage(1);
-					sc.soft = null;
-				});
+
+			if (sc.name != '' 
+				&& sc.version != ''
+				&& sc.selDeveloper != {}
+				&& sc.selLicense != {}
+				) {
+					SoftwareService.update(sc.soft)
+					.success(function (data) {
+						sc.loadPage(1);
+						sc.soft = null;
+					});
+					sc.closeThisDialog(true);
+				}
+			else alert('Error');
 			}
 		});
 	}
