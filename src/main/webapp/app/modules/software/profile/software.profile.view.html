@@ -18,169 +18,169 @@
       <div class="panel-body">
         <b><h1>{{profile.name}}</h1></b>
         <uib-tabset active="activeJustified" justified="true">
-        <uib-tab index="0" heading="productInfo">
-        <div class="col-lg-6">
-          <div
-            flow-init="target"
-            flow-file-added="$file.size < 2000000"
-            flow-file-success="getImages()"
-            flow-drop>
-            <div ng-init="imageUploadShow = false"
-              ng-mouseover="imageUploadShow = true"
-              ng-mouseleave="imageUploadShow = false">
-              <img class="image-current" ng-if="images != ''" ng-src="data:image/png;base64, {{images[imgIndex].image}}" ng-click="openImageById(imgIndex)">
-              <img class="image-current" ng-if="images == ''" src="/dist/img/no_image.gif">
-              
-              <div ng-show="imageUploadShow" class="owner-image-upload full-width show-hide" flow-btn>
-                <center>
-                <div>
-                  <i class="glyphicon glyphicon-arrow-up"></i>
-                  <span translate>addPhotos</span>
+          <uib-tab index="0" heading="productInfo">
+            <div class="col-lg-6">
+              <div
+                      flow-init="target"
+                      flow-file-added="$file.size < 2000000"
+                      flow-file-success="getImages()"
+                      flow-drop>
+                <div ng-init="imageUploadShow = false"
+                     ng-mouseover="imageUploadShow = true"
+                     ng-mouseleave="imageUploadShow = false">
+                  <img class="image-current" ng-if="images != ''" ng-src="data:image/png;base64, {{images[imgIndex].image}}" ng-click="openImageById(imgIndex)">
+                  <img class="image-current" ng-if="images == ''" src="/dist/img/no_image.gif">
+
+                  <div ng-show="imageUploadShow" class="owner-image-upload full-width show-hide" flow-btn>
+                    <center>
+                      <div>
+                        <i class="glyphicon glyphicon-arrow-up"></i>
+                        <span translate>addPhotos</span>
+                      </div>
+                    </center>
+                  </div>
                 </div>
-                </center>
-              </div>
-            </div>
-            <button ng-if="$flow.files[0] != null" type="submit" class="btn btn-primary full-width" ng-class="{'disabled': $flow.files[0] == null}" ng-click="$flow.upload();">apply</button>
-            <div class="row image-upload" ng-if="$flow.files[0] != null">
-              <div class="col-lg-4 col-md-4 col-sm-2 col-xs-6" ng-repeat-start="file in $flow.files">
-                <div class="image-container crop">
-                  <img flow-img="file">
-                  <i class="remove-image" ng-click="$flow.files[$index].cancel();" uib-tooltip="Remove"></i>
+                <button ng-if="$flow.files[0] != null" type="submit" class="btn btn-primary full-width" ng-class="{'disabled': $flow.files[0] == null}" ng-click="$flow.upload();">apply</button>
+                <div class="row image-upload" ng-if="$flow.files[0] != null">
+                  <div class="col-lg-4 col-md-4 col-sm-2 col-xs-6" ng-repeat-start="file in $flow.files">
+                    <div class="image-container crop">
+                      <img flow-img="file">
+                      <i class="remove-image" ng-click="$flow.files[$index].cancel();" uib-tooltip="Remove"></i>
+                    </div>
+                    <uib-progressbar class="progress" value="file.progress() * 100" type="primary"></uib-progressbar>
+                  </div>
+                  <div class="clearfix" ng-if="$index%3==5"></div>
+                  <div ng-repeat-end=""></div>
                 </div>
-                <uib-progressbar class="progress" value="file.progress() * 100" type="primary"></uib-progressbar>
               </div>
-              <div class="clearfix" ng-if="$index%3==5"></div>
-              <div ng-repeat-end=""></div>
-            </div>
-          </div>
-          <!-- <div class="col-lg-12">
-            <img class="image-current" ng-if="images != ''" ng-src="data:image/png;base64, {{images[imgIndex].image}}" ng-click="openImageById(imgIndex)">
-            <img class="image-current" ng-if="images == ''" src="/dist/img/no_image.gif">
-          </div> -->
-          <!-- <div class="col-lg-12 image-list">
-            <ul>
-              <li ng-repeat="image in images" index="$index" ng-mouseover="getImage($index)">
-                <img class="thumbnail" ng-src="data:image/png;base64, {{image.image}}" onerror="this.src = '/dist/img/no_image.gif'" ng-click="openImageById($index)">
-              </li>
-            </ul>
-          </div> -->
-          <div class="row image-upload">
-            <div class="col-lg-4 col-md-4 col-sm-2 col-xs-6" ng-repeat-start="image in images" ng-init="removeImageShow = false">
-              <div class="thumbnail crop" ng-mouseover="removeImageShow = true" ng-mouseleave="removeImageShow = false">
-                <center>
-                <img ng-src="data:image/png;base64, {{image.image}}" onerror="this.src = '/dist/img/no_image.gif'" ng-click="openImageById($index)" ng-mouseover="getImage($index)">
-                </center>
-                <i ng-show="removeImageShow" class="remove-image remove-image-gallery show-hide" ng-click="deleteImage(image.id)" uib-tooltip="Remove"></i>
+              <!-- <div class="col-lg-12">
+                <img class="image-current" ng-if="images != ''" ng-src="data:image/png;base64, {{images[imgIndex].image}}" ng-click="openImageById(imgIndex)">
+                <img class="image-current" ng-if="images == ''" src="/dist/img/no_image.gif">
+              </div> -->
+              <!-- <div class="col-lg-12 image-list">
+                <ul>
+                  <li ng-repeat="image in images" index="$index" ng-mouseover="getImage($index)">
+                    <img class="thumbnail" ng-src="data:image/png;base64, {{image.image}}" onerror="this.src = '/dist/img/no_image.gif'" ng-click="openImageById($index)">
+                  </li>
+                </ul>
+              </div> -->
+              <div class="row image-upload">
+                <div class="col-lg-4 col-md-4 col-sm-2 col-xs-6" ng-repeat-start="image in images" ng-init="removeImageShow = false">
+                  <div class="thumbnail crop" ng-mouseover="removeImageShow = true" ng-mouseleave="removeImageShow = false">
+                    <center>
+                      <img ng-src="data:image/png;base64, {{image.image}}" onerror="this.src = '/dist/img/no_image.gif'" ng-click="openImageById($index)" ng-mouseover="getImage($index)">
+                    </center>
+                    <i ng-show="removeImageShow" class="remove-image remove-image-gallery show-hide" ng-click="deleteImage(image.id)" uib-tooltip="Remove"></i>
+                  </div>
+                </div>
+                <div class="clearfix" ng-if="$index%3==3"></div>
+                <div ng-repeat-end=""></div>
               </div>
             </div>
-            <div class="clearfix" ng-if="$index%3==3"></div>
-            <div ng-repeat-end=""></div>
-          </div>
-        </div>
-        <div class="col-lg-6">
-          <br>
-          <table class="table">
-            <tr>
-              <td translate>version</td><td><b>{{profile.version}}</b></td>
-            </tr>
-            <tr>
-              <td translate>release</td><td><b>{{profile.release}}</b></td>
-            </tr>
-            <tr>
-              <td translate>windows</td>
-              <td>
-                <span ng-show="profile.windows" class="glyphicon glyphicon-ok"></span>
-                <span ng-show="!profile.windows" class="glyphicon glyphicon-remove"></span>
-              </td>
-            </tr>
-            <tr>
-              <td translate>macOS</td>
-              <td>
-                <span ng-show="profile.macOS" class="glyphicon glyphicon-ok"></span>
-                <span ng-show="!profile.macOS" class="glyphicon glyphicon-remove"></span>
-              </td>
-            </tr>
-            <tr>
-              <td translate>linux</td>
-              <td>
-                <span ng-show="profile.linux" class="glyphicon glyphicon-ok"></span>
-                <span ng-show="!profile.linux" class="glyphicon glyphicon-remove"></span>
-              </td>
-            </tr>
-            <tr>
-              <td translate>website</td>
-              <td>
-                <a href="{{profile.developer.website}}">{{profile.developer.website}}</a>
-              </td>
-            </tr>
-          </table>
-          <a href="#/developer/{{profile.developer.id}}"><img class="dev-logo" ng-src="data:image/png;base64, {{devLogo}}" onerror="this.src = '/dist/img/no_image.gif'" >{{profile.developer.name}}</a>
-        </div>
-        </uib-tab>
-        <uib-tab index="1" heading="developer">
-        <div class="col-lg-12">
-          <br>
-          <table class="table">
-            <tr>
-              <td translate>name</td><td><b><a href="#/developer/{{profile.developer.id}}">{{profile.developer.name}}</a></b></td>
-            </tr>
-            <tr>
-              <td translate>city</td><td><b>{{profile.developer.city}}</b></td>
-            </tr>
-            <tr>
-              <td translate>country</td><td><b>{{profile.developer.country}}</b></td>
-            </tr>
-            <tr>
-              <td translate>website</td><td><b>{{profile.developer.website}}</b></td>
-            </tr>
-            <tr>
-              <td translate>phoneNumber</td><td><b>{{profile.developer.phoneNumber | phone}}</b></td>
-            </tr>
-            <tr>
-              <td translate>fax</td><td><b>{{profile.developer.fax}}</b></td>
-            </tr>
-          </table>
-        </div>
-        </uib-tab>
-        <uib-tab index="2" heading="license">
-        <div class="col-lg-12">
-          <br>
-          <table class="table">
-            <tr>
-              <td translate>name</td><td><b>{{profile.license.name}}</b></td>
-            </tr>
-            <tr>
-              <td translate>type</td>
-              <td ng-switch="profile.license.type">
-                <span ng-switch-when="FREE" class="label label-success"><b>free</b></span>
-                <span ng-switch-when="TRIAL" class="label label-warning"><b>trial</b></span>
-                <span ng-switch-when="PAID" class="label label-primary"><b>paid</b></span>
-              </td>
-            </tr>
-            <tr>
-              <td translate>minimumUsers</td><td><b>{{profile.license.minimumUsers}}</b></td>
-            </tr>
-            <tr>
-              <td translate>maximumUsers</td><td><b>{{profile.license.maximumUsers}}</b></td>
-            </tr>
-            <tr>
-              <td translate>expiration</td><td><b>{{profile.license.expiration}}</b></td>
-            </tr>
-            <tr>
-              <td translate>priceForOne</td><td><b>{{profile.license.priceForOne}}</b></td>
-            </tr>
-          </table>
-        </div>
-        </uib-tab>
-        <uib-tab index="3" heading="photo" ng-click="getImages()">
-        <br>
-        <div class="col-lg-12">
-          <div class="row">
+            <div class="col-lg-6">
+              <br>
+              <table class="table">
+                <tr>
+                  <td translate>version</td><td><b>{{profile.version}}</b></td>
+                </tr>
+                <tr>
+                  <td translate>release</td><td><b>{{profile.release}}</b></td>
+                </tr>
+                <tr>
+                  <td translate>windows</td>
+                  <td>
+                    <span ng-show="profile.windows" class="glyphicon glyphicon-ok"></span>
+                    <span ng-show="!profile.windows" class="glyphicon glyphicon-remove"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td translate>macOS</td>
+                  <td>
+                    <span ng-show="profile.macOS" class="glyphicon glyphicon-ok"></span>
+                    <span ng-show="!profile.macOS" class="glyphicon glyphicon-remove"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td translate>linux</td>
+                  <td>
+                    <span ng-show="profile.linux" class="glyphicon glyphicon-ok"></span>
+                    <span ng-show="!profile.linux" class="glyphicon glyphicon-remove"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td translate>website</td>
+                  <td>
+                    <a href="{{profile.developer.website}}">{{profile.developer.website}}</a>
+                  </td>
+                </tr>
+              </table>
+              <a href="#/developer/{{profile.developer.id}}"><img class="dev-logo" ng-src="data:image/png;base64, {{devLogo}}" onerror="this.src = '/dist/img/no_image.gif'" >{{profile.developer.name}}</a>
+            </div>
+          </uib-tab>
+          <uib-tab index="1" heading="developer">
+            <div class="col-lg-12">
+              <br>
+              <table class="table">
+                <tr>
+                  <td translate>name</td><td><b><a href="#/developer/{{profile.developer.id}}">{{profile.developer.name}}</a></b></td>
+                </tr>
+                <tr>
+                  <td translate>city</td><td><b>{{profile.developer.city}}</b></td>
+                </tr>
+                <tr>
+                  <td translate>country</td><td><b>{{profile.developer.country}}</b></td>
+                </tr>
+                <tr>
+                  <td translate>website</td><td><b>{{profile.developer.website}}</b></td>
+                </tr>
+                <tr>
+                  <td translate>phoneNumber</td><td><b>{{profile.developer.phoneNumber | phone}}</b></td>
+                </tr>
+                <tr>
+                  <td translate>fax</td><td><b>{{profile.developer.fax}}</b></td>
+                </tr>
+              </table>
+            </div>
+          </uib-tab>
+          <uib-tab index="2" heading="license">
+            <div class="col-lg-12">
+              <br>
+              <table class="table">
+                <tr>
+                  <td translate>name</td><td><b>{{profile.license.name}}</b></td>
+                </tr>
+                <tr>
+                  <td translate>type</td>
+                  <td ng-switch="profile.license.type">
+                    <span ng-switch-when="FREE" class="label label-success"><b>free</b></span>
+                    <span ng-switch-when="TRIAL" class="label label-warning"><b>trial</b></span>
+                    <span ng-switch-when="PAID" class="label label-primary"><b>paid</b></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td translate>minimumUsers</td><td><b>{{profile.license.minimumUsers}}</b></td>
+                </tr>
+                <tr>
+                  <td translate>maximumUsers</td><td><b>{{profile.license.maximumUsers}}</b></td>
+                </tr>
+                <tr>
+                  <td translate>expiration</td><td><b>{{profile.license.expiration}}</b></td>
+                </tr>
+                <tr>
+                  <td translate>priceForOne</td><td><b>{{profile.license.priceForOne}}</b></td>
+                </tr>
+              </table>
+            </div>
+          </uib-tab>
+          <uib-tab index="3" heading="photo" ng-click="getImages()">
+            <br>
+            <div class="col-lg-12">
+              <div class="row">
             <span
-              flow-init="target"
-              flow-file-added="$file.size < 2000000"
-              flow-file-success="getImages()"
-              >
+                    flow-init="target"
+                    flow-file-added="$file.size < 2000000"
+                    flow-file-success="getImages()"
+            >
               <div class="col-lg-12">
                 <br>
                 <div class="thumbnail image-upload" flow-drop>
@@ -208,21 +208,21 @@
                 </div>
               </div>
             </span>
-          </div>
-          <div class="row" >
-            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 image-gallery" ng-repeat-start="image in images" ng-init="removeImageShow = false">
-              <div class="thumbnail crop" ng-mouseover="removeImageShow = true" ng-mouseleave="removeImageShow = false">
-                <center>
-                <img ng-src="data:image/png;base64, {{image.image}}" onerror="this.src = '/dist/img/no_image.gif'" ng-click="openImageById($index)" >
-                </center>
-                <i ng-show="removeImageShow" class="remove-image remove-image-gallery show-hide" ng-click="deleteImage(image.id)" uib-tooltip="Remove"></i>
+              </div>
+              <div class="row" >
+                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 image-gallery" ng-repeat-start="image in images" ng-init="removeImageShow = false">
+                  <div class="thumbnail crop" ng-mouseover="removeImageShow = true" ng-mouseleave="removeImageShow = false">
+                    <center>
+                      <img ng-src="data:image/png;base64, {{image.image}}" onerror="this.src = '/dist/img/no_image.gif'" ng-click="openImageById($index)" >
+                    </center>
+                    <i ng-show="removeImageShow" class="remove-image remove-image-gallery show-hide" ng-click="deleteImage(image.id)" uib-tooltip="Remove"></i>
+                  </div>
+                </div>
+                <div class="clearfix" ng-if="$index%3==3"></div>
+                <div ng-repeat-end=""></div>
               </div>
             </div>
-            <div class="clearfix" ng-if="$index%3==3"></div>
-            <div ng-repeat-end=""></div>
-          </div>
-        </div>
-        </uib-tab>
+          </uib-tab>
         </uib-tabset>
       </div>
     </div>

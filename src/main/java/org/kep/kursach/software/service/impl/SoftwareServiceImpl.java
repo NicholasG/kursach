@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -114,7 +115,7 @@ public class SoftwareServiceImpl implements SoftwareService {
                 .map( s -> {
                     Image img = null;
                     try {
-                        img = getImage( image );
+                        img = encodeImage( image );
                         img.setSoftware( s );
                     } catch ( IOException e ) {
                         e.printStackTrace();
@@ -130,15 +131,37 @@ public class SoftwareServiceImpl implements SoftwareService {
     }
 
     @Override
+    public ResponseEntity<Set<Image>> getAllImages( Long id ) {
+        Set<Image> images = repository.findOneById( id )
+                .map( SoftwareInfo::getImages )
+                .orElseGet( () -> null );
+        Set<Image> decodedImages = new HashSet<>();
+
+        return ResponseEntity.ok( decodedImages );
+    }
+
+    @Override
     public ResponseEntity<Void> removeImage( Long imageId ) {
         imageRepository.delete( imageId );
         return ResponseEntity.ok().build();
     }
 
-    private Image getImage( MultipartFile image ) throws IOException {
+    private Image encodeImage( MultipartFile image ) throws IOException {
         String imgAsString = Base64Utils.encodeToString( image.getBytes() );
         return new Image( imgAsString );
     }
+
+    private Set<Image> decodeImages( Set<Image> images ) {
+        Set<Image> decodedImages = new HashSet<>();
+        for ( Image image : images ) {
+            byte[] decodeFromString = Base64Utils.decodeFromString( image.getImageAsString() );
+            Image i = new Image();
+            i.setImage( decodeFromString );
+            decodedImages.add( i );
+        }
+        return decodedImages;
+    }
+
 }
 
 

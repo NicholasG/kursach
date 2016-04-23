@@ -1,9 +1,9 @@
 <div
-  flow-init="target"
-  flow-file-added="$file.size < 2000000"
-  flow-file-success="getLogoById(id); closeThisDialog(true)"
-  class="thumbnail image-upload logo-upload" 
-  >
+        flow-init="target"
+        flow-file-added="$file.size < 2000000"
+        flow-file-success="getLogoById(id); closeThisDialog(true)"
+        class="thumbnail image-upload logo-upload"
+>
   <br>
   <div class=" " flow-drop>
     <div class="row">
@@ -16,13 +16,13 @@
       </div>
     </div>
     <center>
-    <p ng-if="$flow.files[0] == null"><br>Drag and drop image here (limit 2MB )<br>
-    or</p>
+      <p ng-if="$flow.files[0] == null"><br>Drag and drop image here (limit 2MB )<br>
+        or</p>
     </center>
     <br>
     <center>
-    <button class="btn btn-default" flow-btn>Browse</button>
-    <button type="submit" class="btn btn-primary" ng-class="{'disabled': $flow.files[0] == null}" ng-click="$flow.upload();"><i class="glyphicon glyphicon-arrow-up"></i> upload</button>
+      <button class="btn btn-default" flow-btn>Browse</button>
+      <button type="submit" class="btn btn-primary" ng-class="{'disabled': $flow.files[0] == null}" ng-click="$flow.upload();"><i class="glyphicon glyphicon-arrow-up"></i> upload</button>
     </center>
     <br>
   </div>

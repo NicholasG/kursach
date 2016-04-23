@@ -2,6 +2,7 @@ package org.kep.kursach.images.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.kep.kursach.software.domain.SoftwareInfo;
+import org.springframework.data.annotation.Transient;
 
 import javax.persistence.*;
 
@@ -17,19 +18,31 @@ public class Image {
     @Column( name = "id" )
     private Long id;
 
-    @Column( name = "image", length = 3000000 )
-    private String image;
+    @JsonIgnore
+    @Column( name = "image_as_string", length = 3000000 )
+    private String imageAsString;
+
+    @Transient
+    private byte[] image;
 
     @JsonIgnore
     @ManyToOne
     @JoinColumn( name = "software_id", nullable = false )
     private SoftwareInfo software;
 
-    public Image( String image ) {
-        this.image = image;
+    public Image( String imageAsString ) {
+        this.imageAsString = imageAsString;
     }
 
     public Image() {
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage( byte[] image ) {
+        this.image = image;
     }
 
     public Long getId() {
@@ -40,12 +53,12 @@ public class Image {
         this.id = id;
     }
 
-    public String getImage() {
-        return image;
+    public String getImageAsString() {
+        return imageAsString;
     }
 
-    public void setImage( String image ) {
-        this.image = image;
+    public void setImageAsString( String imageAsString ) {
+        this.imageAsString = imageAsString;
     }
 
     public SoftwareInfo getSoftware() {

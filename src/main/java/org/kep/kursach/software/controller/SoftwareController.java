@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.Set;
 
 /**
@@ -99,9 +100,7 @@ public class SoftwareController {
     )
     public ResponseEntity<Set<Image>> getAllImages( @RequestParam( "id" ) Long id ) {
         LOG.info( "Getting soft's id='{}' images", id );
-        return softwareRepository.findOneById( id )
-                .map( s -> ResponseEntity.ok().body( s.getImages() ) )
-                .orElseGet( () -> new ResponseEntity<>( HttpStatus.NOT_FOUND ) );
+        return softwareService.getAllImages( id );
     }
 
     @RequestMapping(

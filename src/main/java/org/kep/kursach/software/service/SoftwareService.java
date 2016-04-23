@@ -1,10 +1,14 @@
 package org.kep.kursach.software.service;
 
+import org.kep.kursach.images.domain.Image;
 import org.kep.kursach.software.domain.SoftwareInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.util.Set;
 
 /**
  * Created by NicholasG on 05.03.2016.
@@ -23,4 +27,5 @@ public interface SoftwareService {
 
     ResponseEntity<Void> removeImage( Long imageId );
 
+    ResponseEntity<Set<Image>> getAllImages( Long id );
 }
