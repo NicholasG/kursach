@@ -134,7 +134,7 @@ public class SoftwareServiceImpl implements SoftwareService {
     public ResponseEntity<Set<Image>> getAllImages( Long id ) {
         Set<Image> images = repository.findOneById( id )
                 .map( SoftwareInfo::getImages )
-                .orElseGet( () -> null );
+                .orElseGet( null );
         Set<Image> decodedImages = decodeImages( images );
 
         return ResponseEntity.ok( decodedImages );

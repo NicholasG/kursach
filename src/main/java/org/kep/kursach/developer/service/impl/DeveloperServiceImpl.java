@@ -87,6 +87,13 @@ public class DeveloperServiceImpl implements DeveloperService {
     }
 
     @Override
+    public ResponseEntity<String> getLogo( Long id ) {
+        return repository.findOneById( id )
+                .map( d -> ResponseEntity.ok( ("{\"logo\": " + '"' + d.getLogo() + '"' + "}") ) )
+                .orElseGet( () -> new ResponseEntity<>( HttpStatus.NOT_FOUND ) );
+    }
+
+    @Override
     public ResponseEntity<Void> updateLogo( Long id, MultipartFile logo ) {
         return repository.findOneById( id )
                 .map( d -> {

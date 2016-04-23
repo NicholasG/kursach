@@ -21,4 +21,5 @@ public interface DeveloperService {
 
     ResponseEntity<Void> updateLogo( Long id, MultipartFile multipartFile );
 
+    ResponseEntity<String> getLogo( Long id );
 }

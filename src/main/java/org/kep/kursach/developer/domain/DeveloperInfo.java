@@ -2,8 +2,11 @@ package org.kep.kursach.developer.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.kep.kursach.software.domain.SoftwareInfo;
+import org.springframework.data.annotation.*;
+import org.springframework.data.annotation.Transient;
 
 import javax.persistence.*;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -57,6 +60,9 @@ public class DeveloperInfo implements Serializable {
     @Column( name = "logo", length = 3000000 )
     private String logo;
 
+    @Transient
+    private byte[] decodedLogo;
+
     public DeveloperInfo() {
     }
 
@@ -79,6 +85,14 @@ public class DeveloperInfo implements Serializable {
         this.website = website;
         this.phoneNumber = phoneNumber;
         this.fax = fax;
+    }
+
+    public byte[] getDecodedLogo() {
+        return decodedLogo;
+    }
+
+    public void setDecodedLogo( byte[] decodedLogo ) {
+        this.decodedLogo = decodedLogo;
     }
 
     public Set<SoftwareInfo> getProducts() {
