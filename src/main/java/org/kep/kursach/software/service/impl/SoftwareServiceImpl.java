@@ -49,14 +49,7 @@ public class SoftwareServiceImpl implements SoftwareService {
         return repository
                 .findOneById( software.getId() )
                 .map( s -> {
-                    s.setName( software.getName() );
-                    s.setVersion( software.getVersion() );
-                    s.setRelease( software.getRelease() );
-                    s.setDeveloper( software.getDeveloper() );
-                    s.setLicense( software.getLicense() );
-                    s.setWindows( software.isWindows() );
-                    s.setLinux( software.isLinux() );
-                    s.setMacOS( software.isMacOS() );
+                    s = software;
                     repository.saveAndFlush( s );
                     LOG.info( "Software '{}' has been edited", s.getName() );
                     return ResponseEntity.ok().body( s );

@@ -69,14 +69,7 @@ public class LicenseServiceImpl implements LicenseService {
         } else {
             return repository.findOneById( license.getId() )
                     .map( l -> {
-                        l.setName( license.getName() );
-                        l.setType( license.getType() );
-                        l.setExpiration( license.getExpiration() );
-                        l.setMinimumUsers( license.getMinimumUsers() );
-                        l.setMaximumUsers( license.getMaximumUsers() );
-                        l.setPriceForOne( license.getPriceForOne() );
-                        l.setPriceForTen( license.getPriceForTen() );
-                        l.setPriceForHundred( license.getPriceForHundred() );
+                        l = license;
                         repository.saveAndFlush( l );
                         LOG.info( "License '{}' has been edited", l.getName() );
                         return ResponseEntity.ok().body( l );

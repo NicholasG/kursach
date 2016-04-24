@@ -60,9 +60,6 @@ public class DeveloperInfo implements Serializable {
     @Column( name = "logo", length = 3000000 )
     private String logo;
 
-    @Transient
-    private byte[] decodedLogo;
-
     public DeveloperInfo() {
     }
 
@@ -85,14 +82,6 @@ public class DeveloperInfo implements Serializable {
         this.website = website;
         this.phoneNumber = phoneNumber;
         this.fax = fax;
-    }
-
-    public byte[] getDecodedLogo() {
-        return decodedLogo;
-    }
-
-    public void setDecodedLogo( byte[] decodedLogo ) {
-        this.decodedLogo = decodedLogo;
     }
 
     public Set<SoftwareInfo> getProducts() {

@@ -41,15 +41,7 @@ public class DeveloperServiceImpl implements DeveloperService {
         return repository
                 .findOneById( developer.getId() )
                 .map( d -> {
-                    d.setName( developer.getName() );
-                    d.setCountry( developer.getCountry() );
-                    d.setCity( developer.getCity() );
-                    d.setStreet( developer.getStreet() );
-                    d.setEmail( developer.getEmail() );
-                    d.setWebsite( developer.getWebsite() );
-                    d.setPhoneNumber( developer.getPhoneNumber() );
-                    d.setZipcode( developer.getZipcode() );
-                    d.setFax( developer.getFax() );
+                    d = developer;
                     repository.saveAndFlush( d );
                     LOG.info( "Developer '{}' has been edited", d.getName() );
                     return ResponseEntity.ok().body( d );
