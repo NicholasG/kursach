@@ -118,6 +118,7 @@ public class SoftwareServiceImpl implements SoftwareService {
                     images.add( img );
                     s.setImages( images );
                     repository.saveAndFlush( s );
+                    LOG.info( "Image has been added" );
                     return ResponseEntity.ok().build();
                 } )
                 .orElseGet( () -> new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR ) );
@@ -150,6 +151,7 @@ public class SoftwareServiceImpl implements SoftwareService {
             byte[] decodeFromString = Base64Utils.decodeFromString( image.getImageAsString() );
             Image i = new Image();
             i.setImage( decodeFromString );
+            i.setId( image.getId() );
             decodedImages.add( i );
         }
         return decodedImages;
