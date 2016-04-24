@@ -36,9 +36,6 @@
 				&& sc.minimumUsers != ''
 				&& sc.maximumUsers != ''
 				&& sc.expiration != ''
-				&& sc.priceForOne != ''
-				&& sc.priceForTen != ''
-				&& sc.priceForHundred != ''
 				) {
 				LicenseService.new(sc.license)
 				.success(function (data) {
