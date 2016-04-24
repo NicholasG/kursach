@@ -41,9 +41,6 @@
 				&& sc.minimumUsers != ''
 				&& sc.maximumUsers != ''
 				&& sc.expiration != ''
-				&& sc.priceForOne != ''
-				&& sc.priceForTen != ''
-				&& sc.priceForHundred != ''
 				) {
 					LicenseService.update(sc.license)
 					.success(function (data) {

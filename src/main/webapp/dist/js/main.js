@@ -245,6 +245,162 @@
 
 	angular
 	.module('main')
+	.controller('LicenseCtrl', LicenseCtrl);
+
+	function LicenseCtrl($scope, $state, LicenseService, ngDialog) {
+		var sc = $scope;
+  
+		sc.table = 'license';
+		sc.base = '/' + sc.table;
+
+		sc.currentDate = new Date().getFullYear();
+
+		sc.getAge = function () {
+			if (sc.birthday != '') alert(sc.birthday);
+			else sc.age = null;
+		}
+
+		sc.tableHeader = 
+		[
+		'name', 
+		'type',
+		'minimumUsers',
+		'maximumUsers',
+		'expiration',
+		'priceForOne'
+		];
+
+		sc.openEdit = function (id) {
+			ngDialog.open({ 
+				template: '/app/modules/license/action/license.action.view.html', 
+				className: 'ngdialog-theme-dev',
+				showClose: false,
+				controller: 'LicenseEditCtrl',
+				scope: $scope
+			});
+			sc.id = id;
+		};
+
+		sc.openAdd = function () {
+			ngDialog.open({ 
+				template: '/app/modules/license/action/license.action.view.html', 
+				className: 'ngdialog-theme-dev',
+				showClose: false,
+				controller: 'LicenseNewCtrl',
+				scope: $scope
+			});
+		};
+
+		sc.openDelete = function (id) {
+			sc.id = id;
+			ngDialog.open({ 
+				template: '/app/modules/license/action/license.action.delete.view.html', 
+				className: 'ngdialog-theme-dev',
+				showClose: false,
+				controller: 'LicenseDeleteCtrl',
+				scope: $scope
+			});
+		};
+
+		sc.loadPage = function(currentPage, name, type) {
+			LicenseService.getPage(currentPage - 1, 10, name, type)
+			.success(function (data){
+				sc.main = data;
+			});
+		};
+
+		sc.loadPage(1); 
+	};
+
+})();
+
+(function () {
+	'use strict';
+
+	var license = angular.module('license', [
+		'ui.router'
+		])
+	.config(configure);
+
+
+	configure.$inject = ['$locationProvider', '$stateProvider', '$urlRouterProvider'];
+	function configure($locationProvider, $stateProvider, $urlRouterProvider) {
+
+		$stateProvider
+		.state('main.license', {
+			url: 'license',
+			abstract: true,
+			template: '<div ui-view="content"></div>'
+		})
+		.state('main.license.table', {
+			url: '', 
+			views: {
+				'content@main.license': {
+					templateUrl: '/app/shared/table/table.view.html',
+					controller: 'LicenseCtrl',
+				},
+				'filter@main.license.table': {
+					templateUrl: '/app/modules/license/filter/license.filter.view.html'
+				}
+			}
+		});
+
+	}
+
+})();
+
+(function () {
+    'use strict';
+
+    angular.module('main')
+    .service('LicenseService', function ($http) {
+
+        var urlBase = '/license';
+
+        this.getAll = function () {
+            return $http.get(urlBase);
+        };
+
+        this.get = function (id) {
+            return $http.get(urlBase + '/' + id);
+        };
+
+        this.new = function (license) {
+            return $http.post(urlBase, license);
+        };
+
+        this.update = function (license) {
+            return $http.put(urlBase, license)
+        };
+
+        this.delete = function (id) {
+            return $http.delete(urlBase, { 
+                    params: { 
+                        id: id
+                    }
+                }); 
+        };
+
+        this.getPage = function (currentPage, size, name, type) {
+            return $http.get(urlBase, { 
+                    params: { 
+                        page: currentPage, 
+                        size: size ,
+                        name: name,
+                        type: type
+                    }
+            });
+        };
+
+    });
+
+})();
+
+(function () {
+	'use strict';
+
+	angular
+	.module('main')
 	.controller('SoftwareCtrl', SoftwareCtrl);
 
 	function SoftwareCtrl ($scope, $state, SoftwareService, DeveloperService, LicenseService, ngDialog) {
@@ -433,162 +589,6 @@
                     }
             });
         }
-
-    });
-
-})();
-
-(function () {
-	'use strict';
-
-	angular
-	.module('main')
-	.controller('LicenseCtrl', LicenseCtrl);
-
-	function LicenseCtrl($scope, $state, LicenseService, ngDialog) {
-		var sc = $scope;
-  
-		sc.table = 'license';
-		sc.base = '/' + sc.table;
-
-		sc.currentDate = new Date().getFullYear();
-
-		sc.getAge = function () {
-			if (sc.birthday != '') alert(sc.birthday);
-			else sc.age = null;
-		}
-
-		sc.tableHeader = 
-		[
-		'name', 
-		'type',
-		'minimumUsers',
-		'maximumUsers',
-		'expiration',
-		'priceForOne'
-		];
-
-		sc.openEdit = function (id) {
-			ngDialog.open({ 
-				template: '/app/modules/license/action/license.action.view.html', 
-				className: 'ngdialog-theme-dev',
-				showClose: false,
-				controller: 'LicenseEditCtrl',
-				scope: $scope
-			});
-			sc.id = id;
-		};
-
-		sc.openAdd = function () {
-			ngDialog.open({ 
-				template: '/app/modules/license/action/license.action.view.html', 
-				className: 'ngdialog-theme-dev',
-				showClose: false,
-				controller: 'LicenseNewCtrl',
-				scope: $scope
-			});
-		};
-
-		sc.openDelete = function (id) {
-			sc.id = id;
-			ngDialog.open({ 
-				template: '/app/modules/license/action/license.action.delete.view.html', 
-				className: 'ngdialog-theme-dev',
-				showClose: false,
-				controller: 'LicenseDeleteCtrl',
-				scope: $scope
-			});
-		};
-
-		sc.loadPage = function(currentPage, name, type) {
-			LicenseService.getPage(currentPage - 1, 10, name, type)
-			.success(function (data){
-				sc.main = data;
-			});
-		};
-
-		sc.loadPage(1); 
-	};
-
-})();
-
-(function () {
-	'use strict';
-
-	var license = angular.module('license', [
-		'ui.router'
-		])
-	.config(configure);
-
-
-	configure.$inject = ['$locationProvider', '$stateProvider', '$urlRouterProvider'];
-	function configure($locationProvider, $stateProvider, $urlRouterProvider) {
-
-		$stateProvider
-		.state('main.license', {
-			url: 'license',
-			abstract: true,
-			template: '<div ui-view="content"></div>'
-		})
-		.state('main.license.table', {
-			url: '', 
-			views: {
-				'content@main.license': {
-					templateUrl: '/app/shared/table/table.view.html',
-					controller: 'LicenseCtrl',
-				},
-				'filter@main.license.table': {
-					templateUrl: '/app/modules/license/filter/license.filter.view.html'
-				}
-			}
-		});
-
-	}
-
-})();
-
-(function () {
-    'use strict';
-
-    angular.module('main')
-    .service('LicenseService', function ($http) {
-
-        var urlBase = '/license';
-
-        this.getAll = function () {
-            return $http.get(urlBase);
-        };
-
-        this.get = function (id) {
-            return $http.get(urlBase + '/' + id);
-        };
-
-        this.new = function (license) {
-            return $http.post(urlBase, license);
-        };
-
-        this.update = function (license) {
-            return $http.put(urlBase, license)
-        };
-
-        this.delete = function (id) {
-            return $http.delete(urlBase, { 
-                    params: { 
-                        id: id
-                    }
-                }); 
-        };
-
-        this.getPage = function (currentPage, size, name, type) {
-            return $http.get(urlBase, { 
-                    params: { 
-                        page: currentPage, 
-                        size: size ,
-                        name: name,
-                        type: type
-                    }
-            });
-        };
 
     });
 
@@ -943,6 +943,144 @@
 
 	angular
 	.module('main')
+	.controller('LicenseDeleteCtrl', LicenseDeleteCtrl);
+
+	function LicenseDeleteCtrl ($scope, $state, $location, LicenseService) {
+		var sc = $scope;
+		var licName;
+
+		LicenseService.get(sc.id)
+	  		.success( function (data) {
+	  			licName = data.name;
+				sc.log = 'Are you sure you want to remove sicense ' + licName + '?';
+	  		});
+
+		sc.delete = function () {
+			LicenseService.delete(sc.id)
+			.then(function successCallback(response) {
+				sc.closeThisDialog(true);
+				sc.loadPage(1);
+			  }, function errorCallback(response) {
+			    	sc.log = 'License "'+ licName +'" could not be deleted because is in use yet';
+			  }); 
+
+		}
+	};
+})();
+
+(function () {
+	'use strict';
+
+	angular
+	.module('main')
+	.controller('LicenseEditCtrl', LicenseEditCtrl);
+
+	function LicenseEditCtrl ($scope, $state, $location, LicenseService) {
+		var sc = $scope;
+		sc.action = 'Edit';
+
+		LicenseService.get(sc.id)
+		.success(function (data) {
+			sc.license = data;
+
+			sc.id = sc.license.id;
+			sc.name = sc.license.name;
+			sc.type = sc.license.type;
+			sc.minimumUsers = sc.license.minimumUsers;
+			sc.maximumUsers = sc.license.maximumUsers;
+			sc.expiration = sc.license.expiration;
+			sc.priceForOne = sc.license.priceForOne;
+			sc.priceForTen = sc.license.priceForTen;
+			sc.priceForHundred = sc.license.priceForHundred;
+
+			sc.save = function () {
+				sc.license = {
+					'id': sc.id,
+					'name': sc.name,
+					'type': sc.type,
+					'minimumUsers':sc.minimumUsers,
+					'maximumUsers': sc.maximumUsers,
+					'expiration': sc.expiration,
+					'priceForOne': sc.priceForOne,
+					'priceForTen': sc.priceForTen,
+					'priceForHundred': sc.priceForHundred
+				}
+
+				if (sc.name != '' 
+				&& sc.type != ''
+				&& sc.minimumUsers != ''
+				&& sc.maximumUsers != ''
+				&& sc.expiration != ''
+				) {
+					LicenseService.update(sc.license)
+					.success(function (data) {
+						sc.license = null;
+						sc.closeThisDialog(true);
+						sc.loadPage(1);
+					});
+				}
+				else alert('Error');
+			}
+		});
+	}
+})();
+
+(function () {
+	'use strict';
+
+	angular
+	.module('main')
+	.controller('LicenseNewCtrl', LicenseNewCtrl);
+
+	function LicenseNewCtrl ($scope, $state, $location, LicenseService) {
+		var sc = $scope;
+
+		sc.action = 'Add';
+
+		sc.name = '';
+		sc.type = '';
+		sc.minimumUsers = '';
+		sc.maximumUsers = '';
+		sc.expiration = '';
+		sc.priceForOne = '';
+		sc.priceForTen = '';
+		sc.priceForHundred = '';
+		
+		sc.save = function () {
+			sc.license = {
+				'name': sc.name,
+				'type': sc.type,
+				'minimumUsers':sc.minimumUsers,
+				'maximumUsers': sc.maximumUsers,
+				'expiration': sc.expiration,
+				'priceForOne': sc.priceForOne,
+				'priceForTen': sc.priceForTen,
+				'priceForHundred': sc.priceForHundred
+			}
+
+			if (sc.name != '' 
+				&& sc.type != ''
+				&& sc.minimumUsers != ''
+				&& sc.maximumUsers != ''
+				&& sc.expiration != ''
+				) {
+				LicenseService.new(sc.license)
+				.success(function (data) {
+					sc.license = null;
+					sc.closeThisDialog(true);
+					sc.loadPage(1);
+				});
+			}
+			else alert('Error');
+		}
+	};
+})();
+
+(function () {
+	'use strict';
+
+	angular
+	.module('main')
 	.controller('SoftwareDeleteCtrl', SoftwareDeleteCtrl);
 
 	function SoftwareDeleteCtrl ($scope, $state, $location, SoftwareService) {
@@ -1159,146 +1297,5 @@
 		}
 
 	  	sc.getImages();
-	};
-})();
-
-(function () {
-	'use strict';
-
-	angular
-	.module('main')
-	.controller('LicenseDeleteCtrl', LicenseDeleteCtrl);
-
-	function LicenseDeleteCtrl ($scope, $state, $location, LicenseService) {
-		var sc = $scope;
-		var licName;
-
-		LicenseService.get(sc.id)
-	  		.success( function (data) {
-	  			licName = data.name;
-				sc.log = 'Are you sure you want to remove sicense ' + licName + '?';
-	  		});
-
-		sc.delete = function () {
-			LicenseService.delete(sc.id)
-			.then(function successCallback(response) {
-				sc.closeThisDialog(true);
-				sc.loadPage(1);
-			  }, function errorCallback(response) {
-			    	sc.log = 'License "'+ licName +'" could not be deleted because is in use yet';
-			  }); 
-
-		}
-	};
-})();
-
-(function () {
-	'use strict';
-
-	angular
-	.module('main')
-	.controller('LicenseEditCtrl', LicenseEditCtrl);
-
-	function LicenseEditCtrl ($scope, $state, $location, LicenseService) {
-		var sc = $scope;
-		sc.action = 'Edit';
-
-		LicenseService.get(sc.id)
-		.success(function (data) {
-			sc.license = data;
-
-			sc.id = sc.license.id;
-			sc.name = sc.license.name;
-			sc.type = sc.license.type;
-			sc.minimumUsers = sc.license.minimumUsers;
-			sc.maximumUsers = sc.license.maximumUsers;
-			sc.expiration = sc.license.expiration;
-			sc.priceForOne = sc.license.priceForOne;
-			sc.priceForTen = sc.license.priceForTen;
-			sc.priceForHundred = sc.license.priceForHundred;
-
-			sc.save = function () {
-				sc.license = {
-					'id': sc.id,
-					'name': sc.name,
-					'type': sc.type,
-					'minimumUsers':sc.minimumUsers,
-					'maximumUsers': sc.maximumUsers,
-					'expiration': sc.expiration,
-					'priceForOne': sc.priceForOne,
-					'priceForTen': sc.priceForTen,
-					'priceForHundred': sc.priceForHundred
-				}
-
-				if (sc.name != '' 
-				&& sc.type != ''
-				&& sc.minimumUsers != ''
-				&& sc.maximumUsers != ''
-				&& sc.expiration != ''
-				&& sc.priceForOne != ''
-				&& sc.priceForTen != ''
-				&& sc.priceForHundred != ''
-				) {
-					LicenseService.update(sc.license)
-					.success(function (data) {
-						sc.license = null;
-						sc.closeThisDialog(true);
-						sc.loadPage(1);
-					});
-				}
-				else alert('Error');
-			}
-		});
-	}
-})();
-
-(function () {
-	'use strict';
-
-	angular
-	.module('main')
-	.controller('LicenseNewCtrl', LicenseNewCtrl);
-
-	function LicenseNewCtrl ($scope, $state, $location, LicenseService) {
-		var sc = $scope;
-
-		sc.action = 'Add';
-
-		sc.name = '';
-		sc.type = '';
-		sc.minimumUsers = '';
-		sc.maximumUsers = '';
-		sc.expiration = '';
-		sc.priceForOne = '';
-		sc.priceForTen = '';
-		sc.priceForHundred = '';
-		
-		sc.save = function () {
-			sc.license = {
-				'name': sc.name,
-				'type': sc.type,
-				'minimumUsers':sc.minimumUsers,
-				'maximumUsers': sc.maximumUsers,
-				'expiration': sc.expiration,
-				'priceForOne': sc.priceForOne,
-				'priceForTen': sc.priceForTen,
-				'priceForHundred': sc.priceForHundred
-			}
-
-			if (sc.name != '' 
-				&& sc.type != ''
-				&& sc.minimumUsers != ''
-				&& sc.maximumUsers != ''
-				&& sc.expiration != ''
-				) {
-				LicenseService.new(sc.license)
-				.success(function (data) {
-					sc.license = null;
-					sc.closeThisDialog(true);
-					sc.loadPage(1);
-				});
-			}
-			else alert('Error');
-		}
 	};
 })();
