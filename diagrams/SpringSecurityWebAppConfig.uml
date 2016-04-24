@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>org.kep.kursach.configuration.SpringSecurityWebAppConfig</OriginalElement>
+  <nodes>
+    <node x="742.0" y="124.0">org.springframework.context.annotation.Configuration</node>
+    <node x="0.0" y="226.0">org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter</node>
+    <node x="379.84375" y="124.0">org.springframework.core.annotation.Order</node>
+    <node x="692.0" y="535.5">org.springframework.security.config.annotation.web.configuration.EnableWebSecurity</node>
+    <node x="214.84375" y="0.0">org.springframework.security.config.annotation.SecurityConfigurer</node>
+    <node x="630.7083333333334" y="947.0">org.kep.kursach.configuration.SpringSecurityWebAppConfig</node>
+    <node x="202.84375" y="135.0">org.springframework.security.config.annotation.web.WebSecurityConfigurer</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="org.springframework.security.config.annotation.web.configuration.EnableWebSecurity" target="org.springframework.context.annotation.Configuration">
+      <point x="0.0" y="-26.0" />
+      <point x="763.5" y="201.0" />
+      <point x="773.25" y="201.0" />
+      <point x="-31.25" y="26.0" />
+    </edge>
+    <edge source="org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter" target="org.springframework.security.config.annotation.web.WebSecurityConfigurer">
+      <point x="-168.0" y="-335.5" />
+      <point x="168.0" y="201.0" />
+      <point x="281.34375" y="201.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter" target="org.springframework.core.annotation.Order">
+      <point x="168.0" y="-335.5" />
+      <point x="504.0" y="201.0" />
+      <point x="433.84375" y="201.0" />
+      <point x="0.0" y="26.0" />
+    </edge>
+    <edge source="org.kep.kursach.configuration.SpringSecurityWebAppConfig" target="org.springframework.context.annotation.Configuration">
+      <point x="68.66666666666663" y="-26.0" />
+      <point x="802.375" y="922.0" />
+      <point x="845.5" y="922.0" />
+      <point x="845.5" y="201.0" />
+      <point x="835.75" y="201.0" />
+      <point x="31.25" y="26.0" />
+    </edge>
+    <edge source="org.springframework.security.config.annotation.web.WebSecurityConfigurer" target="org.springframework.security.config.annotation.SecurityConfigurer">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="37.0" />
+    </edge>
+    <edge source="org.kep.kursach.configuration.SpringSecurityWebAppConfig" target="org.springframework.security.config.annotation.web.configuration.EnableWebSecurity">
+      <point x="0.0" y="-26.0" />
+      <point x="733.7083333333334" y="922.0" />
+      <point x="763.5" y="922.0" />
+      <point x="0.0" y="26.0" />
+    </edge>
+    <edge source="org.kep.kursach.configuration.SpringSecurityWebAppConfig" target="org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter">
+      <point x="-68.66666666666663" y="-26.0" />
+      <point x="665.0416666666667" y="922.0" />
+      <point x="336.0" y="922.0" />
+      <point x="0.0" y="335.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.5848871442590775" x="433.5" y="499.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Properties</Category>
+    <Category>Methods</Category>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

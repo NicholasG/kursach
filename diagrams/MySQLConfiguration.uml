@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>org.kep.kursach.configuration.MySQLConfiguration</OriginalElement>
+  <nodes>
+    <node x="599.0" y="22.0">org.springframework.context.annotation.Configuration</node>
+    <node x="252.5" y="146.0">org.kep.kursach.configuration.MySQLConfiguration</node>
+    <node x="0.0" y="0.0">org.springframework.context.annotation.PropertySource</node>
+    <node x="187.0" y="0.0">org.springframework.transaction.annotation.EnableTransactionManagement</node>
+    <node x="446.0" y="22.0">org.springframework.context.annotation.Profile</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="org.kep.kursach.configuration.MySQLConfiguration" target="org.springframework.context.annotation.PropertySource">
+      <point x="-117.75" y="-125.5" />
+      <point x="291.75" y="121.0" />
+      <point x="83.5" y="121.0" />
+      <point x="0.0" y="48.0" />
+    </edge>
+    <edge source="org.kep.kursach.configuration.MySQLConfiguration" target="org.springframework.transaction.annotation.EnableTransactionManagement">
+      <point x="-39.25" y="-125.5" />
+      <point x="370.25" y="121.0" />
+      <point x="306.5" y="121.0" />
+      <point x="0.0" y="48.0" />
+    </edge>
+    <edge source="org.kep.kursach.configuration.MySQLConfiguration" target="org.springframework.context.annotation.Configuration">
+      <point x="117.75" y="-125.5" />
+      <point x="527.25" y="121.0" />
+      <point x="661.5" y="121.0" />
+      <point x="0.0" y="26.0" />
+    </edge>
+    <edge source="org.kep.kursach.configuration.MySQLConfiguration" target="org.springframework.context.annotation.Profile">
+      <point x="39.25" y="-125.5" />
+      <point x="448.75" y="121.0" />
+      <point x="512.5" y="121.0" />
+      <point x="0.0" y="26.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="362.0" y="198.5" />
+  <SelectedNodes>
+    <node>org.kep.kursach.configuration.MySQLConfiguration</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Properties</Category>
+    <Category>Methods</Category>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

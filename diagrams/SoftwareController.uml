@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>org.kep.kursach.software.controller.SoftwareController</OriginalElement>
+  <nodes>
+    <node x="304.75" y="668.0">org.kep.kursach.software.service.impl.SoftwareServiceImpl</node>
+    <node x="143.0" y="278.0">org.kep.kursach.images.domain.Image</node>
+    <node x="518.0" y="356.0">org.kep.kursach.software.service.SoftwareService</node>
+    <node x="0.0" y="433.0">org.kep.kursach.images.repository.ImageRepository</node>
+    <node x="1467.0" y="345.0">org.springframework.web.bind.annotation.RequestMapping</node>
+    <node x="1143.25" y="679.0">org.kep.kursach.software.controller.SoftwareController</node>
+    <node x="1322.0" y="422.0">org.springframework.web.bind.annotation.RestController</node>
+    <node x="974.0" y="400.0">org.kep.kursach.software.reporitory.SoftwareRepository</node>
+    <node x="448.63888888888886" y="0.0">org.springframework.data.jpa.repository.JpaRepository</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="org.kep.kursach.software.service.impl.SoftwareServiceImpl" target="org.kep.kursach.images.domain.Image">
+      <point x="-42.25" y="-147.5" />
+      <point x="431.5" y="638.0" />
+      <point x="320.5" y="638.0" />
+      <point x="0.0" y="170.0" />
+    </edge>
+    <edge source="org.kep.kursach.software.controller.SoftwareController" target="org.springframework.web.bind.annotation.RequestMapping">
+      <point x="119.25" y="-136.5" />
+      <point x="1421.5" y="648.0" />
+      <point x="1600.5" y="648.0" />
+      <point x="0.0" y="103.0" />
+    </edge>
+    <edge source="org.kep.kursach.software.reporitory.SoftwareRepository" target="org.springframework.data.jpa.repository.JpaRepository">
+      <point x="0.0" y="-48.0" />
+      <point x="1138.0" y="253.0" />
+      <point x="674.3888888888889" y="253.0" />
+      <point x="75.25" y="114.0" />
+    </edge>
+    <edge source="org.kep.kursach.images.repository.ImageRepository" target="org.springframework.data.jpa.repository.JpaRepository">
+      <point x="0.0" y="-15.0" />
+      <point x="61.5" y="253.0" />
+      <point x="523.8888888888889" y="253.0" />
+      <point x="-75.25" y="114.0" />
+    </edge>
+    <edge source="org.kep.kursach.software.controller.SoftwareController" target="org.kep.kursach.software.service.SoftwareService">
+      <point x="-119.25" y="-136.5" />
+      <point x="1183.0" y="638.0" />
+      <point x="845.0" y="638.0" />
+      <point x="109.0" y="92.0" />
+    </edge>
+    <edge source="org.kep.kursach.software.service.impl.SoftwareServiceImpl" target="org.kep.kursach.software.reporitory.SoftwareRepository">
+      <point x="126.75" y="-147.5" />
+      <point x="600.5" y="648.0" />
+      <point x="1056.0" y="648.0" />
+      <point x="-82.0" y="48.0" />
+    </edge>
+    <edge source="org.kep.kursach.software.service.impl.SoftwareServiceImpl" target="org.kep.kursach.software.service.SoftwareService">
+      <point x="42.25" y="-147.5" />
+      <point x="516.0" y="638.0" />
+      <point x="627.0" y="638.0" />
+      <point x="-109.0" y="92.0" />
+    </edge>
+    <edge source="org.kep.kursach.software.controller.SoftwareController" target="org.kep.kursach.software.reporitory.SoftwareRepository">
+      <point x="-39.75" y="-136.5" />
+      <point x="1262.5" y="648.0" />
+      <point x="1220.0" y="648.0" />
+      <point x="82.0" y="48.0" />
+    </edge>
+    <edge source="org.kep.kursach.software.service.impl.SoftwareServiceImpl" target="org.kep.kursach.images.repository.ImageRepository">
+      <point x="-126.75" y="-147.5" />
+      <point x="347.0" y="648.0" />
+      <point x="61.5" y="648.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="org.kep.kursach.software.controller.SoftwareController" target="org.springframework.web.bind.annotation.RestController">
+      <point x="39.75" y="-136.5" />
+      <point x="1342.0" y="648.0" />
+      <point x="1384.5" y="648.0" />
+      <point x="0.0" y="26.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.5912200684150513" x="867.0000000000001" y="481.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+    <Category>Constructors</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>org.kep.kursach.developer.controller.DeveloperController</OriginalElement>
+  <nodes>
+    <node x="295.49999999999994" y="256.0">org.kep.kursach.developer.controller.DeveloperController</node>
+    <node x="826.6666666666666" y="278.0">org.kep.kursach.developer.service.impl.DeveloperServiceImpl</node>
+    <node x="0.0" y="0.0">org.springframework.web.bind.annotation.RequestMapping</node>
+    <node x="882.0" y="55.0">org.kep.kursach.developer.repository.DeveloperRepository</node>
+    <node x="431.99999999999994" y="22.0">org.kep.kursach.developer.service.DeveloperService</node>
+    <node x="286.99999999999994" y="77.0">org.springframework.web.bind.annotation.RestController</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="org.kep.kursach.developer.controller.DeveloperController" target="org.springframework.web.bind.annotation.RestController">
+      <point x="-37.25" y="-125.5" />
+      <point x="407.24999999999994" y="236.0" />
+      <point x="349.49999999999994" y="236.0" />
+      <point x="0.0" y="26.0" />
+    </edge>
+    <edge source="org.kep.kursach.developer.controller.DeveloperController" target="org.springframework.web.bind.annotation.RequestMapping">
+      <point x="-111.75" y="-125.5" />
+      <point x="332.74999999999994" y="236.0" />
+      <point x="133.5" y="236.0" />
+      <point x="0.0" y="103.0" />
+    </edge>
+    <edge source="org.kep.kursach.developer.service.impl.DeveloperServiceImpl" target="org.kep.kursach.developer.repository.DeveloperRepository">
+      <point x="64.5" y="-103.5" />
+      <point x="1020.1666666666666" y="236.0" />
+      <point x="1133.25" y="236.0" />
+      <point x="83.75" y="48.0" />
+    </edge>
+    <edge source="org.kep.kursach.developer.controller.DeveloperController" target="org.kep.kursach.developer.repository.DeveloperRepository">
+      <point x="111.75" y="-125.5" />
+      <point x="556.25" y="236.0" />
+      <point x="965.75" y="236.0" />
+      <point x="-83.75" y="48.0" />
+    </edge>
+    <edge source="org.kep.kursach.developer.service.impl.DeveloperServiceImpl" target="org.kep.kursach.developer.service.DeveloperService">
+      <point x="-64.5" y="-103.5" />
+      <point x="891.1666666666666" y="226.0" />
+      <point x="754.5" y="226.0" />
+      <point x="107.5" y="81.0" />
+    </edge>
+    <edge source="org.kep.kursach.developer.controller.DeveloperController" target="org.kep.kursach.developer.service.DeveloperService">
+      <point x="37.25" y="-125.5" />
+      <point x="481.74999999999994" y="236.0" />
+      <point x="539.5" y="236.0" />
+      <point x="-107.5" y="81.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.8383185125303153" x="608.5" y="253.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+    <Category>Constructors</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
