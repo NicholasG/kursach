@@ -8,20 +8,40 @@
     function DeveloperNewCtrl($scope, $state, $location, $document, DeveloperService) {
         var sc = $scope;
 
-        var fileLimit = 2000000;
         var fileLimitSuccess = false;
 
-        sc.action = 'Add';
+        sc.action = 'add';
+
+        sc.formValid = false;
 
         sc.name = '';
         sc.country = '';
         sc.city = '';
         sc.street = '';
         sc.email = '';
-        sc.zipcode = '';
+        sc.zipcode = ''; 
         sc.website = '';
         sc.phoneNumber = '';
         sc.fax = '';
+
+        sc.checkForm = function () {
+            if (sc.name != '' 
+                && sc.country != '' 
+                && sc.city != '' 
+                && sc.street != '' 
+                && sc.email != '' 
+                && sc.zipcode != '' 
+                && sc.website != '' 
+                && sc.phoneNumber != ''
+                && sc.fax != ''
+                && sc.devForm.$valid
+            ) {
+                sc.formValid = true;
+            } 
+            else {
+                sc.formValid = false;
+            }
+        }
 
         sc.save = function() {
             sc.developer = {
@@ -36,22 +56,11 @@
                 'fax': sc.fax
             };
 
-            if (sc.name != '' 
-            	&& sc.country != '' 
-            	&& sc.city != '' 
-            	&& sc.street != '' 
-            	&& sc.email != '' 
-            	&& sc.zipcode != '' 
-            	&& sc.website != '' 
-            	&& sc.phoneNumber != ''
-            	&& sc.fax != ''
-            ) {
-                DeveloperService.new(sc.developer)
-					.success(function() {
-					    sc.closeThisDialog(true);
-					    sc.loadPage(1);
-					});
-            } else alert('Error');
+            if (sc.formValid) DeveloperService.new(sc.developer)
+				.success(function() {
+				    sc.closeThisDialog(true);
+				    sc.loadPage(1);
+				});
         };
 
     };
