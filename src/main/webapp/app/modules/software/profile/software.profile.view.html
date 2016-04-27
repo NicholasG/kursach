@@ -22,7 +22,7 @@
             <div class="col-lg-6">
               <div
                       flow-init="target"
-                      flow-file-added="$file.size < 2000000"
+                      flow-file-added="$file.size < 512000"
                       flow-file-success="getImages()"
                       flow-drop>
                 <div ng-init="imageUploadShow = false"
@@ -178,7 +178,7 @@
               <div class="row">
             <span
                     flow-init="target"
-                    flow-file-added="$file.size < 2000000"
+                    flow-file-added="$file.size < 512000"
                     flow-file-success="getImages()"
             >
               <div class="col-lg-12">
@@ -196,7 +196,7 @@
                     <div ng-repeat-end=""></div>
                   </div>
                   <center>
-                  <p><br>Drag and drop image here (limit 2MB )<br>
+                  <p ng-if="$flow.files[0] == null"><br>Drag and drop image here (limit 512KB)<br>
                   or</p>
                   </center>
                   <br>

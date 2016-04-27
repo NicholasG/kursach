@@ -116,6 +116,8 @@
 			.success(function (data){
 				sc.main = data;
 			});
+
+			sc.currentPage = currentPage;
 		};
 
 		sc.loadPage(1); 
@@ -756,7 +758,7 @@
 			DeveloperService.delete(sc.id)
 			.then(function successCallback(response) {
 				sc.closeThisDialog(true);
-				sc.loadPage(1);
+				sc.loadPage(sc.currentPage);
 			  }, function errorCallback(response) {
 			    	sc.log = 'Developer "' + devName + '" could not be deleted because is in use yet';
 			  }); 
@@ -830,7 +832,7 @@
 	            if (sc.formValid) DeveloperService.update(sc.developer)
 					.success(function() {
 					    sc.closeThisDialog(true);
-					    sc.loadPage(1);
+					    sc.loadPage(sc.currentPage);
 					});
             	
 			}
@@ -899,7 +901,7 @@
             if (sc.formValid) DeveloperService.new(sc.developer)
 				.success(function() {
 				    sc.closeThisDialog(true);
-				    sc.loadPage(1);
+				    sc.loadPage(sc.currentPage);
 				});
         };
 
@@ -973,7 +975,7 @@
 			LicenseService.delete(sc.id)
 			.then(function successCallback(response) {
 				sc.closeThisDialog(true);
-				sc.loadPage(1);
+				sc.loadPage(sc.currentPage);
 			  }, function errorCallback(response) {
 			    	sc.log = 'License "'+ licName +'" could not be deleted because is in use yet';
 			  }); 
@@ -991,7 +993,9 @@
 
 	function LicenseEditCtrl ($scope, $state, $location, LicenseService) {
 		var sc = $scope;
-		sc.action = 'Edit';
+		sc.action = 'edit';
+
+		sc.formValid = false;
 
 		LicenseService.get(sc.id)
 		.success(function (data) {
@@ -1007,6 +1011,24 @@
 			sc.priceForTen = sc.license.priceForTen;
 			sc.priceForHundred = sc.license.priceForHundred;
 
+			sc.checkForm = function () {
+	            if (sc.name != '' 
+					&& sc.type != ''
+					&& sc.minimumUsers != 0
+					&& sc.maximumUsers != 0
+					&& sc.expiration != 0
+					&& sc.minimumUsers != null
+					&& sc.maximumUsers != null
+					&& sc.expiration != null
+					&& sc.licenseForm.$valid
+	            ) {
+	                sc.formValid = true;
+	            } 
+	            else {
+	                sc.formValid = false;
+	            }
+	        }
+
 			sc.save = function () {
 				sc.license = {
 					'id': sc.id,
@@ -1020,20 +1042,12 @@
 					'priceForHundred': sc.priceForHundred
 				}
 
-				if (sc.name != '' 
-				&& sc.type != ''
-				&& sc.minimumUsers != ''
-				&& sc.maximumUsers != ''
-				&& sc.expiration != ''
-				) {
-					LicenseService.update(sc.license)
+				if (sc.formValid) LicenseService.update(sc.license)
 					.success(function (data) {
 						sc.license = null;
 						sc.closeThisDialog(true);
-						sc.loadPage(1);
+						sc.loadPage(sc.currentPage);
 					});
-				}
-				else alert('Error');
 			}
 		});
 	}
@@ -1049,16 +1063,36 @@
 	function LicenseNewCtrl ($scope, $state, $location, LicenseService) {
 		var sc = $scope;
 
-		sc.action = 'Add';
+		sc.action = 'add';
+
+		sc.formValid = false;
 
 		sc.name = '';
 		sc.type = '';
-		sc.minimumUsers = '';
-		sc.maximumUsers = '';
-		sc.expiration = '';
+		sc.minimumUsers = null;
+		sc.maximumUsers = null;
+		sc.expiration = null;
 		sc.priceForOne = '';
 		sc.priceForTen = '';
 		sc.priceForHundred = '';
+
+		sc.checkForm = function () {
+            if (sc.name != '' 
+				&& sc.type != ''
+				&& sc.minimumUsers != 0
+				&& sc.maximumUsers != 0
+				&& sc.expiration != 0
+				&& sc.minimumUsers != null
+				&& sc.maximumUsers != null
+				&& sc.expiration != null
+				&& sc.licenseForm.$valid
+            ) {
+                sc.formValid = true;
+            } 
+            else {
+                sc.formValid = false;
+            }
+        }
 		
 		sc.save = function () {
 			sc.license = {
@@ -1072,20 +1106,12 @@
 				'priceForHundred': sc.priceForHundred
 			}
 
-			if (sc.name != '' 
-				&& sc.type != ''
-				&& sc.minimumUsers != ''
-				&& sc.maximumUsers != ''
-				&& sc.expiration != ''
-				) {
-				LicenseService.new(sc.license)
-				.success(function (data) {
-					sc.license = null;
-					sc.closeThisDialog(true);
-					sc.loadPage(1);
-				});
-			}
-			else alert('Error');
+			if (sc.formValid) LicenseService.new(sc.license)
+			.success(function (data) {
+				sc.license = null;
+				sc.closeThisDialog(true);
+				sc.loadPage(sc.currentPage);
+			});
 		}
 	};
 })();
@@ -1103,7 +1129,7 @@
 		sc.delete = function () {
 			SoftwareService.delete(sc.id)
 			.success(function (data) {
-				sc.loadPage(1);
+				sc.loadPage(sc.currentPage);
 				sc.closeThisDialog(true);
 			});
 		}
@@ -1120,7 +1146,7 @@
 	function SoftwareEditCtrl ($scope, $state, $location, SoftwareService, DeveloperService, LicenseService) {
 		var sc = $scope;
 
-		sc.action = 'Edit';
+		sc.action = 'edit';
 
 		SoftwareService.get(sc.id)
 		.success(function (data) {
@@ -1128,15 +1154,23 @@
 
 			sc.id = sc.software.id;
 			sc.name = sc.software.name;
+			sc.release = new Date(sc.software.release);
 			sc.version = sc.software.version;
-			sc.releaseValue = sc.software.release;
 			sc.license = sc.software.license;
 			sc.developer = sc.software.developer;
 			sc.windows = sc.software.windows;
 			sc.linux = sc.software.linux;
 			sc.macOS = sc.software.macOS;
 
-			sc.release = new Date(sc.software.release);
+			sc.checkForm = function () {
+	            if (sc.name != '' 
+					&& sc.version != ''
+					&& sc.selLicense != ''
+					&& sc.selDeveloper != ''
+					&& sc.softForm.$valid
+	            ) sc.formValid = true;
+	            else sc.formValid = false;
+	        }
 
 			sc.selDeveloper = sc.software.developer;
 			sc.selLicense = sc.software.license;
@@ -1163,19 +1197,12 @@
 				}
 
 
-			if (sc.name != '' 
-				&& sc.version != ''
-				&& sc.selDeveloper != {}
-				&& sc.selLicense != {}
-				) {
-					SoftwareService.update(sc.soft)
-					.success(function (data) {
-						sc.loadPage(1);
-						sc.soft = null;
-					});
+				if (sc.formValid) SoftwareService.update(sc.soft)
+				.success(function (data) {
+					sc.loadPage(sc.currentPage);
+					sc.soft = null;
 					sc.closeThisDialog(true);
-				}
-			else alert('Error');
+				});
 			}
 		});
 	}
@@ -1191,7 +1218,9 @@
 	function SoftwareNewCtrl ($scope, $state, $location, SoftwareService, DeveloperService, LicenseService) {
 		var sc = $scope;
 
-		sc.action = 'Add';
+		sc.action = 'add';
+
+		sc.formValid = false;
 
 		sc.name = '';
 		sc.version = '';
@@ -1202,6 +1231,16 @@
 		sc.macOS = false;
 		sc.selDeveloper = '';
 		sc.selLicense = '';
+
+		sc.checkForm = function () {
+            if (sc.name != '' 
+				&& sc.version != ''
+				&& sc.selLicense != ''
+				&& sc.selDeveloper != ''
+				&& sc.softForm.$valid
+            ) sc.formValid = true;
+            else sc.formValid = false;
+        }
 
 		DeveloperService.getAll().success( function (data) {
 			sc.developers = data.content;
@@ -1224,19 +1263,12 @@
 				'macOS': sc.macOS
 			}
 
-		if (sc.name != '' 
-			&& sc.version != ''
-				&& sc.selLicense != ''
-				&& sc.selDeveloper != ''
-				) {
-				SoftwareService.new(sc.soft)
-				.success(function (data) {
-					sc.loadPage(1);
-					sc.soft = null;
-					sc.closeThisDialog(true);
-				});
-			}
-			else alert('Error');
+			if (sc.formValid) SoftwareService.new(sc.soft)
+			.success(function (data) {
+				sc.loadPage(sc.currentPage);
+				sc.soft = null;
+				sc.closeThisDialog(true);
+			});
 		}
 	}
 })();

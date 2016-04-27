@@ -11,7 +11,7 @@
 		sc.delete = function () {
 			SoftwareService.delete(sc.id)
 			.success(function (data) {
-				sc.loadPage(1);
+				sc.loadPage(sc.currentPage);
 				sc.closeThisDialog(true);
 			});
 		}

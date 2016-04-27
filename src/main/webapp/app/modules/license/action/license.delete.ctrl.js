@@ -19,7 +19,7 @@
 			LicenseService.delete(sc.id)
 			.then(function successCallback(response) {
 				sc.closeThisDialog(true);
-				sc.loadPage(1);
+				sc.loadPage(sc.currentPage);
 			  }, function errorCallback(response) {
 			    	sc.log = 'License "'+ licName +'" could not be deleted because is in use yet';
 			  }); 

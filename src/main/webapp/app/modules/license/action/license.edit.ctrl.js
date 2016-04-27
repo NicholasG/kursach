@@ -7,7 +7,9 @@
 
 	function LicenseEditCtrl ($scope, $state, $location, LicenseService) {
 		var sc = $scope;
-		sc.action = 'Edit';
+		sc.action = 'edit';
+
+		sc.formValid = false;
 
 		LicenseService.get(sc.id)
 		.success(function (data) {
@@ -23,6 +25,24 @@
 			sc.priceForTen = sc.license.priceForTen;
 			sc.priceForHundred = sc.license.priceForHundred;
 
+			sc.checkForm = function () {
+	            if (sc.name != '' 
+					&& sc.type != ''
+					&& sc.minimumUsers != 0
+					&& sc.maximumUsers != 0
+					&& sc.expiration != 0
+					&& sc.minimumUsers != null
+					&& sc.maximumUsers != null
+					&& sc.expiration != null
+					&& sc.licenseForm.$valid
+	            ) {
+	                sc.formValid = true;
+	            } 
+	            else {
+	                sc.formValid = false;
+	            }
+	        }
+
 			sc.save = function () {
 				sc.license = {
 					'id': sc.id,
@@ -36,20 +56,12 @@
 					'priceForHundred': sc.priceForHundred
 				}
 
-				if (sc.name != '' 
-				&& sc.type != ''
-				&& sc.minimumUsers != ''
-				&& sc.maximumUsers != ''
-				&& sc.expiration != ''
-				) {
-					LicenseService.update(sc.license)
+				if (sc.formValid) LicenseService.update(sc.license)
 					.success(function (data) {
 						sc.license = null;
 						sc.closeThisDialog(true);
-						sc.loadPage(1);
+						sc.loadPage(sc.currentPage);
 					});
-				}
-				else alert('Error');
 			}
 		});
 	}

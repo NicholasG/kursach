@@ -59,7 +59,7 @@
             if (sc.formValid) DeveloperService.new(sc.developer)
 				.success(function() {
 				    sc.closeThisDialog(true);
-				    sc.loadPage(1);
+				    sc.loadPage(sc.currentPage);
 				});
         };
 

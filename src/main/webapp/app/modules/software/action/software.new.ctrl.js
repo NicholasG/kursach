@@ -8,7 +8,9 @@
 	function SoftwareNewCtrl ($scope, $state, $location, SoftwareService, DeveloperService, LicenseService) {
 		var sc = $scope;
 
-		sc.action = 'Add';
+		sc.action = 'add';
+
+		sc.formValid = false;
 
 		sc.name = '';
 		sc.version = '';
@@ -19,6 +21,16 @@
 		sc.macOS = false;
 		sc.selDeveloper = '';
 		sc.selLicense = '';
+
+		sc.checkForm = function () {
+            if (sc.name != '' 
+				&& sc.version != ''
+				&& sc.selLicense != ''
+				&& sc.selDeveloper != ''
+				&& sc.softForm.$valid
+            ) sc.formValid = true;
+            else sc.formValid = false;
+        }
 
 		DeveloperService.getAll().success( function (data) {
 			sc.developers = data.content;
@@ -41,19 +53,12 @@
 				'macOS': sc.macOS
 			}
 
-		if (sc.name != '' 
-			&& sc.version != ''
-				&& sc.selLicense != ''
-				&& sc.selDeveloper != ''
-				) {
-				SoftwareService.new(sc.soft)
-				.success(function (data) {
-					sc.loadPage(1);
-					sc.soft = null;
-					sc.closeThisDialog(true);
-				});
-			}
-			else alert('Error');
+			if (sc.formValid) SoftwareService.new(sc.soft)
+			.success(function (data) {
+				sc.loadPage(sc.currentPage);
+				sc.soft = null;
+				sc.closeThisDialog(true);
+			});
 		}
 	}
 })();

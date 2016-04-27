@@ -8,16 +8,36 @@
 	function LicenseNewCtrl ($scope, $state, $location, LicenseService) {
 		var sc = $scope;
 
-		sc.action = 'Add';
+		sc.action = 'add';
+
+		sc.formValid = false;
 
 		sc.name = '';
 		sc.type = '';
-		sc.minimumUsers = '';
-		sc.maximumUsers = '';
-		sc.expiration = '';
+		sc.minimumUsers = null;
+		sc.maximumUsers = null;
+		sc.expiration = null;
 		sc.priceForOne = '';
 		sc.priceForTen = '';
 		sc.priceForHundred = '';
+
+		sc.checkForm = function () {
+            if (sc.name != '' 
+				&& sc.type != ''
+				&& sc.minimumUsers != 0
+				&& sc.maximumUsers != 0
+				&& sc.expiration != 0
+				&& sc.minimumUsers != null
+				&& sc.maximumUsers != null
+				&& sc.expiration != null
+				&& sc.licenseForm.$valid
+            ) {
+                sc.formValid = true;
+            } 
+            else {
+                sc.formValid = false;
+            }
+        }
 		
 		sc.save = function () {
 			sc.license = {
@@ -31,20 +51,12 @@
 				'priceForHundred': sc.priceForHundred
 			}
 
-			if (sc.name != '' 
-				&& sc.type != ''
-				&& sc.minimumUsers != ''
-				&& sc.maximumUsers != ''
-				&& sc.expiration != ''
-				) {
-				LicenseService.new(sc.license)
-				.success(function (data) {
-					sc.license = null;
-					sc.closeThisDialog(true);
-					sc.loadPage(1);
-				});
-			}
-			else alert('Error');
+			if (sc.formValid) LicenseService.new(sc.license)
+			.success(function (data) {
+				sc.license = null;
+				sc.closeThisDialog(true);
+				sc.loadPage(sc.currentPage);
+			});
 		}
 	};
 })();

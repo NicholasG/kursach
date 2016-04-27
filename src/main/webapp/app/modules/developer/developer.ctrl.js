@@ -61,6 +61,8 @@
 			.success(function (data){
 				sc.main = data;
 			});
+
+			sc.currentPage = currentPage;
 		};
 
 		sc.loadPage(1); 

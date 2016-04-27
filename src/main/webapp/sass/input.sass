@@ -1,8 +1,19 @@
 input.ng-invalid:focus, input.ng-invalid
 	border-color: #E96666
 	box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(233, 102, 102, 0.6)
-    // box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(233, 102, 102, 0.6)
 
 input.ng-valid
     //border-color:lightgreen
 
+#release_filter
+	input.ng-invalid:focus
+		border-color: #E96666
+		box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(233, 102, 102, 0.6)
+	input.ng-invalid
+		border-color: #ccc
+		box-shadow: inset 0 1px 1px rgba(0,0,0,.075)
+	
+	@media (min-width: 1024px)
+		.dropdown-menu
+			left: -76px !important
+			right: 0 !important

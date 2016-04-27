@@ -19,7 +19,7 @@
         <div class="col-lg-6">
           <div
             flow-init="target"
-            flow-file-added="$file.size < 2000000"
+            flow-file-added="$file.size < 512000"
             flow-file-success="getLogoById(id); $flow.files[0].cancel();"
             flow-drop>
             <div ng-init="imageUploadShow = false"

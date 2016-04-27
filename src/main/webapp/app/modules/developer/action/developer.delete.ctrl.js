@@ -19,7 +19,7 @@
 			DeveloperService.delete(sc.id)
 			.then(function successCallback(response) {
 				sc.closeThisDialog(true);
-				sc.loadPage(1);
+				sc.loadPage(sc.currentPage);
 			  }, function errorCallback(response) {
 			    	sc.log = 'Developer "' + devName + '" could not be deleted because is in use yet';
 			  }); 

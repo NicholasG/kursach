@@ -8,7 +8,7 @@
 	function SoftwareEditCtrl ($scope, $state, $location, SoftwareService, DeveloperService, LicenseService) {
 		var sc = $scope;
 
-		sc.action = 'Edit';
+		sc.action = 'edit';
 
 		SoftwareService.get(sc.id)
 		.success(function (data) {
@@ -16,15 +16,23 @@
 
 			sc.id = sc.software.id;
 			sc.name = sc.software.name;
+			sc.release = new Date(sc.software.release);
 			sc.version = sc.software.version;
-			sc.releaseValue = sc.software.release;
 			sc.license = sc.software.license;
 			sc.developer = sc.software.developer;
 			sc.windows = sc.software.windows;
 			sc.linux = sc.software.linux;
 			sc.macOS = sc.software.macOS;
 
-			sc.release = new Date(sc.software.release);
+			sc.checkForm = function () {
+	            if (sc.name != '' 
+					&& sc.version != ''
+					&& sc.selLicense != ''
+					&& sc.selDeveloper != ''
+					&& sc.softForm.$valid
+	            ) sc.formValid = true;
+	            else sc.formValid = false;
+	        }
 
 			sc.selDeveloper = sc.software.developer;
 			sc.selLicense = sc.software.license;
@@ -51,19 +59,12 @@
 				}
 
 
-			if (sc.name != '' 
-				&& sc.version != ''
-				&& sc.selDeveloper != {}
-				&& sc.selLicense != {}
-				) {
-					SoftwareService.update(sc.soft)
-					.success(function (data) {
-						sc.loadPage(1);
-						sc.soft = null;
-					});
+				if (sc.formValid) SoftwareService.update(sc.soft)
+				.success(function (data) {
+					sc.loadPage(sc.currentPage);
+					sc.soft = null;
 					sc.closeThisDialog(true);
-				}
-			else alert('Error');
+				});
 			}
 		});
 	}

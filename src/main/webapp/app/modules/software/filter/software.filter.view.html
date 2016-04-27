@@ -1,11 +1,11 @@
 <label translate>name</label>
-<input name="name" ng-model="name" type="text" class="form-control" placeholder="Enter dev name" ng-change="loadPage(1, name, release, devName.name, licName.name)" pattern="[A-z^\s]*">
+<input name="name" ng-model="name" type="text" class="form-control" ng-change="loadPage(1, name, release, devName.name, licName.name)" pattern="[A-z^\s]*">
 <label>release</label>
-<div class="input-group">
+<div id="release_filter" class="input-group">
 	<span class="input-group-btn">
 		<button type="button" class="btn btn-default" ng-click="popup1 = true"><i class="glyphicon glyphicon-calendar"></i></button>
 	</span>
-	<input name="release" ng-model="release" type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" is-open="popup1" ng-required="true" close-text="Close" alt-input-formats="'yyyy-MM-dd'" ng-click="popup1 = true" ng-value="releaseValue" ng-change="loadPage(1, name, release, devName.name, licName.name)" readonly>
+	<input name="release" ng-model="release" type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" popup-placement="bottom-left" is-open="popup1" ng-required="true" close-text="Close" alt-input-formats="'yyyy-MM-dd'" ng-click="popup1 = true" ng-value="releaseValue" ng-change="loadPage(1, name, release, devName.name, licName.name)">
 	<span class="input-group-btn">
 		<button type="button" class="btn btn-default" ng-click="release = null; loadPage(1, name, release, devName.name, licName.name)">Clear</button>
 	</span>

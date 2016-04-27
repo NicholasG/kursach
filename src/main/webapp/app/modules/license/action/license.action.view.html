@@ -4,34 +4,37 @@
     <i class="glyphicon glyphicon-remove action action-close right" ng-click="closeThisDialog(true)"></i>
   </div>
   <div class="panel-body">
+    <ng-form name="licenseForm">
     <div class="col-lg-6">
-      <label>name</label>
-      <input name="name" ng-model="name" type="text" class="form-control">
-      <label>type</label>
-      <select class="form-control" ng-model="type">
+      <label translate>name</label>
+      <input name="name" ng-model="name" type="text" class="form-control" pattern="[A-z^\s]*"
+      uib-tooltip="Тільки латинські символи" tooltip-is-open="licenseForm.name.$invalid" tooltip-trigger="none"  ng-change="checkForm()">
+      <label translate>type</label>
+      <select class="form-control" ng-model="type"  ng-change="checkForm()">
         <option value="" disabled>{{type}}</option>
         <option value="FREE">free</option>
         <option value="TRIAL">trial</option>
         <option value="PAID">paid</option>
       </select>
-      <label>minimumUsers</label>
-      <input name="minimumUsers" ng-model="minimumUsers" type="number" class="form-control" min="0">
-      <label>maximumUsers</label>
-      <input name="maximumUsers" ng-model="maximumUsers" type="number" class="form-control" min="0">
-    </div><!-- /.col-lg-6 -->
+      <label translate>minimumUsers</label>
+      <input name="minimumUsers" ng-model="minimumUsers" type="number" class="form-control" min="0" ng-change="checkForm()">
+      <label translate>maximumUsers</label>
+      <input name="maximumUsers" ng-model="maximumUsers" type="number" class="form-control" min="0" ng-change="checkForm()">
+    </div>
     <div class="col-lg-6">
-      <label>expiration</label>
-      <input name="expiration" ng-model="expiration" type="number" class="form-control" min="0">
-      <label>priceForOne</label>
-      <input name="priceForOne" ng-model="priceForOne" type="number" class="form-control">
-      <label>priceForTen</label>
-      <input name="priceForTen" ng-model="priceForTen" type="number" class="form-control">
-      <label>priceForHundred</label>
-      <input name="priceForHundred" ng-model="priceForHundred" type="number" class="form-control">
-    </div><!-- /.col-lg-6 -->   
+      <label translate>expiration</label>
+      <input name="expiration" ng-model="expiration" type="number" class="form-control" min="0" ng-change="checkForm()">
+      <label translate>priceForOne</label>
+      <input name="priceForOne" ng-model="priceForOne" type="number" class="form-control" ng-change="checkForm()">
+      <label translate>priceForTen</label>
+      <input name="priceForTen" ng-model="priceForTen" type="number" class="form-control" ng-change="checkForm()">
+      <label translate>priceForHundred</label>
+      <input name="priceForHundred" ng-model="priceForHundred" type="number" class="form-control" ng-change="checkForm()">
+    </div>
+    </ng-form>
     <div class="col-lg-12 tools">
-     <button class="btn btn-primary" ng-click="save()"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
-     <button class="btn btn-default right" ng-click="closeThisDialog(true)" style="margin-right: 15px;">Cancel</button>
-   </div>  
- </div>
+      <button type="submit" ng-class="{'disabled': !formValid}" class="btn btn-primary" ng-click="save()"><i class="glyphicon glyphicon-floppy-disk"></i> <span translate>save</span></button>
+      <button class="btn btn-default right" ng-click="closeThisDialog(true)" style="margin-right: 15px;">Cancel</button>
+    </div>
+  </div>
 </div>
